@@ -56,7 +56,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
     private static final int PERMS_REQUEST_CODE = 12345;
     String selectedQn, selectedAffiliation;
     SpinnerDialog spinnerDialog;
-    GetRemoteData grd;
+    //GetRemoteData grd;
     RequestPerms requestPerms;
     private ArrayAdapter<String> arrayAdapterFacility;
     SendMessage sm;
@@ -164,7 +164,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
     }
 
 
-    public void getRemoteData() {
+    /*public void getRemoteData() {
 
         try {
 //            Toast.makeText(this, "getting data", Toast.LENGTH_SHORT).show();
@@ -182,7 +182,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
 
 
         }
-    }
+    }*/
 
     public void setFacilityAdapter() {
 
@@ -217,12 +217,12 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
             trcidnoE = (EditText) findViewById(R.id.trc_idno);
             ucsfOptionsL = (LinearLayout) findViewById(R.id.ucsfoptions);
             requestPerms = new RequestPerms(Registration.this, this);
-            affiliationE = (EditText) findViewById(R.id.affiliationnewspinner);
+            //affiliationE = (EditText) findViewById(R.id.affiliationnewspinner);
             username = (EditText) findViewById(R.id.username_edt);
             password = (EditText) findViewById(R.id.password_edt);
             repassword = (EditText) findViewById(R.id.repassword_edt);
             securityanswerE = (EditText) findViewById(R.id.securityanswer);
-            grd = new GetRemoteData(Registration.this);
+           // grd = new GetRemoteData(Registration.this);
 
             securityhint = (EditText) findViewById(R.id.securityhint_edt);
             register = (Button) findViewById(R.id.register_btn);
@@ -246,7 +246,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
     public void setAffiliationSpinner() {
 
         try {
-            getRemoteData();
+            //getRemoteData();
             setFacilityAdapter();
             addListenerToAffiliationSpinnerEdt();
 
@@ -428,7 +428,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
                     String Secuhint = securityhint.getText().toString();
                     String Repass = repassword.getText().toString();
                     String SecuanswerS = securityanswerE.getText().toString();
-                    String affiliationS = affiliationE.getText().toString();
+                   // String affiliationS = affiliationE.getText().toString();
                     String affiliationIds = "";
 
                     List<Mflcode> mfllist=Mflcode.findWithQuery(Mflcode.class,"Select * from Mflcode");
@@ -495,12 +495,14 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
                                 Toast.makeText(Registration.this, "the provided username already exists, try again", Toast.LENGTH_SHORT).show();
                             } else {
 
-                                List<Affiliationstable> affl = Affiliationstable.findWithQuery(Affiliationstable.class, "select * from Affiliationstable where affiliationname=? limit 1", affiliationS);
-                                for (int y = 0; y < affl.size(); y++) {
+                               // List<Affiliationstable> affl = Affiliationstable.findWithQuery(Affiliationstable.class, "select * from Affiliationstable where affiliationname=? limit 1", affiliationS);
+                                List<Affiliationstable> affl = Affiliationstable.findWithQuery(Affiliationstable.class, "select * from Affiliationstable where affiliationname=? limit 1");
+                               for (int y = 0; y < affl.size(); y++) {
 
                                     affiliationIds = affl.get(y).getAffiliationid();
                                 }
-                                Registrationtable rt = new Registrationtable(Uname, Pass, Secuhint, SecuanswerS, affiliationS, phonenum);
+                               // Registrationtable rt = new Registrationtable(Uname, Pass, Secuhint, SecuanswerS, affiliationS, phonenum);
+                                Registrationtable rt = new Registrationtable(Uname, Pass, Secuhint, SecuanswerS, phonenum);
                                 rt.save();
 
 

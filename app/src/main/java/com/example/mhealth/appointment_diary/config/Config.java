@@ -6,7 +6,9 @@ public class Config {
 //    public static final String mainShortcode="40149";
 
 //    live shortcode
-    public static final String mainShortcode="40146";
+   // public static final String mainShortcode="40146";
+
+ public static final String mainShortcode="401409";
 
     //***************test url********************************
 //    public static final String GETAFFILIATION_URL = "https://ushauritest.mhealthkenya.co.ke/chore/affiliation";
@@ -20,30 +22,39 @@ public class Config {
 //    public static final String SENDDATATODB_URL2 = "https://ushauritest.mhealthkenya.co.ke/chore/receiver_post";
 
 //******************live url******************
-    public static final String GETAFFILIATION_URL = "https://ushaurinew.mhealthkenya.co.ke/chore/affiliation";
+    //public static final String GETAFFILIATION_URL = "https://ushaurinew.mhealthkenya.co.ke/chore/affiliation";
+    public static final String GETAFFILIATION_URL = "https://ushauri-api.mod.go.ke/chore/affiliation";
 
-    public static final String GET_DOD_SERVICES = "https://ushauri-dod.mhealthkenya.co.ke/clients/service";
+   // public static final String GET_DOD_SERVICES = "https://ushauri-dod.mhealthkenya.co.ke/clients/service";
+   public static final String GET_DOD_SERVICES = "https://ushauri-api.mod.go.ke/clients/service";
 
-    public static final String GET_DOD_UNITS = "https://ushauri-dod.mhealthkenya.co.ke/clients/unit";
+    //public static final String GET_DOD_RANKS = "https://ushauri-dod.mhealthkenya.co.ke/clients/rank";
+    public static final String GET_DOD_RANKS = "https://ushauri-api.mod.go.ke/clients/rank";
+
+
+      //public static final String GET_DOD_UNITS = "https://ushauri-dod.mhealthkenya.co.ke/clients/unit";
+      public static final String GET_DOD_UNITS = "https://ushauri-api.mod.go.ke/clients/unit/service_id";
+
 
 
     //public static final String SENDDATATODB_URL = "https://ushaurinode.mhealthkenya.co.ke/receiver/";
-    public static final String SENDDATATODB_URL = "https://ushauri-dod.mhealthkenya.co.ke/receiver/";
+    public static final String SENDDATATODB_URL = "https://ushauri-api.mod.go.ke/receiver/";
 
 
-    //   public static final String GETTODAYSAPPOINTMENT_URL = "https://ushaurinode.mhealthkenya.co.ke/today_appointments";
-   public static final String GETTODAYSAPPOINTMENT_URL = "https://ushauri-dod.mhealthkenya.co.ke/today_appointments";
+   // public static final String GETTODAYSAPPOINTMENT_URL = "https://ushaurinode.mhealthkenya.co.ke/today_appointments";
+    public static final String GETTODAYSAPPOINTMENT_URL = "https://ushauri-api.mod.go.ke/today_appointments";
    //public static final String GETTODAYSAPPOINTMENT_URL = "http://ushauri-dod.mhealthkenya.co.ke/today_appointments";
-    public static final String GETUSERMFLCODE_URL = "https://ushaurinode.mhealthkenya.co.ke/verifyMFLCode";
+    //public static final String GETUSERMFLCODE_URL = "https://ushaurinode.mhealthkenya.co.ke/verifyMFLCode";
+    public static final String GETUSERMFLCODE_URL = "https://ushauri-api.mod.go.ke/verifyMFLCode";
     //public static final String REMOVEFAKEDEFAULTER_URL = "https://ushaurinew.mhealthkenya.co.ke/chore/toda";
-    public static final String REMOVEFAKEDEFAULTER_URL = "https://ushauri-dod.mhealthkenya.co.ke/chore/toda";
-   // public static final String GETDEFAULTERSAPPOINTMENT_URL = "https://ushaurinode.mhealthkenya.co.ke/past_appointments";
-    public static final String GETDEFAULTERSAPPOINTMENT_URL = "https://ushauri-dod.mhealthkenya.co.ke/past_appointments";
+    public static final String REMOVEFAKEDEFAULTER_URL = "https://ushauri-api.mod.go.ke/chore/toda";
+    //public static final String GETDEFAULTERSAPPOINTMENT_URL = "https://ushaurinode.mhealthkenya.co.ke/past_appointments";
+    public static final String GETDEFAULTERSAPPOINTMENT_URL = "https://ushauri-api.mod.go.ke/past_appointments";
 
 
 
     //public static final String SENDDATATODB_URL2 = "https://ushaurinew.mhealthkenya.co.ke/chore/receiver_post";
-    public static final String SENDDATATODB_URL2 = "https://ushauri-dod.mhealthkenya.co.ke/chore/receiver_post";
+     public static final String SENDDATATODB_URL2 = "https://ushauri-api.mod.go.ke/chore/receiver_post";
 
 
 
@@ -67,59 +78,59 @@ public class Config {
     public static final int LOSTTOFOLLOWUPPERIOD=30;
 
     //public static final String GET_ENROLLMENT_DURATION = "https://ushaurinode.mhealthkenya.co.ke/api/process_dfc/check/enrollment/duration";
-    public static final String GET_ENROLLMENT_DURATION = "https://ushauri-dod.mhealthkenya.co.ke/api/process_dfc/check/enrollment/duration";
+    public static final String GET_ENROLLMENT_DURATION = "https://ushauri-api.mod.go.ke/api/process_dfc/check/enrollment/duration";
     //public static final String WELL_ADVANCED_BOOKING = "https://ushaurinode.mhealthkenya.co.ke/api/process_dfc/well/advanced/booking";
-    public static final String WELL_ADVANCED_BOOKING = "https://ushauri-dod.mhealthkenya.co.ke/api/process_dfc/well/advanced/booking";
+    public static final String WELL_ADVANCED_BOOKING = "https://ushauri-api.mod.go.ke/api/process_dfc/well/advanced/booking";
 
     //public static final String ON_DCM_BOOKING = "https://ushaurinode.mhealthkenya.co.ke/api/process_dfc/client/dcm/create";
-    public static final String ON_DCM_BOOKING = "https://ushauri-dod.mhealthkenya.co.ke/api/process_dfc/client/dcm/create";
+    public static final String ON_DCM_BOOKING = "https://ushauri-api.mod.go.ke/api/process_dfc/client/dcm/create";
     //public static final String NOT_ON_DCM_BOOKING = "https://ushaurinode.mhealthkenya.co.ke/api/process_dfc/client/not/dcm";
-    public static final String NOT_ON_DCM_BOOKING = "https://ushauri-dod.mhealthkenya.co.ke/api/process_dfc/client/not/dcm";
+    public static final String NOT_ON_DCM_BOOKING = "https://ushauri-api.mod.go.ke/api/process_dfc/client/not/dcm";
     //public static final String UNSTABLE_BOOKING = "https://ushaurinode.mhealthkenya.co.ke/api/process_dfc/unstable/client/booking";
-    public static final String UNSTABLE_BOOKING = "https://ushauri-dod.mhealthkenya.co.ke/api/process_dfc/unstable/client/booking";
+    public static final String UNSTABLE_BOOKING = "https://ushauri-api.mod.go.ke/api/process_dfc/unstable/client/booking";
 
 
 
     //public static final String CHECK_PMTCT = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/check/pmtct/clinic";
-    public static final String CHECK_PMTCT = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/check/pmtct/clinic";
+    public static final String CHECK_PMTCT = "https://ushauri-api.mod.go.ke/api/process_pmtct/check/pmtct/clinic";
 
     //public static final String REGISTER_HEI = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/register/hei/client";
-    public static final String REGISTER_HEI = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/register/hei/client";
-   // public static final String REGISTER_HEI_WITH_CAREGIVER = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/register/hei/with/caregiver";
-    public static final String REGISTER_HEI_WITH_CAREGIVER = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/register/hei/with/caregiver";
-    //public static final String GET_ATTACHED_HEIS = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/check/attached/heis";
-    public static final String GET_ATTACHED_HEIS = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/check/attached/heis";
+    public static final String REGISTER_HEI = "https://ushauri-api.mod.go.ke/api/process_pmtct/register/hei/client";
+   //public static final String REGISTER_HEI_WITH_CAREGIVER = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/register/hei/with/caregiver";
+    public static final String REGISTER_HEI_WITH_CAREGIVER = "https://ushauri-api.mod.go.ke/api/process_pmtct/register/hei/with/caregiver";
+   // public static final String GET_ATTACHED_HEIS = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/check/attached/heis";
+    public static final String GET_ATTACHED_HEIS = "https://ushauri-api.mod.go.ke/api/process_pmtct/check/attached/heis";
 
 
     //public static final String BOOK_HEI_APT = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/book/client/appointment";
-    public static final String BOOK_HEI_APT = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/book/client/appointment";
+    public static final String BOOK_HEI_APT = "https://ushauri-api.mod.go.ke/api/process_pmtct/book/client/appointment";
 
     //public static final String REGISTER_NON_BREASTFEEDING = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/register/non/breastfeeding";
-    public static final String REGISTER_NON_BREASTFEEDING = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/register/non/breastfeeding";
+    public static final String REGISTER_NON_BREASTFEEDING = "https://ushauri-api.mod.go.ke/api/process_pmtct/register/non/breastfeeding";
 
     //public static final String BOOK_HEI_ONLY_APT = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/book/hei/appointment";
-    public static final String BOOK_HEI_ONLY_APT = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/book/hei/appointment";
+    public static final String BOOK_HEI_ONLY_APT = "https://ushauri-api.mod.go.ke/api/process_pmtct/book/hei/appointment";
     //public static final String BOOK_UNSCHEDULED_HEI_ONLY_APT = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/book/hei/unscheduled";
-    public static final String BOOK_UNSCHEDULED_HEI_ONLY_APT = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/book/hei/unscheduled";
+    public static final String BOOK_UNSCHEDULED_HEI_ONLY_APT = "https://ushauri-api.mod.go.ke/api/process_pmtct/book/hei/unscheduled";
 
     //public static final String SEARCH_HEI = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/get/hei/details";
-    public static final String SEARCH_HEI = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/get/hei/details";
+    public static final String SEARCH_HEI = "https://ushauri-api.mod.go.ke/api/process_pmtct/get/hei/details";
 
-   // public static final String UPDATE_HEI = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/update/hei/details/";
-    public static final String UPDATE_HEI = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/update/hei/details/";
+   //public static final String UPDATE_HEI = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/update/hei/details/";
+   public static final String UPDATE_HEI = "https://ushauri-api.mod.go.ke/api/process_pmtct/update/hei/details/";
 
-    //public static final String SEARCH_PCR = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/pcr/positive/details";
-    public static final String SEARCH_PCR = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/pcr/positive/details";
+   // public static final String SEARCH_PCR = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/pcr/positive/details";
+    public static final String SEARCH_PCR = "https://ushauri-api.mod.go.ke/api/process_pmtct/pcr/positive/details";
     //public static final String UPDATE_PCR = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/enroll/positive/pcr/";
-    public static final String UPDATE_PCR = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/enroll/positive/pcr/";
+    public static final String UPDATE_PCR = "https://ushauri-api.mod.go.ke/api/process_pmtct/enroll/positive/pcr/";
     //public static final String SEARCH_HEI_FINAL = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/outcome/get/details";
-    public static final String SEARCH_HEI_FINAL = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/outcome/get/details";
+    public static final String SEARCH_HEI_FINAL = "https://ushauri-api.mod.go.ke/api/process_pmtct/outcome/get/details";
     //public static final String POST_FINAL_OUTOME = "https://ushaurinode.mhealthkenya.co.ke/api/process_pmtct/confirm/final/outcome";
-    public static final String POST_FINAL_OUTOME = "https://ushauri-dod.mhealthkenya.co.ke/api/process_pmtct/confirm/final/outcome";
-   // public static final String SEARCH_RESCHEDULE_APT = "https://ushaurinode.mhealthkenya.co.ke/api/edit_appointment/get/client/apps";
-    public static final String SEARCH_RESCHEDULE_APT = "https://ushauri-dod.mhealthkenya.co.ke/api/edit_appointment/get/client/apps";
-    //public static final String RESCHEDULE_APT = "https://ushaurinode.mhealthkenya.co.ke/api/edit_appointment/edit/appointment/date/";
-    public static final String RESCHEDULE_APT = "https://ushauri-dod.mhealthkenya.co.ke/api/edit_appointment/edit/appointment/date/";
+    public static final String POST_FINAL_OUTOME = "https://ushauri-api.mod.go.ke/api/process_pmtct/confirm/final/outcome";
+   //public static final String SEARCH_RESCHEDULE_APT = "https://ushaurinode.mhealthkenya.co.ke/api/edit_appointment/get/client/apps";
+    public static final String SEARCH_RESCHEDULE_APT = "https://ushauri-api.mod.go.ke/api/edit_appointment/get/client/apps";
+   // public static final String RESCHEDULE_APT = "https://ushaurinode.mhealthkenya.co.ke/api/edit_appointment/edit/appointment/date/";
+    public static final String RESCHEDULE_APT = "https://ushauri-api.mod.go.ke/api/edit_appointment/edit/appointment/date/";
 
 
 

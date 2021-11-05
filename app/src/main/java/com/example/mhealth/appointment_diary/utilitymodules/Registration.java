@@ -4,12 +4,16 @@ package com.example.mhealth.appointment_diary.utilitymodules;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,13 +26,23 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mhealth.appointment_diary.AccessServer.AccessServer;
 import com.example.mhealth.appointment_diary.AppendFunction.AppendFunction;
@@ -53,6 +67,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,12 +87,21 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
     ArrayList<String> servicesList;
     ArrayList<Service> services;
 
+    ArrayList<String> RankList;
+    ArrayList<Ranks> ranks;
+
+    /*ArrayList<String> serviceUnitsList;
+    ArrayList<ServicesUnit> serviceUnits;*/
+
     ArrayList<String> serviceUnitsList;
-    ArrayList<ServicesUnit> serviceUnits;
+    ArrayList<Unit> serviceUnits;
+public static final String TAG ="Registration";
 
     private int serviceID = 0;
     private int serviceUnitID = 0;
 
+    private int ranksID = 0;
+    String ranksValue= "";
 
     String serviceValue= "";
     String unitValue="";
@@ -87,8 +111,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
 
 
-    SearchableSpinner serviceSpin;
-    SearchableSpinner unitSpin;
+    SearchableSpinner serviceSpin, rankSpin,unitSpin;
 
     ArrayList<String>servicesArray;
     ArrayAdapter<String> AA;
@@ -103,8 +126,8 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
     LinearLayout smslayoutL, idnoL, orphanL, altphoneL, disableL, groupingL;
 
-    EditText cccE, upnE, fileserialE, f_nameE, s_nameE, o_nameE, dobE, enrollment_dateE, art_dateE, phoneE, email_address, idnoE, altphoneE, ageinyearsE, ServiceNo;
-
+    EditText cccE, upnE,  f_nameE, s_nameE, o_nameE, dobE, enrollment_dateE, art_dateE, phoneE, email_address, idnoE, altphoneE, ageinyearsE, ServiceNo;
+    //fileserialE
     Spinner genderS, maritalS, conditionS, enrollmentS, languageS, smsS, wklymotivation, messageTime, SelectstatusS, patientStatus, GroupingS, orphanS, schoolS, newGroupingS;
 
     String gender_code, marital_code, condition_code, grouping_code, new_grouping_code, category_code, language_code, sms_code, Selectstatus_code, wklyMotivation_code, messageTime_code, patientStatus_code, school_code, orphan_code, idnoS;
@@ -144,22 +167,25 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_registration);
 
         rq = Volley.newRequestQueue(Registration.this);
-        serviceSpin = findViewById(R.id.services);
-        unitSpin = findViewById(R.id.unit);
+        //serviceSpin = findViewById(R.id.services);
+        //unitSpin = findViewById(R.id.unit);
         //service and unit array
-        getServicesUnits();
+        //getServicesUnits();
 
 
 
 
-        /*ServiceSpinner = findViewById(R.id.ServiceSpinner);
+        ServiceSpinner = findViewById(R.id.ServiceSpinner);
         serviceUnitSpinner = findViewById(R.id.serviceUnit);
+        rankSpin = findViewById(R.id.RankSpinner);
+        rankSpin.setTitle("Select Rank");
+        rankSpin.setPositiveButton("OK");
 
 
        ServiceSpinner.setTitle("Select Service");
         ServiceSpinner.setPositiveButton("OK");
         serviceUnitSpinner.setTitle("Select Unit");
-        serviceUnitSpinner.setPositiveButton("OK");*/
+        serviceUnitSpinner.setPositiveButton("OK");
 
 
         // components from activity_registration.xml
@@ -202,7 +228,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
         setSpinnerListeners();
         setPrompts();
-       // getFacilities();
+        getFacilities();
+        getRanks();
+
 
 
         final Context gratitude = this;
@@ -418,7 +446,6 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 //            GroupingS.setOnItemSelectedListener(this);
             newGroupingS.setOnItemSelectedListener(this);
 
-
         } catch (Exception e) {
 
         }
@@ -443,7 +470,8 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             sm = new SendMessage(Registration.this);
             acs = new AccessServer(Registration.this);
             chkinternet = new CheckInternet(Registration.this);
-            idnoE = (EditText) findViewById(R.id.idno);
+            //idnoE = (EditText) findViewById(R.id.idno);
+            ServiceNo = (EditText) findViewById(R.id.idno);
             idnoS = "";
 
            /* locatorcountyE = (EditText) findViewById(R.id.locatorcounty);
@@ -542,6 +570,8 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             art_dateE.setText("");
             phoneE.setText("");
             idnoE.setText("");
+            ServiceNo.setText("");
+
            // email_address.setText("");
             if (altphoneE.isShown()) {
                 altphoneE.setText("");
@@ -612,7 +642,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                             }, mYear, mMonth, mDay);
                     datePickerDialog.show();
                 }
-            });
+           });
         } catch (Exception e) {
 
 
@@ -644,8 +674,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
                                 }
                             }, mYear, mMonth, mDay);
-                    datePickerDialog.show();
-                }
+                    datePickerDialog.show();                }
             });
         } catch (Exception e) {
 
@@ -676,14 +705,13 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                                 public void onDateSet(DatePicker view, int year,
                                                       int monthOfYear, int dayOfMonth) {
                                     // set day of month , month and year value in the edit text
-                                    dobE.setText(dayOfMonth + "/"
+                                   dobE.setText(dayOfMonth + "/"
                                             + (monthOfYear + 1) + "/" + year);
 
                                     int mycurrentYear = Integer.parseInt(MyDates.getCurrentYear());
                                     int difference = mycurrentYear - year;
 
-                                    ageinyearsE.setText(difference + " Years");
-
+                                   ageinyearsE.setText(difference + " Years");
 
                                     /*if (difference >= 18) {
                                         idnoL.setVisibility(View.VISIBLE);
@@ -744,7 +772,6 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
         if (spin.getId() == R.id.marital_spinner) {
 
             marital_code = Integer.toString(position);
-
 
         }
         if (spin.getId() == R.id.condition_spinner) {
@@ -848,11 +875,13 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             if (patientStatus_code.contentEquals("1")) {
                 populateStatusNew();
                 cccE.setEnabled(false);
+                upnE.setEnabled(false);
                 populateMflCode();
 
 
             } else {
                 cccE.setEnabled(true);
+                upnE.setEnabled(true);
                 cccE.setText("");
                 populateStatus();
 
@@ -917,7 +946,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             GroupingS.setAdapter(customAdapter);
 
 
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
 
         }
@@ -1242,7 +1271,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             String altphoneNumber = "-1";
             String buddyphoneNumber = "-1";
             String idNumber = "-1";
-            String Service_No = idnoE.getText().toString();
+           // String Service_No = idnoE.getText().toString();
+            String Service_No = ServiceNo.getText().toString();
+
             String[] dobArray = new String[]{};
             String[] enrollmentArray = new String[]{};
             String[] artArray = new String[]{};
@@ -1505,12 +1536,12 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                     sms_code = "-1";
                     wklyMotivation_code = "-1";
                 }
-                if (idnoE.isShown() && !idnoE.getText().toString().trim().isEmpty()) {
+               /* if (idnoE.isShown() && !idnoE.getText().toString().trim().isEmpty()) {
                     idnoS = idnoE.getText().toString();
                 } else {
 
                     idnoS = "-1";
-                }
+                }*/
 
                 //*******check empty values and set them to -1***
 
@@ -1637,7 +1668,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                 //String myccnumber = cccS + newupns;
                 String myccnumber = cccS;
 
-                String sendSms = myccnumber +  "*" + Service_No+ "*"+ f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + emailS + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" +serviceID + "*" + serviceUnitID;
+                String sendSms = myccnumber +  "*" + Service_No+ "*"+ f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + emailS + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" +serviceID + "*" + serviceUnitID+ "*" + ranksID;
                     //Service_No
                 //String sendSms =  f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + emailS + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" +serviceID + "*" + serviceUnitID;
 
@@ -1820,32 +1851,22 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-    //get Facilitiews
+    //get Facilitiews main
 
     public void getFacilities(){
 
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                Config.GET_DOD_SERVICES, null, new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(Request.Method.GET,
+                Config.GET_DOD_SERVICES, null,  new Response.Listener<JSONArray>() {
 
 
             @Override
-            public void onResponse(JSONObject response) {
-//                Log.d(TAG, response.toString());
+            public void onResponse(JSONArray response) {
 
-                // progressDialog.dismiss();
+
 
                 try {
 
-                    boolean  status = response.has("success") && response.getBoolean("success");
-                    String  message = response.has("message") ? response.getString("message") : "" ;
-                    String  errors = response.has("errors") ? response.getString("errors") : "" ;
-
-
-                    if (status)
-                    {
-//                        Stash.clear(Constants.DISTRICTS_ARRAYLIST);
-//                        Stash.clear(Constants.DISTRICTS_LIST);
 
                         services = new ArrayList<Service>();
                         servicesList = new ArrayList<String>();
@@ -1853,14 +1874,20 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                         services.clear();
                         servicesList.clear();
 
-                        JSONArray jsonArray = response.getJSONArray("data");
 
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject service = (JSONObject) jsonArray.get(i);
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject service = (JSONObject) response.get(i);
+
+
 
                             int id = service.has("id") ? service.getInt("id") : 0;
-                            String name = service.has("Kenya Army") ? service.getString("Kenya Army") : "";
-                            String partner_type_id = service.has("partner_type_id") ? service.getString(null) : "" ;
+                            String name = service.has("name") ? service.getString("name") : "";
+
+
+
+                            //String org_id = service.has("service_id") ? service.getString("service_id") : "";
+
+                            /*int partner_type_id = service.has("partner_type_id") ? service.getInt("partner_type_id") : 1 ;
 
                             String phone_no = service.has("phone_no") ? service.getString(null) : "";
                             String location = service.has("location") ? service.getString("Nairobi") : "";
@@ -1868,30 +1895,24 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                             String created_by = service.has("created_by") ? service.getString(null) : "";
 
                             String updated_by = service.has("updated_by") ? service.getString(null) : "";
-                            String createdAt = service.has("createdAt") ? service.getString("2021") : "";
-                            String updatedAt = service.has("updatedAt") ? service.getString(null) : "";
-                            String deletedAt = service.has("deletedAt") ? service.getString(null) : "";
+                            String createdAt = service.has("createdAt") ? service.getString("2021-07-27T11:06:43.000Z") : "";
+                            String updatedAt = service.has("updatedAt") ? service.getString("2021-07-30T05:52:34.000Z") : "";
+                            String deletedAt = service.has("deletedAt") ? service.getString(null) : "";*/
 
 
 
-                            Service newService = new Service(id,name,partner_type_id,phone_no, location, created_by, updated_by, createdAt, updatedAt, deletedAt);
+                            //Service newService = new Service(id,name,partner_type_id,phone_no, location, created_by, updated_by, createdAt, updatedAt, deletedAt);
+                            //Service newService = new Service(id,name, org_id);
+                            Service newService = new Service(id,name);
 
                             services.add(newService);
                             servicesList.add(newService.getName());
-                        }
+                       // }
 
-                        services.add(new Service(0,"--select service--",null, "--select service--","--select service--", null, null, "2021","--select--","--select--"));
+                        //services.add(new Service(0,"--select service--",1, "--select service--","--select service--", null, null, "2021","--select--","--select--"));
+                        //services.add(new Service(0,"--select service--", "20"));
+                        services.add(new Service(0,"--select service--"));
                         servicesList.add("--select service--");
-
-
-
-//                        Stash.put(Constants.DISTRICTS_ARRAYLIST, facilities);
-//                        Stash.put(Constants.DISTRICTS_LIST, facilitiesList);
-
-                        //progressBar.setVisibility(View.VISIBLE);
-
-
-
 
                         ArrayAdapter<String> aa=new ArrayAdapter<String>(Registration.this,
                                 android.R.layout.simple_spinner_dropdown_item,
@@ -1903,12 +1924,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                             }
                         };
 
-                        //progressBar.setVisibility(View.GONE);
-                        //progressDialog.dismiss();
-
                         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                        if (ServiceSpinner != null){
+                       // if (ServiceSpinner != null){
                             ServiceSpinner.setAdapter(aa);
                             ServiceSpinner.setSelection(aa.getCount()-1);
 
@@ -1918,20 +1936,28 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
-                                    serviceUnitSpinner.setAdapter(null);
+
+                                  // serviceUnitSpinner.setAdapter(null);
 
                                     serviceID = services.get(position).getId();
+                                    //getDepartments(services.get(position).getService_id());
 
-//                                Toast.makeText(context,facilityID+"", Toast.LENGTH_LONG).show();
-
+//
                                     if (serviceID !=0)
-
                                         Toast.makeText(Registration.this, "get departments", Toast.LENGTH_LONG).show();
-                                    getDepartments(serviceID);
+                                    try {
+                                        getDepartments(serviceID);
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                    //getDepartments(serviceID);
+                                    //getDepartments(serviceID);
+
                                 }
 
                                 @Override
                                 public void onNothingSelected(AdapterView<?> adapterView) {
+
 
                                 }
                             });
@@ -1939,15 +1965,11 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                         }
 
 
-                    } else {
-                        // InfoMessage bottomSheetFragment = InfoMessage.newInstance(message,errors, context);
-                        //bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
-                    }
+                    //}
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-
-                    //  Snackbar.make(root.findViewById(R.id.fragment_create_profile), e.getMessage(), Snackbar.LENGTH_LONG).show();
+                    Toast.makeText(Registration.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -1955,13 +1977,22 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                // progressDialog.dismiss();
+                if (error instanceof TimeoutError) {
+                    Toast.makeText(Registration.this,"Request Time-Out", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof NoConnectionError) {
+                    Toast.makeText(Registration.this,"No Connection Found", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ServerError) {
+                    Toast.makeText(Registration.this,"Server Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof NetworkError) {
+                    Toast.makeText(Registration.this,"Network Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    Toast.makeText(Registration.this,"Parse Error", Toast.LENGTH_SHORT).show();
+                }
 
-                //VolleyLog.e(TAG, "Error: " + error.getMessage());
-                // Snackbar snackbar = Snackbar.make(root.findViewById(R.id.fragment_create_profile), VolleyErrors.getVolleyErrorMessages(error, getContext()), Snackbar.LENGTH_LONG);
 
-                Toast.makeText(Registration.this, "cant fetch", Toast.LENGTH_LONG).show();
 
+                Toast.makeText(Registration.this, " cant get services", Toast.LENGTH_LONG).show();
+                error.printStackTrace();
             }
         }
         )
@@ -1982,147 +2013,131 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                 };
 
 
-                jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+               jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                         0,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 //AppController.getInstance().addToRequestQueue(jsonObjReq);
-                rq.add(jsonObjReq);
+                rq.add(jsonArrayRequest);
 
             }
 
 
-            public void getDepartments(int id) {
-                JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                        Config.GET_DOD_UNITS + id, null, new Response.Listener<JSONObject>() {
+            public void getDepartments(int serviceID) {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-//                Log.d(TAG, response.toString());
+        JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, Config.GET_DOD_UNITS+serviceID,
+                null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
 
-                        try {
+                //Toast.makeText(Registration.this, "response", Toast.LENGTH_LONG).show();
 
-                            boolean status = response.has("success") && response.getBoolean("success");
-                            String message = response.has("message") ? response.getString("message") : "";
-                            String errors = response.has("errors") ? response.getString("errors") : "";
+                try {
 
+                    serviceUnits = new ArrayList<Unit>();
+                    serviceUnitsList = new ArrayList<String>();
 
-                            if (status) {
-//                        Stash.clear(Constants.DISTRICTS_ARRAYLIST);
-//                        Stash.clear(Constants.DISTRICTS_LIST);
-
-                                serviceUnits = new ArrayList<ServicesUnit>();
-                                serviceUnitsList = new ArrayList<String>();
-
-                                serviceUnits.clear();
-                                serviceUnitsList.clear();
-
-                                JSONArray jsonArray = response.getJSONArray("data");
-
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject serviceUnit = (JSONObject) jsonArray.get(i);
-
-                                    int id = serviceUnit.has("id") ? serviceUnit.getInt("id") : 0;
-                                    int service_id = serviceUnit.has("service_id") ? serviceUnit.getInt("service_id") : 0;
-                                    String unit_name = serviceUnit.has("unit_name") ? serviceUnit.getString("unit_name") : "";
+                    serviceUnits.clear();
+                    serviceUnitsList.clear();
 
 
-                                    ServicesUnit newServiceUnit = new ServicesUnit(id, service_id, unit_name);
+                    //JSONArray jsonArray = response.getJSONArray("data");
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject serviceUnit = (JSONObject) response.get(i);
 
-                                    serviceUnits.add(newServiceUnit);
-                                    serviceUnitsList.add(newServiceUnit.getUnit_name());
-                                }
-
-                                serviceUnits.add(new ServicesUnit(0, 0, "--select unit--"));
-                                serviceUnitsList.add("--select unit--");
+                        int id = serviceUnit.has("id") ? serviceUnit.getInt("id") : 0;
+                        int service_id = serviceUnit.has("service_id") ? serviceUnit.getInt("service_id") : 0;
+                        String unit_name = serviceUnit.has("unit_name") ? serviceUnit.getString("unit_name") : "";
 
 
-//                        Stash.put(Constants.DISTRICTS_ARRAYLIST, facilities);
-//                        Stash.put(Constants.DISTRICTS_LIST, facilitiesList);
 
-                                ArrayAdapter<String> aa = new ArrayAdapter<String>(Registration.this,
-                                        android.R.layout.simple_spinner_dropdown_item,
-                                        serviceUnitsList) {
-                                    @Override
-                                    public int getCount() {
-                                        return super.getCount(); // you dont display last item. It is used as hint.
-                                    }
-                                };
 
-                                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        Unit newServiceUnit = new Unit(id, service_id, unit_name);
 
-                                serviceUnitSpinner.setAdapter(aa);
-                                serviceUnitSpinner.setSelection(aa.getCount() - 1);
+                        serviceUnits.add(newServiceUnit);
+                        serviceUnitsList.add(newServiceUnit.getUnit_name());
+                    }
 
-                                serviceUnitID = serviceUnits.get(aa.getCount() - 1).getId();
+                    serviceUnits.add(new Unit( 0, 0,"--select unit--" ));
+                    serviceUnitsList.add("--select unit--");
 
-                                serviceUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                    @Override
-                                    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                    ArrayAdapter<String> aa = new ArrayAdapter<String>(Registration.this,
+                            android.R.layout.simple_spinner_dropdown_item,
+                            serviceUnitsList) {
+                        @Override
+                        public int getCount() {
+                            return super.getCount(); // you dont display last item. It is used as hint.
+                        }
+                    };
 
-                                        serviceUnitID = serviceUnits.get(position).getId();
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    serviceUnitSpinner.setAdapter(aa);
+                    serviceUnitSpinner.setSelection(aa.getCount() - 1);
+
+                    serviceUnitID = serviceUnits.get(aa.getCount() - 1).getId();
+
+                    serviceUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        //@Overide
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                           // Toast.makeText(Registration.this, "null selected", Toast.LENGTH_LONG).show();
+                            serviceUnitID = serviceUnits.get(position).getId();
+
+
 
 //                                Toast.makeText(context,facilityDepartments.get(position).getDepartment_name(), Toast.LENGTH_LONG).show();
-                                    }
-
-                                    @Override
-                                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                                    }
-                                });
-
-
-                            } else {
-                                //InfoMessage bottomSheetFragment = InfoMessage.newInstance(message,errors, context);
-                                //bottomSheetFragment.show(getChildFragmentManager(), bottomSheetFragment.getTag());
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-
-                            // Snackbar.make(root.findViewById(R.id.fragment_create_profile), e.getMessage(), Snackbar.LENGTH_LONG).show();
                         }
 
-                    }
-                },
-                        new Response.ErrorListener() {
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
 
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                                //VolleyLog.e(TAG, "Error: " + error.getMessage());
-                                //Snackbar snackbar = Snackbar.make(root.findViewById(R.id.fragment_create_profile), VolleyErrors.getVolleyErrorMessages(error, getContext()), Snackbar.LENGTH_LONG);
-                                // snackbar.setAction("Ok", new View.OnClickListener() {
-                           /* @Override
-                            public void onClick(View view) {
-                                snackbar.dismiss();
-                            }
-                        }).show();*/
+                        }
+                    });
 
 
-                            }
-                        }) {
 
-                    /**
-                     * Passing some request headers
-                     */
-                    @Override
-                    public Map<String, String> getHeaders() {
-                        HashMap<String, String> headers = new HashMap<String, String>();
-                        //headers.put("Authorization", loggedInUser.getToken_type()+" "+loggedInUser.getAccess_token());
-                        headers.put("Content-Type", "application/json");
-                        headers.put("Accept", "application/json");
-                        return headers;
-                    }
-                };
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+               // Toast.makeText(Registration.this, "cant get", Toast.LENGTH_LONG).show();
 
 
-                jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(
+               /* if (error instanceof NetworkError) {
+                    Toast.makeText(Registration.this,"Network Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    Toast.makeText(Registration.this,"Parse Error", Toast.LENGTH_SHORT).show();
+                }
+                else if (error instanceof ServerError) {
+                    Toast.makeText(Registration.this,"Server Error", Toast.LENGTH_SHORT).show();
+                    error.printStackTrace();
+                }*/
+                error.printStackTrace();
+            }
+        }
+        ){
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //headers.put("Authorization", loggedInUser.getToken_type()+" "+loggedInUser.getAccess_token());
+
+                headers.put("Content-Type", "application/json");
+                headers.put("Accept", "application/json");
+                return headers;
+            }
+        };
+                jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                         0,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-               // AppController.getInstance().addToRequestQueue(jsonObjReq);
-                rq.add(jsonObjReq);
+                //AppController.getInstance().addToRequestQueue(jsonObjReq);
+                rq.add(jsonArrayRequest);
 
             }
 
@@ -2130,6 +2145,98 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             //END FACILITIES
 
 
+public  void getRanks(){
+
+    JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
+            Config.GET_DOD_RANKS, null, new Response.Listener<JSONArray>() {
+        @Override
+        public void onResponse(JSONArray response) {
+
+            try {
+               ranks = new ArrayList<Ranks>();
+                RankList= new ArrayList<String>();
+
+                ranks.clear();
+                RankList.clear();
+
+                for (int i = 0; i < response.length(); i++) {
+                    JSONObject jsonObject = (JSONObject) response.get(i);
+
+                    int id = jsonObject.has("id") ? jsonObject.getInt("id") : 0;
+                    String name = jsonObject.has("rank_name") ? jsonObject.getString("rank_name") : "";
+
+
+                   Ranks rank = new Ranks(id,name);
+
+                    ranks.add(rank);
+                    RankList.add(rank.getRank_name());
+                }
+
+                ranks.add(new Ranks(0,"--select your rank--"));
+                RankList.add("--select rank--");
+
+                ArrayAdapter<String> aa=new ArrayAdapter<String>(Registration.this,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        RankList){
+                    @Override
+                    public int getCount() {
+                        return super.getCount(); // you dont display last item. It is used as hint.
+                    }
+                };
+
+                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+               rankSpin.setAdapter(aa);
+               rankSpin.setSelection(aa.getCount()-1);
+
+               ranksID = ranks.get(aa.getCount()-1).getId();
+
+                rankSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ranksID= ranks.get(position).getId();
+                        //getSubCountiesP(counties.get(position).getOrganisationunitid());
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+
+            }catch(JSONException e){
+                e.printStackTrace();
+
+            }
+
+
+
+
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            error.printStackTrace();
+            //Toast.makeText(Registration.this, " cant get ranks", Toast.LENGTH_LONG).show();
+
+        }
+    }){
+        public Map<String, String> getHeaders() {
+            HashMap<String, String> headers = new HashMap<String, String>();
+             headers.put("Content-Type", "application/json");
+            headers.put("Accept", "application/json");
+            return headers;
+        }
+    };
+
+
+   jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+            0,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+    rq.add(jsonArrayRequest);
 
 
 
@@ -2137,3 +2244,11 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
 
 }
+
+}
+
+
+
+
+
+

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
 
-    <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">ushaurinew.mhealthkenya.co.ke</domain>
+    <domain-config cleartextTrafficPermitted="true">
+       <!-- <domain includeSubdomains="true">ushaurinew.mhealthkenya.co.ke</domain>
         <domain includeSubdomains="true">ushaurinode.mhealthkenya.co.ke</domain>
-        <domain includeSubdomains="true">ushauri-dod.mhealthkenya.co.ke</domain>
+        <domain includeSubdomains="true">ushauri-dod.mhealthkenya.co.ke</domain>-->
+        <domain includeSubdomains="true">ushauri-api.mod.go.ke</domain>
 
        <!-- <trust-anchors>
             <certificates src="@raw/ushaurinew"/>

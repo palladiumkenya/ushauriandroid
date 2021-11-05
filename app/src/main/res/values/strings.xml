@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ushauri</string>
+    <string name="app_name">Ushauri DOD</string>
     <string name="something_went_wrong">Something went wrong</string>
 
     <string name="generic_server_down">Cannot Reach Server Using Device</string>

@@ -245,7 +245,8 @@ public class LoginActivity extends Activity {
                         List<Registrationtable> myl=Registrationtable.findWithQuery(Registrationtable.class,"select * from Registrationtable where username=? and password=?",usernameV,PasswordV);
                         if(myl.size()==1){
                             for(int x=0;x<myl.size();x++){
-                                myaff=myl.get(x).getAffiliation();
+                                //myaff=myl.get(x).getAffiliation();
+                                //myaff=myl.get(x);
                                 Myaffiliation.deleteAll(Myaffiliation.class);
                                 Myaffiliation mya=new Myaffiliation(myaff);
                                 mya.save();
