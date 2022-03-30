@@ -93,21 +93,21 @@ public class ClinicMovement extends AppCompatActivity implements AdapterView.OnI
     public void validate(){
 
         try{
-            String userMfl=transmflE.getText().toString();
+           // String userMfl=transmflE.getText().toString();
             String userUpn=transupnE.getText().toString();
-            if(userMfl.trim().isEmpty()){
+            /*if(userMfl.trim().isEmpty()){
 
                 Toast.makeText(this, "mfl is required", Toast.LENGTH_SHORT).show();
-            }
-            else if(userUpn.trim().isEmpty()){
+            }*/
+             if(userUpn.trim().isEmpty()){
 
-                Toast.makeText(this, "CCC No is required", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "KDOD No is required", Toast.LENGTH_SHORT).show();
             }
-            else if(userMfl.length()!=5){
+            /*else if(userMfl.length()!=5){
 
                 Toast.makeText(this, "provide a valid mfl number", Toast.LENGTH_SHORT).show();
 
-            }
+            }*/
             else if(selectedClinic.contentEquals("0")){
 
                 Toast.makeText(this, "select clinic", Toast.LENGTH_SHORT).show();
@@ -115,7 +115,8 @@ public class ClinicMovement extends AppCompatActivity implements AdapterView.OnI
             else{
 
                 String newval=AppendFunction.AppendUniqueIdentifier(userUpn);
-                String patientCC=userMfl+newval;
+                //String patientCC=userMfl+newval;
+                 String patientCC=newval;
 
                 String messToSend="MOVECLINIC*"+ Base64Encoder.encryptString(patientCC+"*"+ selectedClinic);
 
