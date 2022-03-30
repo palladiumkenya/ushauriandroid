@@ -77,5 +77,23 @@
             android:gravity="center"
             android:text="No account yet? Create one"
             android:textSize="16dip" />
+
+        <TextView
+
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text="Version 1.0"
+            android:textSize="16dip" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/logodod" />
+
     </LinearLayout>
 </ScrollView>
