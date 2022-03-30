@@ -132,14 +132,14 @@ public class ClientTransfer extends AppCompatActivity{
             String cccS=cccE.getText().toString();
             String upnS=upnE.getText().toString();
 
-            if(cccS.trim().isEmpty()){
+           /* if(cccS.trim().isEmpty()){
 
                 cccE.setError("ccc number required");
 
-            }
-            else if(upnS.trim().isEmpty()){
+            }*/
+             if(upnS.trim().isEmpty()){
 
-                upnE.setError("CCC No is required");
+                upnE.setError("KDOD No is required");
 
             }
 
@@ -147,7 +147,9 @@ public class ClientTransfer extends AppCompatActivity{
 
 
                     String newupns= AppendFunction.AppendUniqueIdentifier(upnS);
-                    String clientCcc=cccS+newupns;
+                    //String clientCcc=cccS+newupns;
+                      String clientCcc=newupns;
+
                     String sendSms=clientCcc;
                     String encrypted = Base64Encoder.encryptString(sendSms);
 
