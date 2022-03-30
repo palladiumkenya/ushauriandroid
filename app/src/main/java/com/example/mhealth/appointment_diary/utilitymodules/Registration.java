@@ -790,13 +790,13 @@ public static final String TAG ="Registration";
             if (patientStatus_code.contentEquals("1")) {
                 populateStatusNew();
                 cccE.setEnabled(false);
-                upnE.setEnabled(false);
+                //upnE.setEnabled(false);
                 populateMflCode();
 
 
             } else {
                 cccE.setEnabled(true);
-                upnE.setEnabled(true);
+                //upnE.setEnabled(true);
                 cccE.setText("");
                 populateStatus();
 
