@@ -85,8 +85,8 @@ import static com.example.mhealth.appointment_diary.StringSplitter.SplitString.s
  */
 
 public class TodaysAppointment extends AppCompatActivity {
-    Button btnRegister, btnReport, bookedappointments, broadcast, transfer, consent,transitCl,moveClinic, todayapp;
-    CardView card_register, card_book, card_consent, card_dsd, card_transfer, card_transit, card_clinic, card_today;
+    Button btnRegister, btnReport, bookedappointments, broadcast, transfer, consent,transitCl,moveClinic, todayapp, btnRequest;
+    CardView card_register, card_book, card_consent, card_dsd, card_transfer, card_transit, card_clinic, card_today, Card_KDOD;
     Button missed,honored;
     String passedUname,passedPassword;
 
