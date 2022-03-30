@@ -1884,7 +1884,7 @@ public static final String TAG ="Registration";
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (error instanceof TimeoutError) {
+                /*if (error instanceof TimeoutError) {
                     Toast.makeText(Registration.this,"Request Time-Out", Toast.LENGTH_SHORT).show();
                 } else if (error instanceof NoConnectionError) {
                     Toast.makeText(Registration.this,"No Connection Found", Toast.LENGTH_SHORT).show();
@@ -1894,7 +1894,7 @@ public static final String TAG ="Registration";
                     Toast.makeText(Registration.this,"Network Error", Toast.LENGTH_SHORT).show();
                 } else if (error instanceof ParseError) {
                     Toast.makeText(Registration.this,"Parse Error", Toast.LENGTH_SHORT).show();
-                }
+                }*/
 
 
 
