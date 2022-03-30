@@ -337,7 +337,7 @@ public class PmtctRegistrationFragment extends Fragment {
         }
 
         if (TextUtils.isEmpty(ccc_no.getText().toString())) {
-            ccc_no.setError(getString(R.string.ccc_required));
+            ccc_no.setError(getString(R.string.KDO_required));
             valid = false;
             return valid;
         }
