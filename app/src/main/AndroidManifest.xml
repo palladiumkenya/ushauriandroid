@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".privecy"></activity>
+       <activity android:name=".privecy" />
         <activity
             android:name=".PmtctActivity"
             android:label="PMTCT"
@@ -69,7 +69,8 @@
         </receiver> <!-- end sms retriever details here -->
         <activity
             android:name=".loginmodule.LoginActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
