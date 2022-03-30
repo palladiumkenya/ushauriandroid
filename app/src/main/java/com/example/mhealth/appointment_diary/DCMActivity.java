@@ -297,10 +297,12 @@ public class DCMActivity extends AppCompatActivity {
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(mfl_code.getText().toString())){
+                /*if (TextUtils.isEmpty(mfl_code.getText().toString())){
                     mfl_code.setError("Please enter MFL code");
-                }else if (TextUtils.isEmpty(ccc_no.getText().toString())){
-                    ccc_no.setError("Please enter CCC Number");
+                }*/
+                 if (TextUtils.isEmpty(ccc_no.getText().toString())){
+
+                    ccc_no.setError("Please enter KDOD Number");
                 }else {
                     wellness_level_layout.setVisibility(View.GONE);
                     stability_layout.setVisibility(View.GONE);
@@ -394,14 +396,14 @@ public class DCMActivity extends AppCompatActivity {
     private boolean validateWellAdvanced() {
         boolean valid = true;
 
-        if (TextUtils.isEmpty(mfl_code.getText().toString())) {
+        /*if (TextUtils.isEmpty(mfl_code.getText().toString())) {
             mfl_code.setError(getString(R.string.mfl_code_required));
             valid = false;
             return valid;
-        }
+        }*/
 
         if (TextUtils.isEmpty(ccc_no.getText().toString())) {
-            ccc_no.setError(getString(R.string.ccc_required));
+            ccc_no.setError(getString(R.string.KDO_required));
             valid = false;
             return valid;
         }
@@ -442,14 +444,14 @@ public class DCMActivity extends AppCompatActivity {
     private boolean validateOnDcm() {
         boolean valid = true;
 
-        if (TextUtils.isEmpty(mfl_code.getText().toString())) {
+        /*if (TextUtils.isEmpty(mfl_code.getText().toString())) {
             mfl_code.setError(getString(R.string.mfl_code_required));
             valid = false;
             return valid;
-        }
+        }*/
 
         if (TextUtils.isEmpty(ccc_no.getText().toString())) {
-            ccc_no.setError(getString(R.string.ccc_required));
+            ccc_no.setError(getString(R.string.KDO_required));
             valid = false;
             return valid;
         }
@@ -515,7 +517,7 @@ public class DCMActivity extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(ccc_no.getText().toString())) {
-            ccc_no.setError(getString(R.string.ccc_required));
+            ccc_no.setError(getString(R.string.KDO_required));
             valid = false;
             return valid;
         }
@@ -573,7 +575,7 @@ public class DCMActivity extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(ccc_no.getText().toString())) {
-            ccc_no.setError(getString(R.string.ccc_required));
+            ccc_no.setError(getString(R.string.KDO_required));
             valid = false;
             return valid;
         }

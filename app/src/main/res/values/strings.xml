@@ -31,7 +31,7 @@
     <string name="error_504">Gateway Timeout</string>
     <string name="error_505">HTTP Version Not Supported</string>
     <string name="mfl_code_required">MFL code is required</string>
-    <string name="ccc_required">CCC no. is required</string>
+    <string name="KDO_required">KDOD no. is required</string>
     <string name="apt_date_req">Appointment date is required</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="first_name">First Name</string>
