@@ -101,12 +101,15 @@ public class TransitClient extends AppCompatActivity implements AdapterView.OnIt
             String useridno = idnoE.getText().toString();
             String drugpickedS = drugpicked.getText().toString();
             String drugdurationS =drugduration.getText().toString();
-            if (userMfl.trim().isEmpty()) {
+
+            /*if (userMfl.trim().isEmpty()) {
 
                 Toast.makeText(this, "mfl is required", Toast.LENGTH_SHORT).show();
-            } else if (userUpn.trim().isEmpty()) {
+            }*/
+              if (userUpn.trim().isEmpty()) {
 
-                Toast.makeText(this, "CCC No is required", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(this, "KDOD No is required", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -124,11 +127,12 @@ public class TransitClient extends AppCompatActivity implements AdapterView.OnIt
 //
 //                Toast.makeText(this, "ID number is required", Toast.LENGTH_SHORT).show();
 //            }
-            else if (userMfl.length() != 5) {
+            /*else if (userMfl.length() != 5) {
 
                 Toast.makeText(this, "provide a valid mfl number", Toast.LENGTH_SHORT).show();
 
-            } else if (selectedApptype.contentEquals("0")) {
+            }*/
+            else if (selectedApptype.contentEquals("0")) {
 
                 Toast.makeText(this, "select appointment type", Toast.LENGTH_SHORT).show();
             }
