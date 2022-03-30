@@ -33,7 +33,7 @@ public class Config {
 
 
       //public static final String GET_DOD_UNITS = "https://ushauri-dod.mhealthkenya.co.ke/clients/unit";
-      public static final String GET_DOD_UNITS = "https://ushauri-api.mod.go.ke/clients/unit";
+      public static final String GET_DOD_UNITS = "https://ushauri-api.mod.go.ke/clients/unit/";
 
 
 

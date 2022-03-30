@@ -242,87 +242,7 @@ public static final String TAG ="Registration";
 
     }
 
-    private void getServicesUnits() {
-        servicesArray = new ArrayList<>();
-        servicesArray.add("Select Service");
-        servicesArray.add("Kenya Army");
-        servicesArray.add("Kenya Air Force");
-        servicesArray.add("Kenya Navy");
 
-        AA =new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item,servicesArray);
-
-        serviceSpin.setAdapter(AA);
-
-        //ArmyList
-        ArmyList = new ArrayList<>();
-
-        ArmyList.add("THIKA GARISSON");
-        ArmyList.add("EMBAKASI");
-
-
-        //AirwaysList
-        AirwaysList = new ArrayList<>();
-        AirwaysList.add("MAB");
-        AirwaysList.add("LAB");
-
-
-        //NavyList
-        NavyList = new ArrayList<>();
-        NavyList.add("MANDA REFILL CENTER");
-        NavyList.add("KENYA NAVY HOSPITAL");
-        NavyList.add("MUTONGWE MILITARY OUTREACH CLINIC");
-
-
-        serviceSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                //get value
-
-               // int getid = parent.getSelectedItemPosition();   ///get the selected element place id
-               // textView1.setText("Position of selected element: "+String.valueOf(getid));
-               // String getvalue = String.valueOf(parent.getItemAtPosition(position));   // getting the selected element value
-               // textView2.setText("Value of Selected Spinner : "+getvalue);
-                serviceValue = String.valueOf(parent.getItemAtPosition(position));
-                serviceID = parent.getSelectedItemPosition();
-
-                if (position==1){
-                    AAList = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, ArmyList);
-                }
-
-                if (position==2){
-                    AAList = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, AirwaysList);
-                }
-
-                if (position==3){
-                    AAList = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, NavyList);
-                }
-                unitSpin.setAdapter(AAList);
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        unitSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                unitValue = String.valueOf(parent.getItemAtPosition(position));
-
-                serviceUnitID = parent.getSelectedItemPosition();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-    }
 
     private void populateMflCode() {
 
@@ -474,11 +394,6 @@ public static final String TAG ="Registration";
             ServiceNo = (EditText) findViewById(R.id.idno);
             idnoS = "";
 
-           /* locatorcountyE = (EditText) findViewById(R.id.locatorcounty);
-            locatorsubcountyE = (EditText) findViewById(R.id.locatorsubcounty);
-            locatorlocationE = (EditText) findViewById(R.id.locatorlocation);
-            locatorwardE = (EditText) findViewById(R.id.locatorward);
-            locatorvillageE = (EditText) findViewById(R.id.locatorvillage);*/
 
             email_address = (EditText) findViewById(R.id.Email);
             altphoneE = (EditText) findViewById(R.id.altphone);
@@ -1248,15 +1163,6 @@ public static final String TAG ="Registration";
 
         try {
 
-
-            //start set locator information variables
-
-//            locatorsubcountyS,locatorlocationS,locatorwardS,locatorvillageS
-
-
-
-            //end set locator information variables
-
             String cccS = cccE.getText().toString();
             //String fileserialS = fileserialE.getText().toString();
             String upnS = upnE.getText().toString();
@@ -1855,7 +1761,6 @@ public static final String TAG ="Registration";
 
     public void getFacilities(){
 
-
         JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(Request.Method.GET,
                 Config.GET_DOD_SERVICES, null,  new Response.Listener<JSONArray>() {
 
@@ -1868,24 +1773,24 @@ public static final String TAG ="Registration";
                 try {
 
 
-                        services = new ArrayList<Service>();
-                        servicesList = new ArrayList<String>();
+                    services = new ArrayList<Service>();
+                    servicesList = new ArrayList<String>();
 
-                        services.clear();
-                        servicesList.clear();
-
-
-                        for (int i = 0; i < response.length(); i++) {
-                            JSONObject service = (JSONObject) response.get(i);
+                    services.clear();
+                    servicesList.clear();
 
 
-
-                            int id = service.has("id") ? service.getInt("id") : 0;
-                            String name = service.has("name") ? service.getString("name") : "";
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject service = (JSONObject) response.get(i);
 
 
 
-                            //String org_id = service.has("service_id") ? service.getString("service_id") : "";
+                        int id = service.has("id") ? service.getInt("id") : 0;
+                        String name = service.has("name") ? service.getString("name") : "";
+
+
+
+                        //String org_id = service.has("service_id") ? service.getString("service_id") : "";
 
                             /*int partner_type_id = service.has("partner_type_id") ? service.getInt("partner_type_id") : 1 ;
 
@@ -1901,18 +1806,20 @@ public static final String TAG ="Registration";
 
 
 
-                            //Service newService = new Service(id,name,partner_type_id,phone_no, location, created_by, updated_by, createdAt, updatedAt, deletedAt);
-                            //Service newService = new Service(id,name, org_id);
-                            Service newService = new Service(id,name);
+                        //Service newService = new Service(id,name,partner_type_id,phone_no, location, created_by, updated_by, createdAt, updatedAt, deletedAt);
+                        //Service newService = new Service(id,name, org_id);
+                        Service newService = new Service(id,name);
 
-                            services.add(newService);
-                            servicesList.add(newService.getName());
-                       // }
+                        services.add(newService);
+                        servicesList.add(newService.getName());
+                        // }
 
                         //services.add(new Service(0,"--select service--",1, "--select service--","--select service--", null, null, "2021","--select--","--select--"));
                         //services.add(new Service(0,"--select service--", "20"));
-                        services.add(new Service(0,"--select service--"));
-                        servicesList.add("--select service--");
+                        // services.add(new Service(0,"--select service--"));
+                        // services.add(new Service(0,""));
+                        // servicesList.add("--select service--");
+                        //servicesList.add("");
 
                         ArrayAdapter<String> aa=new ArrayAdapter<String>(Registration.this,
                                 android.R.layout.simple_spinner_dropdown_item,
@@ -1926,43 +1833,43 @@ public static final String TAG ="Registration";
 
                         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                       // if (ServiceSpinner != null){
-                            ServiceSpinner.setAdapter(aa);
-                            ServiceSpinner.setSelection(aa.getCount()-1);
+                        // if (ServiceSpinner != null){
+                        ServiceSpinner.setAdapter(aa);
+                        ServiceSpinner.setSelection(aa.getCount()-1);
 
-                            serviceID = services.get(aa.getCount()-1).getId();
+                        serviceID = services.get(aa.getCount()-1).getId();
 
-                            ServiceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                @Override
-                                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                        ServiceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
 
-                                  // serviceUnitSpinner.setAdapter(null);
+                                // serviceUnitSpinner.setAdapter(null);
 
-                                    serviceID = services.get(position).getId();
-                                    //getDepartments(services.get(position).getService_id());
+                                serviceID = services.get(position).getId();
+                                //getDepartments(services.get(position).getService_id());
 
 //
-                                    if (serviceID !=0)
-                                        Toast.makeText(Registration.this, "get departments", Toast.LENGTH_LONG).show();
-                                    try {
-                                        getDepartments(serviceID);
-                                    }catch (Exception e){
-                                        e.printStackTrace();
-                                    }
-                                    //getDepartments(serviceID);
-                                    //getDepartments(serviceID);
-
+                                   /* if (serviceID !=0)
+                                        Toast.makeText(Registration.this, "getting units", Toast.LENGTH_LONG).show();*/
+                                try {
+                                    getDepartments(serviceID);
+                                }catch (Exception e){
+                                    e.printStackTrace();
                                 }
 
-                                @Override
-                                public void onNothingSelected(AdapterView<?> adapterView) {
+                                //getDepartments(serviceID);
+
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
 
 
-                                }
-                            });
+                            }
+                        });
 
-                        }
+                    }
 
 
                     //}
@@ -1991,17 +1898,18 @@ public static final String TAG ="Registration";
 
 
 
-                Toast.makeText(Registration.this, " cant get services", Toast.LENGTH_LONG).show();
+                // Toast.makeText(Registration.this, " cant get services", Toast.LENGTH_LONG).show();
                 error.printStackTrace();
+                getFacilities();
             }
         }
         )
 
-                {
+        {
 
-                    /**
-                     * Passing some request headers
-                     */
+            /**
+             * Passing some request headers
+             */
             public Map<String, String> getHeaders() {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 //headers.put("Authorization", loggedInUser.getToken_type()+" "+loggedInUser.getAccess_token());
@@ -2010,134 +1918,137 @@ public static final String TAG ="Registration";
                 return headers;
             }
 
-                };
+        };
 
 
-               jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
-                        0,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                //AppController.getInstance().addToRequestQueue(jsonObjReq);
-                rq.add(jsonArrayRequest);
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //AppController.getInstance().addToRequestQueue(jsonObjReq);
+        rq.add(jsonArrayRequest);
+
 
             }
 
 
-            public void getDepartments(int serviceID) {
+            public void getDepartments(int ID) {
 
-        JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, Config.GET_DOD_UNITS+serviceID,
-                null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
+                JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, Config.GET_DOD_UNITS+ID,
+                        null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
 
-                //Toast.makeText(Registration.this, "response", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Registration.this, "response", Toast.LENGTH_LONG).show();
 
-                try {
+                        try {
 
-                    serviceUnits = new ArrayList<Unit>();
-                    serviceUnitsList = new ArrayList<String>();
+                            serviceUnits = new ArrayList<Unit>();
+                            serviceUnitsList = new ArrayList<String>();
 
-                    serviceUnits.clear();
-                    serviceUnitsList.clear();
-
-
-                    //JSONArray jsonArray = response.getJSONArray("data");
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject serviceUnit = (JSONObject) response.get(i);
-
-                        int id = serviceUnit.has("id") ? serviceUnit.getInt("id") : 0;
-                        int service_id = serviceUnit.has("service_id") ? serviceUnit.getInt("service_id") : 0;
-                        String unit_name = serviceUnit.has("unit_name") ? serviceUnit.getString("unit_name") : "";
+                            serviceUnits.clear();
+                            serviceUnitsList.clear();
 
 
+                            //JSONArray jsonArray = response.getJSONArray("data");
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject serviceUnit = (JSONObject) response.get(i);
+
+                                int id = serviceUnit.has("id") ? serviceUnit.getInt("id") : 0;
+                                int service_id = serviceUnit.has("service_id") ? serviceUnit.getInt("service_id") : 0;
+                                String unit_name = serviceUnit.has("unit_name") ? serviceUnit.getString("unit_name") : "";
 
 
-                        Unit newServiceUnit = new Unit(id, service_id, unit_name);
 
-                        serviceUnits.add(newServiceUnit);
-                        serviceUnitsList.add(newServiceUnit.getUnit_name());
-                    }
 
-                    serviceUnits.add(new Unit( 0, 0,"--select unit--" ));
-                    serviceUnitsList.add("--select unit--");
+                                Unit newServiceUnit = new Unit(id, service_id, unit_name);
 
-                    ArrayAdapter<String> aa = new ArrayAdapter<String>(Registration.this,
-                            android.R.layout.simple_spinner_dropdown_item,
-                            serviceUnitsList) {
-                        @Override
-                        public int getCount() {
-                            return super.getCount(); // you dont display last item. It is used as hint.
-                        }
-                    };
+                                serviceUnits.add(newServiceUnit);
+                                serviceUnitsList.add(newServiceUnit.getUnit_name());
+                            }
 
-                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            serviceUnits.add(new Unit( 0, 0,"--select unit--" ));
+                            serviceUnitsList.add("--select unit--");
 
-                    serviceUnitSpinner.setAdapter(aa);
-                    serviceUnitSpinner.setSelection(aa.getCount() - 1);
+                            ArrayAdapter<String> aa = new ArrayAdapter<String>(Registration.this,
+                                    android.R.layout.simple_spinner_dropdown_item,
+                                    serviceUnitsList) {
+                                @Override
+                                public int getCount() {
+                                    return super.getCount(); // you dont display last item. It is used as hint.
+                                }
+                            };
 
-                    serviceUnitID = serviceUnits.get(aa.getCount() - 1).getId();
+                            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                    serviceUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        //@Overide
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                            serviceUnitSpinner.setAdapter(aa);
+                            serviceUnitSpinner.setSelection(aa.getCount() - 1);
 
-                           // Toast.makeText(Registration.this, "null selected", Toast.LENGTH_LONG).show();
-                            serviceUnitID = serviceUnits.get(position).getId();
+                            serviceUnitID = serviceUnits.get(aa.getCount() - 1).getId();
+
+                            serviceUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                //@Overide
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                                    // Toast.makeText(Registration.this, "null selected", Toast.LENGTH_LONG).show();
+                                    serviceUnitID = serviceUnits.get(position).getId();
 
 
 
 //                                Toast.makeText(context,facilityDepartments.get(position).getDepartment_name(), Toast.LENGTH_LONG).show();
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                }
+                            });
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+
                         }
 
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //Toast.makeText(Registration.this, "cant get", Toast.LENGTH_LONG).show();
 
+
+                        if (error instanceof NetworkError) {
+                            Toast.makeText(Registration.this,"Network Error", Toast.LENGTH_SHORT).show();
+                        } else if (error instanceof ParseError) {
+                            Toast.makeText(Registration.this,"Parse Error", Toast.LENGTH_SHORT).show();
                         }
-                    });
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-
+                        else if (error instanceof ServerError) {
+                            Toast.makeText(Registration.this,"Server Error", Toast.LENGTH_SHORT).show();
+                            error.printStackTrace();
+                        }
+                        error.printStackTrace();
+                        getDepartments(serviceID);
+                    }
                 }
+                ){
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        //headers.put("Authorization", loggedInUser.getToken_type()+" "+loggedInUser.getAccess_token());
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-               // Toast.makeText(Registration.this, "cant get", Toast.LENGTH_LONG).show();
-
-
-               /* if (error instanceof NetworkError) {
-                    Toast.makeText(Registration.this,"Network Error", Toast.LENGTH_SHORT).show();
-                } else if (error instanceof ParseError) {
-                    Toast.makeText(Registration.this,"Parse Error", Toast.LENGTH_SHORT).show();
-                }
-                else if (error instanceof ServerError) {
-                    Toast.makeText(Registration.this,"Server Error", Toast.LENGTH_SHORT).show();
-                    error.printStackTrace();
-                }*/
-                error.printStackTrace();
-            }
-        }
-        ){
-            @Override
-            public Map<String, String> getHeaders() {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                //headers.put("Authorization", loggedInUser.getToken_type()+" "+loggedInUser.getAccess_token());
-
-                headers.put("Content-Type", "application/json");
-                headers.put("Accept", "application/json");
-                return headers;
-            }
-        };
+                        headers.put("Content-Type", "application/json");
+                        headers.put("Accept", "application/json");
+                        return headers;
+                    }
+                };
                 jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(
                         0,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 //AppController.getInstance().addToRequestQueue(jsonObjReq);
                 rq.add(jsonArrayRequest);
+
 
             }
 
