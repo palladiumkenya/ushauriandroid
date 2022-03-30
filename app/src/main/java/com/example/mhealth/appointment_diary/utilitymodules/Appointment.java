@@ -303,12 +303,12 @@ public class Appointment extends AppCompatActivity implements AdapterView.OnItem
             String a_dateS=adateE.getText().toString();
 
 
-            if(cccS.trim().isEmpty()){
+           /* if(cccS.trim().isEmpty()){
                 cccE.setError("ccc number required");
-            }
-            else if(upnS.trim().isEmpty()){
+            }*/
+             if(upnS.trim().isEmpty()){
 
-                upnE.setError("CCC No. required");
+                upnE.setError("KDOD No. required");
             }
             else if(a_dateS.trim().isEmpty()){
                 adateE.setError("Appointment date required");
@@ -371,7 +371,8 @@ public class Appointment extends AppCompatActivity implements AdapterView.OnItem
 
 
                         String newupn= AppendFunction.AppendUniqueIdentifier(upnS);
-                        String ClientCcc=cccS+newupn;
+                        //String ClientCcc=cccS+newupn;
+                        String ClientCcc=newupn;
                         String sendSms="";
 
                         if(appointment_code.contentEquals("6")){
