@@ -278,11 +278,12 @@ public class Consent extends AppCompatActivity implements AdapterView.OnItemSele
             String timeS = ctimeE.getText().toString();
 
 
-            if (cccS.trim().isEmpty()) {
-                cccE.setError("ccc number required");
-            } else if (upnS.trim().isEmpty()) {
+           /* if (cccS.trim().isEmpty()) {
+                cccE.setError("KDOD number required");
+            } */
+             if (upnS.trim().isEmpty()) {
 
-                upnE.setError("CCC No required");
+                upnE.setError("KDOD No required");
             } else if (a_dateS.trim().isEmpty()) {
                 adateE.setError("Consent date required");
             } else if (language_code.contentEquals("0")) {
@@ -305,7 +306,9 @@ public class Consent extends AppCompatActivity implements AdapterView.OnItemSele
 //                             Toast.makeText(this, "we are good", Toast.LENGTH_SHORT).show();
 
                             String newupn = AppendFunction.AppendUniqueIdentifier(upnS);
-                            String clientCode = cccS + newupn;
+
+                            //String clientCode = cccS + newupn;
+                            String clientCode =  newupn;
                             String sendSms = clientCode + "*" + a_dateS + "*" + timeS + "*" + cphoneS + "*" + language_code + "*" + weekly_code;
 
                             String encrypted = Base64Encoder.encryptString(sendSms);
@@ -349,7 +352,8 @@ public class Consent extends AppCompatActivity implements AdapterView.OnItemSele
 
 
                     String newupn = AppendFunction.AppendUniqueIdentifier(upnS);
-                    String clientCode = cccS + newupn;
+                    //String clientCode = cccS + newupn;
+                    String clientCode = newupn;
                     String sendSms = clientCode + "*" + a_dateS + "*" + timeS + "*" + cphoneS;
                     String encrypted = Base64Encoder.encryptString(sendSms);
 
