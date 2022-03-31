@@ -1,11 +1,13 @@
 package com.example.mhealth.appointment_diary.appointment_diary;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -124,18 +126,32 @@ public class RequestKDOD extends AppCompatActivity {
                     for (int i = 0; i < response.length(); i++){
                         JSONObject jsonObject = response.getJSONObject(Integer.parseInt(String.valueOf(i)));
                         //JSONArray data = response.getJSONArray(Integer.parseInt(String.valueOf(i)));
+
+                        //begin
                         int jj = jsonObject.getInt("kdod_num");
+                        //nims.append("Available KDOD number is:"+ " "+String.valueOf(jj));
 
-                        nims.append("Available KDOD number is:"+ " "+String.valueOf(jj));
+                        AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
+                                setTitle("Available KDOD number is:")
+                                .setMessage(String.valueOf(jj)).setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).setNegativeButton("", null).show();
+
+                        //end
 
 
-                     //   nims = findViewById(R.id.t1);
 
-                        //int id = jsonObject.has("kdod_num") ? jsonObject.getInt("kdod_num") : 0;
-                        //nims.setText(id);
-                        // dod_nums = new DOD_nums();
-                        //dod_nums.setKdod_num(jsonObject.getInt("kdod_num"));
+
+
+                        //begin
+                        //DOD_nums dod_nums = new DOD_nums();
+                        //dod_nums.setKdod_num(Integer.parseInt(String.valueOf(jj)));
                         //numsList.add(dod_nums);
+                        //end
 
                        // Toast.makeText(RequestKDOD.this, "null", Toast.LENGTH_SHORT).show();
 
