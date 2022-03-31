@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity
+            android:name=".appointment_diary.RequestKDOD"
+            android:exported="false" />
+        <activity
             android:name=".appointment_diary.FetchAppointments"
             android:exported="false" />
         <activity android:name=".privecy" />

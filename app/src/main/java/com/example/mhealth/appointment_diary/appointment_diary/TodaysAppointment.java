@@ -111,6 +111,7 @@ public class TodaysAppointment extends AppCompatActivity {
         card_transit= (CardView) findViewById(R.id.card_transi);
         card_clinic= (CardView)  findViewById(R.id.card_clin);
         card_today= (CardView) findViewById(R.id.card_todey);
+        Card_KDOD =(CardView) findViewById(R.id.card_request);
 
         card_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +139,13 @@ public class TodaysAppointment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ClinicMovement.class);
+                startActivity(intent);
+            }
+        });
+        Card_KDOD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RequestKDOD.class);
                 startActivity(intent);
             }
         });
@@ -211,6 +219,13 @@ public class TodaysAppointment extends AppCompatActivity {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(getApplicationContext(), TransitClient.class);
+                    startActivity(intent);
+                }
+            });
+            btnRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), RequestKDOD.class);
                     startActivity(intent);
                 }
             });
