@@ -109,8 +109,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editKDOD"/>
+
 
         <androidx.cardview.widget.CardView
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/kdod_unass"
@@ -189,6 +195,7 @@
                 android:id="@+id/recKDOD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 />
 
                         </LinearLayout>
@@ -198,12 +205,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:id="@+id/kdodsubmit"/>
+
 
 
             <TextView
                 android:id="@+id/t1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
 
                 />
 
