@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +51,7 @@ public class RequestKDOD extends AppCompatActivity {
    EditText editTextKDOD;
    Button btnsubmit;
    String x ="";
+   int jj;
 
 
     @Override
@@ -64,6 +66,7 @@ public class RequestKDOD extends AppCompatActivity {
         Adapter_dod_get adapter_dod_get =new Adapter_dod_get(this, numsList);
         recyclerView.setAdapter(adapter_dod_get);
         nims = findViewById(R.id.t1);
+
        // try1();
        // getData();
 
@@ -76,31 +79,18 @@ public class RequestKDOD extends AppCompatActivity {
                 postkdod();
                 editTextKDOD.setText("");
 
+
                 String  z =editTextKDOD.getText().toString();
 
-                //try alert
 
-
-                AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
-                        setTitle(z+ " KDOD number updated successful:")
-                        .setMessage(String.valueOf(z)).setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-
-
-                            }
-                        }).setNegativeButton("", null).show();
-                //end alert
             }
         });
         card_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                try1();
-                //getUnassigned();
+                //try1();
+                getUnassigned();
                // Toast.makeText(RequestKDOD.this, "null", Toast.LENGTH_SHORT).show();
 
             }
@@ -181,20 +171,22 @@ public class RequestKDOD extends AppCompatActivity {
                         //JSONArray data = response.getJSONArray(Integer.parseInt(String.valueOf(i)));
 
                         //begin
-                        int jj = jsonObject.getInt("kdod_num");
+                        jj = jsonObject.getInt("kdod_num");
+
+                        editTextKDOD.setText(String.valueOf(jj));
                         //nims.append("Available KDOD number is:"+ " "+String.valueOf(jj));
 
-                        AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
+                       /* AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
                                 setTitle("Available KDOD number is:")
                                 .setMessage(String.valueOf(jj)).setCancelable(false)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //finish();
-                                getUnassigned();
+                                //getUnassigned();
 
                             }
-                        }).setNegativeButton("", null).show();
+                        }).setNegativeButton("", null).show();*/
 
                         //end
 
@@ -271,9 +263,12 @@ requestQueue.add(jsonArrayRequest);
                         //begin
                     //response = response.getJSONObject("kdod_num");
                     int un = response.getInt("kdod_num");
-                     x= response.getString("kdod_num");
+                    if (un!=0){
+                     try1();
+                    }
 
-                    editTextKDOD.setText(x);
+                     //x= response.getString("kdod_num");
+                    //editTextKDOD.setText(x);
                         //int kk = jsonObject.getInt("kdod_num");
 
 
@@ -354,7 +349,25 @@ requestQueue.add(jsonArrayRequest);
             @Override
             public void onResponse(String response) {
 
-                Toast.makeText(RequestKDOD.this, "succesful", Toast.LENGTH_SHORT).show();
+
+
+                //try alert
+                AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
+                        setTitle(" KDOD number:"+jj)
+                        .setMessage("updated successful").setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+
+
+                            }
+                        }).setNegativeButton("", null).show();
+                //end alert
+
+
+
+                //Toast.makeText(RequestKDOD.this, "succesful", Toast.LENGTH_SHORT).show();
                 //editTextKDOD.setText("");
 
             }

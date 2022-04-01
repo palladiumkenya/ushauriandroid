@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_alignParentBottom="true"
+    android:layout_alignParentBottom="false"
     android:background="#fffff0">
 
     <com.google.android.material.appbar.AppBarLayout
