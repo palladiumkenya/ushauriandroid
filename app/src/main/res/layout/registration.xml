@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="#FFFFFF"
         android:orientation="vertical"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
@@ -20,7 +20,7 @@
             android:layout_height="72dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/nascoplogonew" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -199,6 +199,8 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
             android:padding="12dp"
+            android:background="@drawable/background_round_corner_button"
+            android:textColor="#FFFFFF"
             android:text="Create account" />
 
         <Button
@@ -208,6 +210,8 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
             android:padding="12dp"
+            android:background="@drawable/background_round_corner_button"
+            android:textColor="#FFFFFF"
             android:text="Cancel" />
 
 

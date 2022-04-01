@@ -51,6 +51,7 @@ public class RequestKDOD extends AppCompatActivity {
    Button btnsubmit;
    String x ="";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +82,7 @@ public class RequestKDOD extends AppCompatActivity {
 
 
                 AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
-                        setTitle(" KDOD number updated successful:")
+                        setTitle(z+ " KDOD number updated successful:")
                         .setMessage(String.valueOf(z)).setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
@@ -239,7 +240,7 @@ requestQueue.add(jsonArrayRequest);
 
 
             List<Mflcode> myl = Mflcode.findWithQuery(Mflcode.class, "select * from Mflcode limit 1");
-            //String mflcode = "";
+
 
             for (int x = 0; x < myl.size(); x++) {
 
@@ -271,6 +272,7 @@ requestQueue.add(jsonArrayRequest);
                     //response = response.getJSONObject("kdod_num");
                     int un = response.getInt("kdod_num");
                      x= response.getString("kdod_num");
+
                     editTextKDOD.setText(x);
                         //int kk = jsonObject.getInt("kdod_num");
 
@@ -328,11 +330,27 @@ requestQueue.add(jsonArrayRequest);
 
     private void postkdod(){
         RequestQueue requestQueue = Volley.newRequestQueue(RequestKDOD.this);
-        String url = "https://ushauri-api.mod.go.ke/kdod/ukdod/4001";
+        //String url = "https://ushauri-api.mod.go.ke/kdod/ukdod/4001";
+        String url = "https://ushauri-api.mod.go.ke/kdod/ukdod/";
+
+        //get mfl
+
+        List<Mflcode> myl = Mflcode.findWithQuery(Mflcode.class, "select * from Mflcode limit 1");
+        //String mflcode = "";
+
+        for (int x = 0; x < myl.size(); x++) {
+
+            mflcode = myl.get(x).getMfl();
+            //Integer.parseInt(mflcode);
+
+        }
+
+        //end get mfl
 
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url+mflcode, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -351,15 +369,13 @@ requestQueue.add(jsonArrayRequest);
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("kdod_num", x);
+                params.put("kdod_num", editTextKDOD.getText().toString());
                 return super.getParams();
             }
         };
         requestQueue.add(stringRequest);
 
     }
-
-
 
 }
 
