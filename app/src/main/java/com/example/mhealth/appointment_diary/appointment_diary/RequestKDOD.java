@@ -58,14 +58,17 @@ public class RequestKDOD extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_kdod);
+
         editTextKDOD = findViewById(R.id.editKDOD);
         btnsubmit = findViewById(R.id.kdodsubmit);
+
         numsList = new ArrayList<>();
         recyclerView = findViewById(R.id.recKDOD);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         Adapter_dod_get adapter_dod_get =new Adapter_dod_get(this, numsList);
         recyclerView.setAdapter(adapter_dod_get);
         nims = findViewById(R.id.t1);
+        editTextKDOD.setEnabled(false);
 
        // try1();
        // getData();
@@ -174,6 +177,8 @@ public class RequestKDOD extends AppCompatActivity {
                         jj = jsonObject.getInt("kdod_num");
 
                         editTextKDOD.setText(String.valueOf(jj));
+                        editTextKDOD.setVisibility(View.VISIBLE);
+                        btnsubmit.setVisibility(View.VISIBLE);
                         //nims.append("Available KDOD number is:"+ " "+String.valueOf(jj));
 
                        /* AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
