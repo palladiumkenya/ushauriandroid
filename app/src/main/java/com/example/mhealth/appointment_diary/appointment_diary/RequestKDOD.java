@@ -49,9 +49,10 @@ public class RequestKDOD extends AppCompatActivity {
    List<DOD_nums> numsList;
    String mflcode = "";
    EditText editTextKDOD;
-   Button btnsubmit;
+   Button btnsubmit,btncancel;
    String x ="";
    int jj;
+   int un;
 
 
     @Override
@@ -61,13 +62,14 @@ public class RequestKDOD extends AppCompatActivity {
 
         editTextKDOD = findViewById(R.id.editKDOD);
         btnsubmit = findViewById(R.id.kdodsubmit);
+        btncancel =findViewById(R.id.btncancel);
 
         numsList = new ArrayList<>();
         recyclerView = findViewById(R.id.recKDOD);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         Adapter_dod_get adapter_dod_get =new Adapter_dod_get(this, numsList);
         recyclerView.setAdapter(adapter_dod_get);
-        nims = findViewById(R.id.t1);
+       // nims = findViewById(R.id.t1);
         editTextKDOD.setEnabled(false);
 
        // try1();
@@ -80,12 +82,19 @@ public class RequestKDOD extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 postkdod();
-                editTextKDOD.setText("");
+                //editTextKDOD.setText("");
 
 
                 String  z =editTextKDOD.getText().toString();
 
 
+            }
+        });
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editTextKDOD.setText("");
+                finish();
             }
         });
         card_next.setOnClickListener(new View.OnClickListener() {
@@ -238,7 +247,6 @@ requestQueue.add(jsonArrayRequest);
 
             List<Mflcode> myl = Mflcode.findWithQuery(Mflcode.class, "select * from Mflcode limit 1");
 
-
             for (int x = 0; x < myl.size(); x++) {
 
                 mflcode = myl.get(x).getMfl();
@@ -267,10 +275,28 @@ requestQueue.add(jsonArrayRequest);
 
                         //begin
                     //response = response.getJSONObject("kdod_num");
-                    int un = response.getInt("kdod_num");
-                    if (un!=0){
+                     un = response.getInt("kdod_num");
+
+                    //String un = response.getString("kdod_num");
+                    if (un==0){
                      try1();
                     }
+                    else{
+                        //editTextKDOD.setText(String.valueOf(un));
+                        editTextKDOD.setText(String.valueOf(un));
+                        editTextKDOD.setVisibility(View.VISIBLE);
+                        btnsubmit.setVisibility(View.VISIBLE);
+                        btncancel.setVisibility(View.VISIBLE);
+                    }
+
+                    /*if(x==0){
+                        try1();
+                    }else{
+                        //editTextKDOD.setText(String.valueOf(un));
+                        editTextKDOD.setText(x);
+                        editTextKDOD.setVisibility(View.VISIBLE);
+                        btnsubmit.setVisibility(View.VISIBLE);
+                    }*/
 
                      //x= response.getString("kdod_num");
                     //editTextKDOD.setText(x);
@@ -318,7 +344,7 @@ requestQueue.add(jsonArrayRequest);
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RequestKDOD.this, "nullable", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RequestKDOD.this, "Error occured", Toast.LENGTH_SHORT).show();
                 error.printStackTrace();
 
             }
@@ -350,36 +376,39 @@ requestQueue.add(jsonArrayRequest);
 
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url+mflcode, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url+un, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
 
+                if(response !=null) {
 
-                //try alert
-                AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
-                        setTitle(" KDOD number:"+jj)
-                        .setMessage("updated successful").setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
+                    //try alert
+                    AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
+                            setTitle(" Unassigned:" + un)
+                            .setMessage(response).setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                    editTextKDOD.setText("");
 
 
-                            }
-                        }).setNegativeButton("", null).show();
+                                }
+                            }).setNegativeButton("", null).show();
+                }
                 //end alert
 
 
 
-                //Toast.makeText(RequestKDOD.this, "succesful", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RequestKDOD.this, "unsuccesful", Toast.LENGTH_SHORT).show();
                 //editTextKDOD.setText("");
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RequestKDOD.this, "Unsuccesful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RequestKDOD.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
 
             }
         }){
