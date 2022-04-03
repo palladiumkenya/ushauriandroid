@@ -29,6 +29,7 @@
                 android:id="@+id/tv_header_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_gravity="left"
                 android:src="@drawable/reg" />
         </androidx.appcompat.widget.Toolbar>

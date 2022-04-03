@@ -31,6 +31,7 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
+                android:visibility="gone"
                 app:srcCompat="@drawable/couple" />
         </androidx.appcompat.widget.Toolbar>
 

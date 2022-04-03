@@ -23,6 +23,7 @@
                 android:id="@+id/tv_header_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_gravity="left"
                 android:src="@drawable/transitclient" />
         </androidx.appcompat.widget.Toolbar>
@@ -156,10 +157,6 @@
 
 
 
-
-
-            </LinearLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_weight="1"
@@ -174,7 +171,7 @@
                     android:textColorHint="#000"
                     />
             </com.google.android.material.textfield.TextInputLayout>
-
+            </LinearLayout>
 
 
 
