@@ -300,12 +300,16 @@
                                                     android:maxLines="1"
                                                     android:singleLine="true"
                                                     android:text="APPOINTMENT DIARY"
+                                                    android:autoSizeTextType="uniform"
+                                                    android:autoSizeMinTextSize="8sp"
+                                                    android:autoSizeMaxTextSize="11sp"
                                                     android:textColor="@color/grey_90" />
 
                                                 <TextView
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:text="Manage appoitments" />
+
+                                                    android:text="Manage appointments" />
 
                                             </LinearLayout>
 
@@ -354,6 +358,9 @@
                                                     android:maxLines="1"
                                                     android:singleLine="true"
                                                     android:text="DEFAULTER DIARY"
+                                                    android:autoSizeTextType="uniform"
+                                                    android:autoSizeMinTextSize="8sp"
+                                                    android:autoSizeMaxTextSize="11sp"
                                                     android:textColor="@color/grey_90" />
 
                                                 <TextView
@@ -417,6 +424,9 @@
                                                     android:maxLines="1"
                                                     android:singleLine="true"
                                                     android:text="PMTCT"
+                                                    android:autoSizeTextType="uniform"
+                                                    android:autoSizeMinTextSize="8sp"
+                                                    android:autoSizeMaxTextSize="11sp"
                                                     android:textColor="@color/grey_90" />
 
                                                 <TextView
@@ -471,6 +481,9 @@
                                                     android:maxLines="1"
                                                     android:singleLine="true"
                                                     android:text="M-LAB"
+                                                    android:autoSizeTextType="uniform"
+                                                    android:autoSizeMinTextSize="8sp"
+                                                    android:autoSizeMaxTextSize="11sp"
                                                     android:textColor="@color/grey_90" />
 
                                                 <TextView
@@ -535,6 +548,9 @@
                                                     android:maxLines="1"
                                                     android:singleLine="true"
                                                     android:text="WEB DASHBOARD"
+                                                    android:autoSizeTextType="uniform"
+                                                    android:autoSizeMinTextSize="8sp"
+                                                    android:autoSizeMaxTextSize="11sp"
                                                     android:textColor="@color/grey_90" />
 
                                                 <TextView
@@ -589,6 +605,9 @@
                                                     android:maxLines="1"
                                                     android:singleLine="true"
                                                     android:text="WELLNESS"
+                                                    android:autoSizeTextType="uniform"
+                                                    android:autoSizeMinTextSize="8sp"
+                                                    android:autoSizeMaxTextSize="11sp"
                                                     android:textColor="@color/grey_90" />
 
                                                 <TextView
@@ -651,6 +670,9 @@
                                                     android:maxLines="1"
                                                     android:singleLine="true"
                                                     android:text="RESCHEDULE"
+                                                    android:autoSizeTextType="uniform"
+                                                    android:autoSizeMinTextSize="8sp"
+                                                    android:autoSizeMaxTextSize="11sp"
                                                     android:textColor="@color/grey_90" />
 
                                                 <TextView

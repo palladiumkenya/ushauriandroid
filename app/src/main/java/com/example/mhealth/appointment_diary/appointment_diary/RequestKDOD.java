@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,8 +73,6 @@ public class RequestKDOD extends AppCompatActivity {
        // nims = findViewById(R.id.t1);
         editTextKDOD.setEnabled(false);
 
-       // try1();
-       // getData();
 
         card_next = findViewById(R.id.kdod_next);
         card_unassigned = findViewById(R.id.kdod_unass);
@@ -82,7 +81,7 @@ public class RequestKDOD extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 postkdod();
-                //editTextKDOD.setText("");
+                editTextKDOD.setText("");
 
 
                 String  z =editTextKDOD.getText().toString();
@@ -101,9 +100,8 @@ public class RequestKDOD extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //try1();
+               // try1();
                 getUnassigned();
-               // Toast.makeText(RequestKDOD.this, "null", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -111,71 +109,24 @@ public class RequestKDOD extends AppCompatActivity {
 
     }
 
-
-
-
-    private void retrieve() {
-        /*RequestQueue requestQueue = Volley.newRequestQueue(RequestKDOD.this);
-        String url = "https://ushauri-api.mod.go.ke/kdod/2";
-        //String url ="https://ushauri-api.mod.go.ke/kdod/pkdod/2";
-
-        JsonArrayRequest jsonArrayRequest =new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        JSONObject jsonObject = response.getJSONObject(i);
-                        DOD_nums dod_nums = new DOD_nums();
-                        dod_nums.setKdod_num(jsonObject.getInt("dod_nums"));
-                        numsList.add(dod_nums);
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(RequestKDOD.this, "null", Toast.LENGTH_SHORT).show();
-
-            }
-        });*/
-    }
-
-
     //}
-    private void getData(){
-        RequestQueue requestQueue = Volley.newRequestQueue(RequestKDOD.this);
-        String url = "https://ushauri-api.mod.go.ke/kdod/2";
 
-
-    }
     private void try1(){
         RequestQueue requestQueue = Volley.newRequestQueue(RequestKDOD.this);
         String url = "https://ushauri-api.mod.go.ke/kdod/";
-        //String url2 = "https://ushauri-api.mod.go.ke/kdod/pkdod/2";
 
         //begin mfl
-
         List<Mflcode> myl = Mflcode.findWithQuery(Mflcode.class, "select * from Mflcode limit 1");
-        //String mflcode = "";
 
         for (int x = 0; x < myl.size(); x++) {
 
             mflcode = myl.get(x).getMfl();
-            //Integer.parseInt(mflcode);
-
         }
 
         //end mfl
       JsonArrayRequest jsonArrayRequest =new JsonArrayRequest(Request.Method.GET, url+mflcode, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
-
 
                 try{
                     for (int i = 0; i < response.length(); i++){
@@ -188,33 +139,7 @@ public class RequestKDOD extends AppCompatActivity {
                         editTextKDOD.setText(String.valueOf(jj));
                         editTextKDOD.setVisibility(View.VISIBLE);
                         btnsubmit.setVisibility(View.VISIBLE);
-                        //nims.append("Available KDOD number is:"+ " "+String.valueOf(jj));
-
-                       /* AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
-                                setTitle("Available KDOD number is:")
-                                .setMessage(String.valueOf(jj)).setCancelable(false)
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //finish();
-                                //getUnassigned();
-
-                            }
-                        }).setNegativeButton("", null).show();*/
-
-                        //end
-
-
-
-
-
-                        //begin
-                        //DOD_nums dod_nums = new DOD_nums();
-                        //dod_nums.setKdod_num(Integer.parseInt(String.valueOf(jj)));
-                        //numsList.add(dod_nums);
-                        //end
-
-                       // Toast.makeText(RequestKDOD.this, "null", Toast.LENGTH_SHORT).show();
+                        btncancel.setVisibility(View.VISIBLE);
 
                     }
 
@@ -240,12 +165,10 @@ requestQueue.add(jsonArrayRequest);
     private void getUnassigned(){
         RequestQueue requestQueue = Volley.newRequestQueue(RequestKDOD.this);
         String url = "https://ushauri-api.mod.go.ke/kdod/pkdod/";
-        //String url2 = "https://ushauri-api.mod.go.ke/kdod/pkdod/2";
 
-        //////////get mfl
+        //get mfl
 
-
-            List<Mflcode> myl = Mflcode.findWithQuery(Mflcode.class, "select * from Mflcode limit 1");
+        List<Mflcode> myl = Mflcode.findWithQuery(Mflcode.class, "select * from Mflcode limit 1");
 
             for (int x = 0; x < myl.size(); x++) {
 
@@ -253,93 +176,35 @@ requestQueue.add(jsonArrayRequest);
                 //Integer.parseInt(mflcode);
 
             }
+            // get mfl
 
 
-
-        ///////////// get mfl
-
-
-        JsonObjectRequest jsonObjectRequest =new JsonObjectRequest(Request.Method.GET, url+mflcode, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest =new JsonObjectRequest(Request.Method.GET, url+mflcode,null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 //Toast.makeText(RequestKDOD.this, "nullss", Toast.LENGTH_SHORT).show();
 
-
                 try{
-                    //for (int i = 0; i < response.length(); i++){
-                        //JSONObject jsonObject = response.getJSONObject(String.valueOf(i));
-                        //JSONObject jsonObject = response.getJSONObject("kdod_num");
+                    un = response.getInt("kdod_num");
 
-                        //JSONObject jsonObject = response.getJSONObject(String.valueOf(Integer.parseInt(String.valueOf(i))));
-                        //JSONArray data = response.getJSONArray(Integer.parseInt(String.valueOf(i)));
-
-                        //begin
-                    //response = response.getJSONObject("kdod_num");
-                     un = response.getInt("kdod_num");
-
-                    //String un = response.getString("kdod_num");
-                    if (un==0){
-                     try1();
+                    //if second API response is null call the first api
+                    if (response.isNull("null")){
+                        try1();
                     }
+
                     else{
-                        //editTextKDOD.setText(String.valueOf(un));
+
                         editTextKDOD.setText(String.valueOf(un));
                         editTextKDOD.setVisibility(View.VISIBLE);
                         btnsubmit.setVisibility(View.VISIBLE);
                         btncancel.setVisibility(View.VISIBLE);
+
                     }
-
-                    /*if(x==0){
-                        try1();
-                    }else{
-                        //editTextKDOD.setText(String.valueOf(un));
-                        editTextKDOD.setText(x);
-                        editTextKDOD.setVisibility(View.VISIBLE);
-                        btnsubmit.setVisibility(View.VISIBLE);
-                    }*/
-
-                     //x= response.getString("kdod_num");
-                    //editTextKDOD.setText(x);
-                        //int kk = jsonObject.getInt("kdod_num");
-
-
-                       // nims.append("Unassigned KDOD number is:"+ " "+String.valueOf(un));
-                        //Toast.makeText(RequestKDOD.this, "nullss"+un, Toast.LENGTH_SHORT).show();
-
-
-                        /*AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
-                                setTitle("Unassigned KDOD number is:")
-                                .setMessage(String.valueOf(un)).setCancelable(false)
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                    }
-                                }).setNegativeButton("", null).show();*/
-
-                        //end
-
-
-
-
-
-                        //begin
-                        //DOD_nums dod_nums = new DOD_nums();
-                        //dod_nums.setKdod_num(Integer.parseInt(String.valueOf(jj)));
-                        //numsList.add(dod_nums);
-                        //end
-
-                        // Toast.makeText(RequestKDOD.this, "null", Toast.LENGTH_SHORT).show();
-
-
-
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
 
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -350,13 +215,9 @@ requestQueue.add(jsonArrayRequest);
             }
         });
         requestQueue.add(jsonObjectRequest);
-
-
     }
-
     private void postkdod(){
         RequestQueue requestQueue = Volley.newRequestQueue(RequestKDOD.this);
-        //String url = "https://ushauri-api.mod.go.ke/kdod/ukdod/4001";
         String url = "https://ushauri-api.mod.go.ke/kdod/ukdod/";
 
         //get mfl
@@ -370,22 +231,17 @@ requestQueue.add(jsonArrayRequest);
             //Integer.parseInt(mflcode);
 
         }
-
         //end get mfl
 
-
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url+un, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url+editTextKDOD.getText().toString(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-
+                //Toast.makeText(RequestKDOD.this, "successful", Toast.LENGTH_SHORT).show();
                 if(response !=null) {
 
                     //try alert
                     AlertDialog alert = new AlertDialog.Builder(RequestKDOD.this).
-                            setTitle(" Unassigned:" + un)
+                            setTitle("")
                             .setMessage(response).setCancelable(false)
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
@@ -399,16 +255,11 @@ requestQueue.add(jsonArrayRequest);
                 }
                 //end alert
 
-
-
-                //Toast.makeText(RequestKDOD.this, "unsuccesful", Toast.LENGTH_SHORT).show();
-                //editTextKDOD.setText("");
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RequestKDOD.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(RequestKDOD.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
 
             }
         }){
@@ -416,10 +267,46 @@ requestQueue.add(jsonArrayRequest);
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("kdod_num", editTextKDOD.getText().toString());
+               // params.put("kdod_num", editTextKDOD.getText().toString());
                 return super.getParams();
             }
         };
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void unsign(){
+        RequestQueue requestQueue = Volley.newRequestQueue(RequestKDOD.this);
+        String url = "https://ushauri-api.mod.go.ke/kdod/pkdod/";
+        //get mfl
+
+
+        List<Mflcode> myl = Mflcode.findWithQuery(Mflcode.class, "select * from Mflcode limit 1");
+
+        for (int x = 0; x < myl.size(); x++) {
+
+            mflcode = myl.get(x).getMfl();
+            //Integer.parseInt(mflcode);
+
+        }
+        // get mfl
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url + mflcode,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(RequestKDOD.this, "Unsuccessful", Toast.LENGTH_SHORT).show();
+
+                if (response.equals(null)){
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(RequestKDOD.this, "onerror", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
+
+            }
+        });
         requestQueue.add(stringRequest);
 
     }
