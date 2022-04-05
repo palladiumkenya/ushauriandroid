@@ -19,9 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -29,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.tables.Mflcode;
+import com.example.mhealth.appointment_diary.utilitymodules.Registration;
 import com.example.mhealth.appointment_diary.utilitymodules.Unit;
 
 import org.json.JSONArray;
@@ -80,9 +84,10 @@ public class RequestKDOD extends AppCompatActivity {
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 postkdod();
                 editTextKDOD.setText("");
-
 
                 String  z =editTextKDOD.getText().toString();
 
@@ -100,7 +105,7 @@ public class RequestKDOD extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               // try1();
+                //try1();
                 getUnassigned();
 
             }
@@ -154,7 +159,16 @@ public class RequestKDOD extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+                if (error instanceof NetworkError) {
+                    Toast.makeText(RequestKDOD.this,"Network Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    Toast.makeText(RequestKDOD.this,"Parse Error", Toast.LENGTH_SHORT).show();
+                }
+                else if (error instanceof ServerError) {
+                    Toast.makeText(RequestKDOD.this,"Server Error", Toast.LENGTH_SHORT).show();
+                    error.printStackTrace();
+                }
+               // error.printStackTrace();
 
             }
         });
@@ -209,8 +223,18 @@ requestQueue.add(jsonArrayRequest);
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RequestKDOD.this, "Error occured", Toast.LENGTH_SHORT).show();
-                error.printStackTrace();
+                //Toast.makeText(RequestKDOD.this, "Error occured", Toast.LENGTH_SHORT).show();
+                if (error instanceof NetworkError) {
+                    Toast.makeText(RequestKDOD.this,"Network Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    Toast.makeText(RequestKDOD.this,"Parse Error", Toast.LENGTH_SHORT).show();
+                }
+                else if (error instanceof ServerError) {
+                    Toast.makeText(RequestKDOD.this,"Server Error", Toast.LENGTH_SHORT).show();
+                    error.printStackTrace();
+                }
+
+               // error.printStackTrace();
 
             }
         });
@@ -302,8 +326,18 @@ requestQueue.add(jsonArrayRequest);
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RequestKDOD.this, "onerror", Toast.LENGTH_SHORT).show();
-                error.printStackTrace();
+                if (error instanceof NetworkError) {
+                    Toast.makeText(RequestKDOD.this,"Network Error", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    Toast.makeText(RequestKDOD.this,"Parse Error", Toast.LENGTH_SHORT).show();
+                }
+                else if (error instanceof ServerError) {
+                    Toast.makeText(RequestKDOD.this,"Server Error", Toast.LENGTH_SHORT).show();
+                    error.printStackTrace();
+                }
+
+                //Toast.makeText(RequestKDOD.this, "onerror", Toast.LENGTH_SHORT).show();
+                //error.printStackTrace();
 
             }
         });
