@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mhealth.appointment_diary.DCMActivity;
 import com.example.mhealth.appointment_diary.Dialogs.Dialogs;
+import com.example.mhealth.appointment_diary.HttpsTrustManager;
 import com.example.mhealth.appointment_diary.ProcessReceivedMessage.ProcessMessage;
 import com.example.mhealth.appointment_diary.Progress.Progress;
 import com.example.mhealth.appointment_diary.config.Config;
@@ -61,6 +62,7 @@ public class AccessServer {
 
     Dialog mydialog;
     private JSONArray id_result;
+
 
 
 
@@ -700,7 +702,8 @@ public class AccessServer {
     //start code to get user mflcode with the specified phone number
 
 
-    public void getUserMflCode(final String phone, final EditText phoneE){
+    public void getUserMflCode(final String phone, final EditText phoneE) {
+        HttpsTrustManager.allowAllSSL();
 
 //        Toast.makeText(ctx, ""+phone, Toast.LENGTH_SHORT).show();
         final int[] mStatusCode = new int[1];
@@ -717,6 +720,7 @@ public class AccessServer {
 
                         @Override
                         public void onResponse(String response) {
+
 //                            pd.dismissDialog();
 
                             pr.dissmissProgress();
@@ -755,6 +759,8 @@ public class AccessServer {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(ctx,  ""+error.getMessage() ,Toast.LENGTH_LONG).show();
+                           // System.out.println(error.getMessage());
                             try{
 
                                 byte[] htmlBodyBytes = error.networkResponse.data;
@@ -767,6 +773,7 @@ public class AccessServer {
 
                             }
                             catch(Exception e){
+                                e.printStackTrace();
 
                                 System.out.println("***error 2****"+e.getMessage());
 
@@ -878,6 +885,13 @@ public class AccessServer {
 
 
     }
+
+    //try ssl
+
+
+
+
+    //end ssl
 
 
     //end code to get user mflcodew with the specified phone number
