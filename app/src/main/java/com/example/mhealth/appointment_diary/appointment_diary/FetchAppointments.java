@@ -531,7 +531,7 @@ public class FetchAppointments extends AppCompatActivity implements SmsReceiver.
 
 
         Intent alarm = new Intent(FetchAppointments.this, SmsReceiver.class);
-        boolean alarmRunning = (PendingIntent.getBroadcast(FetchAppointments.this, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        boolean alarmRunning = (PendingIntent.getBroadcast(FetchAppointments.this, 0, alarm, PendingIntent.FLAG_IMMUTABLE) != null);
         if (alarmRunning == false) {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(FetchAppointments.this, 0, alarm, 0);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
