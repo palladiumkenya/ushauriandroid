@@ -263,7 +263,7 @@
                 </LinearLayout>
 
 
-
+                <!-- ID no field -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
@@ -274,7 +274,6 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
 
                         <EditText
                             android:layout_width="match_parent"
@@ -289,8 +288,65 @@
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                </LinearLayout>
+
+                <!-- Birth cert no. -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/birthnoll"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/birthno"
+                            android:inputType="text"
+                            android:textStyle="bold"
+                            android:hint="Enter Birth cert NO."
+                            android:textColorHint="#000"
+                            android:maxLength="24"
+                            android:textSize="12dp"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
+
+                <!-- UPI no  -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:id="@+id/UPInoll"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/UPIno"
+                            android:inputType="text"
+                            android:textStyle="bold"
+                            android:hint="Enter UPI NO."
+                            android:textColorHint="#000"
+                            android:maxLength="24"
+                            android:textSize="12dp"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+
 
             <TextView
                 android:id="@+id/textView11"
