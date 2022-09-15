@@ -49,9 +49,9 @@ import java.util.List;
 public class Registration extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
-    LinearLayout smslayoutL, idnoL, orphanL, altphoneL, disableL,groupingL;
+    LinearLayout smslayoutL, idnoL, orphanL, altphoneL, disableL,groupingL, birthL;
 
-    EditText cccE, upnE, fileserialE, f_nameE, s_nameE, o_nameE, dobE, enrollment_dateE, art_dateE, phoneE, buddyphoneE, idnoE, altphoneE,ageinyearsE,locatorcountyE,locatorsubcountyE,locatorlocationE,locatorwardE,locatorvillageE;
+    EditText cccE, upnE, fileserialE, f_nameE, s_nameE, o_nameE, dobE, enrollment_dateE, art_dateE, phoneE, buddyphoneE, idnoE, altphoneE,ageinyearsE,locatorcountyE,locatorsubcountyE,locatorlocationE,locatorwardE,locatorvillageE, UPI_number, dobirth;
 
     Spinner genderS, maritalS, conditionS, enrollmentS, languageS, smsS, wklymotivation, messageTime, SelectstatusS, patientStatus, GroupingS, orphanS, schoolS, newGroupingS;
 
@@ -332,6 +332,12 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             enrollment_dateE = (EditText) findViewById(R.id.enrollment_date);
             art_dateE = (EditText) findViewById(R.id.art_date);
             phoneE = (EditText) findViewById(R.id.phone);
+            //UPI no
+            UPI_number =(EditText) findViewById(R.id.UPIno);
+            //dob no
+            dobirth =(EditText) findViewById(R.id.birthno);
+
+            birthL = (LinearLayout) findViewById(R.id.birthnoll);
 
 
             genderS = (Spinner) findViewById(R.id.gender_spinner);
@@ -394,6 +400,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             art_dateE.setText("");
             phoneE.setText("");
             idnoE.setText("");
+
+            UPI_number.setText("");
+            dobirth.setText("");
             if (altphoneE.isShown()) {
                 altphoneE.setText("");
             }
@@ -543,6 +552,15 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
 
                                     }
+                                    else if(difference<18){
+                                        birthL.setVisibility(View.VISIBLE);
+
+                                        if (isUcsf()) {
+                                            orphanL.setVisibility(View.GONE);
+                                        }
+                                    }
+
+
                                     else {
 
                                         idnoL.setVisibility(View.GONE);

@@ -5,6 +5,7 @@ package com.example.mhealth.appointment_diary.AccessServer;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -113,6 +114,8 @@ public class AccessServer {
                     @Override
                     public void onResponse(String response) {
 
+                        Log.d("", response.toString());
+
                         pr.dissmissProgress();
 //                        Toast.makeText(ctx, "response "+response, Toast.LENGTH_SHORT).show();
                         Toast.makeText(ctx,response, Toast.LENGTH_SHORT).show();
@@ -161,6 +164,8 @@ public class AccessServer {
                     @Override
                     public void onResponse(String response) {
 //                        Toast.makeText(ctx, "message "+response, Toast.LENGTH_SHORT).show();
+
+                        Log.d("", response.toString());
                         pr.dissmissProgress();
 
 

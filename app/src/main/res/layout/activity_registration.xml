@@ -309,7 +309,7 @@
                             android:id="@+id/birthno"
                             android:inputType="text"
                             android:textStyle="bold"
-                            android:hint="Enter Birth cert NO."
+                            android:hint="Enter Birth certificate NO."
                             android:textColorHint="#000"
                             android:maxLength="24"
                             android:textSize="12dp"
