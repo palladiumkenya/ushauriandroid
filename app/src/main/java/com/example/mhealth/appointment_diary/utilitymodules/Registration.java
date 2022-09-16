@@ -4,12 +4,14 @@ package com.example.mhealth.appointment_diary.utilitymodules;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mhealth.appointment_diary.AccessServer.AccessServer;
 import com.example.mhealth.appointment_diary.AppendFunction.AppendFunction;
 import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
@@ -29,6 +37,7 @@ import com.example.mhealth.appointment_diary.R;
 //import com.example.mhealth.appointment_diary.SSLTrustCertificate.SSLTrust;
 import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.encryption.Base64Encoder;
+import com.example.mhealth.appointment_diary.loginmodule.LoginActivity;
 import com.example.mhealth.appointment_diary.models.RegisterCounter;
 import com.example.mhealth.appointment_diary.sendmessages.SendMessage;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
@@ -38,10 +47,15 @@ import com.example.mhealth.appointment_diary.tables.Myaffiliation;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.facebook.stetho.Stetho;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by DELL on 12/11/2015.
@@ -49,7 +63,7 @@ import java.util.List;
 public class Registration extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
-    LinearLayout smslayoutL, idnoL, orphanL, altphoneL, disableL,groupingL, birthL;
+    LinearLayout smslayoutL, idnoL, orphanL, altphoneL, disableL,groupingL, birthL, UPIL;
 
     EditText cccE, upnE, fileserialE, f_nameE, s_nameE, o_nameE, dobE, enrollment_dateE, art_dateE, phoneE, buddyphoneE, idnoE, altphoneE,ageinyearsE,locatorcountyE,locatorsubcountyE,locatorlocationE,locatorwardE,locatorvillageE, UPI_number, dobirth;
 
@@ -103,6 +117,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        //getUPI();
         // components from activity_registration.xml
 
         // Find the toolbar view inside the activity layout
@@ -338,6 +353,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             dobirth =(EditText) findViewById(R.id.birthno);
 
             birthL = (LinearLayout) findViewById(R.id.birthnoll);
+            UPIL = (LinearLayout) findViewById(R.id.UPInoll);
 
 
             genderS = (Spinner) findViewById(R.id.gender_spinner);
@@ -546,6 +562,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
                                     if (difference >= 18) {
                                         idnoL.setVisibility(View.VISIBLE);
+                                        birthL.setVisibility(View.GONE);
+                                        UPIL.setVisibility(View.VISIBLE);
+                                        getUPI_id();
                                         if (isUcsf()) {
                                             orphanL.setVisibility(View.GONE);
                                         }
@@ -553,7 +572,10 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
                                     }
                                     else if(difference<18){
+                                        idnoL.setVisibility(View.GONE);
                                         birthL.setVisibility(View.VISIBLE);
+                                        UPIL.setVisibility(View.VISIBLE);
+                                        //getUPI();
 
                                         if (isUcsf()) {
                                             orphanL.setVisibility(View.GONE);
@@ -598,6 +620,162 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
         }
     }
+
+    public void getUPI_id() {
+
+        idnoE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus){
+                    Toast.makeText(Registration.this, "has focus", Toast.LENGTH_SHORT).show();
+                }else{
+
+                    Map<String, String> params =new HashMap<String, String>();
+                    params.put("identifier", "national-id");
+                    params.put("identifier_value", "2345678");
+
+                    //params.put("identifier_value", idnoE.getText().toString());
+
+
+                    JSONObject jsonObject =new JSONObject(params);
+                    String url ="https://ushauriapi.kenyahmis.org/mohupi/verify";
+
+                    RequestQueue requestQueue =Volley.newRequestQueue(Registration.this);
+
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            //Log.d("UPI", response.toString());
+
+                            try {
+                                //JSONObject jsonObject1 =response.getJSONObject("clientExists");
+
+                              boolean  x = response.getBoolean("clientExists");
+                              if (x==true){
+                                  //Toast.makeText(Registration.this, "Exists", Toast.LENGTH_SHORT).show();
+
+                                  JSONObject jsonObject1 =response.getJSONObject("client");
+
+                                  String UPI_number1 =jsonObject1.getString("clientNumber");
+                                  String firstname =jsonObject1.getString("firstName");
+                                  String lastname =jsonObject1.getString("lastName");
+
+                                  UPI_number.setText(UPI_number1);
+
+                                  Toast.makeText(Registration.this, UPI_number1 + firstname, Toast.LENGTH_SHORT).show();
+                                  Log.d("", UPI_number1);
+
+                                  //AlertDialog
+                                  AlertDialog.Builder builder1 = new AlertDialog.Builder(Registration.this);
+                                  builder1.setIcon(android.R.drawable.ic_dialog_alert);
+                                  builder1.setTitle("Clients UPI number is"+ " " + UPI_number1 );
+                                  builder1.setMessage("Name" + " " + firstname + " " + lastname );
+                                  builder1.setCancelable(false);
+
+                                  builder1.setPositiveButton(
+                                          "OK",
+                                          new DialogInterface.OnClickListener() {
+                                              public void onClick(DialogInterface dialog, int id) {
+
+                                                  UPI_number.setText(UPI_number1);
+
+                                                  //dialog.cancel();
+                                              }
+                                          });
+
+
+
+
+                                  //AlertDialog
+
+                              }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                           // Toast.makeText(Registration.this, idnoE.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(Registration.this, "Lost focus2"+idnoE.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                    requestQueue.add(jsonObjectRequest);
+
+
+                 //   Toast.makeText(Registration.this, "Lost focus"+idnoE.getText().toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+       /* UPI_number.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                //Toast.makeText(Registration.this, "", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        // RequestQueue queue = Volley.newRequestQueue(this);
+        //String url ="https://ushauriapi.kenyahmis.org/mohupi/verify";
+
+
+// POST parameters
+       /* Map<String, String> params = new HashMap<String, String>();
+        params.put("identifier", "national-id");
+        params.put("identifier_value", "2345678");*/
+        // JSONObject jsonObj = new JSONObject(params);
+
+
+
+
+                   /* Map<String, String> params = new HashMap<String, String>();
+                    params.put("identifier", "national-id");
+                    params.put("identifier_value", "2345678");
+                    String url ="https://ushauriapi.kenyahmis.org/mohupi/verify";
+
+                   JSONObject jsonObj = new JSONObject(params);
+                    JsonObjectRequest jsonObjectRequest =new JsonObjectRequest(Request.Method.POST, url, jsonObj, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            Toast.makeText(Registration.this, response.toString(), Toast.LENGTH_SHORT).show();
+
+                            Log.d("", response.toString());
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            error.printStackTrace();
+                            Toast.makeText(Registration.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                   // queue.add(jsonObjectRequest);
+                    Volley.newRequestQueue(Registration.this).add(jsonObjectRequest);*/
+
+
+
+    }
+
 
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
