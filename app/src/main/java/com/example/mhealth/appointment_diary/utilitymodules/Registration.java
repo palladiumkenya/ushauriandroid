@@ -33,6 +33,7 @@ import com.example.mhealth.appointment_diary.AccessServer.AccessServer;
 import com.example.mhealth.appointment_diary.AppendFunction.AppendFunction;
 import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
 import com.example.mhealth.appointment_diary.Mydates.MyDates;
+import com.example.mhealth.appointment_diary.Progress.Progress;
 import com.example.mhealth.appointment_diary.R;
 //import com.example.mhealth.appointment_diary.SSLTrustCertificate.SSLTrust;
 import com.example.mhealth.appointment_diary.config.Config;
@@ -62,6 +63,8 @@ import java.util.Map;
  */
 public class Registration extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    Progress progress;
+
 
     LinearLayout smslayoutL, idnoL, orphanL, altphoneL, disableL,groupingL, birthL, UPIL;
 
@@ -69,7 +72,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
     Spinner genderS, maritalS, conditionS, enrollmentS, languageS, smsS, wklymotivation, messageTime, SelectstatusS, patientStatus, GroupingS, orphanS, schoolS, newGroupingS;
 
-    String gender_code, marital_code, condition_code,grouping_code,new_grouping_code, category_code, language_code, sms_code, Selectstatus_code, wklyMotivation_code, messageTime_code, patientStatus_code, school_code, orphan_code, idnoS,locatorcountyS,locatorsubcountyS,locatorlocationS,locatorwardS,locatorvillageS;
+    String gender_code, marital_code, condition_code,grouping_code,new_grouping_code, category_code, language_code, sms_code, Selectstatus_code, wklyMotivation_code, messageTime_code, patientStatus_code, school_code, orphan_code, idnoS, upi_no, birth_cert_no, locatorcountyS,locatorsubcountyS,locatorlocationS,locatorwardS,locatorvillageS;
 
     DatePickerDialog datePickerDialog;
     CheckInternet chkinternet;
@@ -314,12 +317,15 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
     public void initialise() {
 
         try {
+            progress =new Progress(Registration.this);
             ageinyearsE=(EditText) findViewById(R.id.ageinyears);
             sm = new SendMessage(Registration.this);
             acs = new AccessServer(Registration.this);
             chkinternet = new CheckInternet(Registration.this);
             idnoE = (EditText) findViewById(R.id.idno);
             idnoS = "";
+            upi_no="";
+            birth_cert_no="";
 
             locatorcountyE= (EditText) findViewById(R.id.locatorcounty);
             locatorsubcountyE= (EditText) findViewById(R.id.locatorsubcounty);
@@ -564,6 +570,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                                         idnoL.setVisibility(View.VISIBLE);
                                         birthL.setVisibility(View.GONE);
                                         UPIL.setVisibility(View.VISIBLE);
+                                        //UPI_number.setEnabled(false);
                                         getUPI_id();
                                         if (isUcsf()) {
                                             orphanL.setVisibility(View.GONE);
@@ -575,6 +582,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                                         idnoL.setVisibility(View.GONE);
                                         birthL.setVisibility(View.VISIBLE);
                                         UPIL.setVisibility(View.VISIBLE);
+                                        getUPI_birth();
                                         //getUPI();
 
                                         if (isUcsf()) {
@@ -630,11 +638,13 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                     Toast.makeText(Registration.this, "has focus", Toast.LENGTH_SHORT).show();
                 }else{
 
+                    progress.showProgress("Getting UPI number");
+
                     Map<String, String> params =new HashMap<String, String>();
                     params.put("identifier", "national-id");
-                    params.put("identifier_value", "2345678");
+                   // params.put("identifier_value", "2345678");
 
-                    //params.put("identifier_value", idnoE.getText().toString());
+                    params.put("identifier_value", idnoE.getText().toString());
 
 
                     JSONObject jsonObject =new JSONObject(params);
@@ -646,6 +656,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                         @Override
                         public void onResponse(JSONObject response) {
                             //Log.d("UPI", response.toString());
+                            progress.dissmissProgress();
 
                             try {
                                 //JSONObject jsonObject1 =response.getJSONObject("clientExists");
@@ -661,8 +672,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                                   String lastname =jsonObject1.getString("lastName");
 
                                   UPI_number.setText(UPI_number1);
+                                  //UPI_number.setEnabled(false);
 
-                                  Toast.makeText(Registration.this, UPI_number1 + firstname, Toast.LENGTH_SHORT).show();
+                                  Toast.makeText(Registration.this, "Clients UPI number is"+ " " +UPI_number1 +" "+ "Name"+ " "+ firstname+ " "+ lastname, Toast.LENGTH_SHORT).show();
                                   Log.d("", UPI_number1);
 
                                   //AlertDialog
@@ -688,6 +700,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
                                   //AlertDialog
 
+                              }else{
+                                  Toast.makeText(Registration.this, "Client has no UPI number", Toast.LENGTH_SHORT).show();
+
                               }
 
 
@@ -702,7 +717,10 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(Registration.this, "Lost focus2"+idnoE.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(Registration.this, "error occured, try again", Toast.LENGTH_SHORT).show();
+                            progress.dissmissProgress();
+                            //Toast.makeText(Registration.this, "Lost focus2"+idnoE.getText().toString(), Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -773,6 +791,110 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                     Volley.newRequestQueue(Registration.this).add(jsonObjectRequest);*/
 
 
+
+    }
+
+    public void getUPI_birth(){
+
+
+
+        dobirth.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus){
+                    Toast.makeText(Registration.this, "has focus", Toast.LENGTH_SHORT).show();
+                }else{
+                    progress.showProgress("Getting UPI number");
+
+                    Map<String, String> params =new HashMap<String, String>();
+                    params.put("identifier", "national-id");
+                    params.put("identifier_value", "2345678");
+
+                    //params.put("identifier_value", idnoE.getText().toString());
+
+
+                    JSONObject jsonObject =new JSONObject(params);
+                    String url ="https://ushauriapi.kenyahmis.org/mohupi/verify";
+
+                    RequestQueue requestQueue =Volley.newRequestQueue(Registration.this);
+
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            //Log.d("UPI", response.toString());
+                            progress.dissmissProgress();
+
+                            try {
+                                //JSONObject jsonObject1 =response.getJSONObject("clientExists");
+
+                                boolean  x = response.getBoolean("clientExists");
+                                if (x==true){
+                                    //Toast.makeText(Registration.this, "Exists", Toast.LENGTH_SHORT).show();
+
+                                    JSONObject jsonObject1 =response.getJSONObject("client");
+
+                                    String UPI_number1 =jsonObject1.getString("clientNumber");
+                                    String firstname =jsonObject1.getString("firstName");
+                                    String lastname =jsonObject1.getString("lastName");
+
+                                    UPI_number.setText(UPI_number1);
+                                   // UPI_number.setEnabled(false);
+
+                                    Toast.makeText(Registration.this, "Clients UPI number is"+ " " +UPI_number1 +" "+ "Name"+ " "+ firstname+ " "+ lastname, Toast.LENGTH_SHORT).show();
+                                    Log.d("", UPI_number1);
+
+                                    //AlertDialog
+                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(Registration.this);
+                                    builder1.setIcon(android.R.drawable.ic_dialog_alert);
+                                    builder1.setTitle("Clients UPI number is"+ " " + UPI_number1 );
+                                    builder1.setMessage("Name" + " " + firstname + " " + lastname );
+                                    builder1.setCancelable(false);
+
+                                    builder1.setPositiveButton(
+                                            "OK",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int id) {
+
+                                                    UPI_number.setText(UPI_number1);
+
+                                                    //dialog.cancel();
+                                                }
+                                            });
+
+
+
+
+                                    //AlertDialog
+
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            // Toast.makeText(Registration.this, idnoE.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            Toast.makeText(Registration.this, "error occured, try again", Toast.LENGTH_SHORT).show();
+                            progress.dissmissProgress();
+                           // Toast.makeText(Registration.this, "Lost focus2"+idnoE.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+                    requestQueue.add(jsonObjectRequest);
+
+
+                    //   Toast.makeText(Registration.this, "Lost focus"+idnoE.getText().toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
     }
 
@@ -1618,6 +1740,18 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                     idnoS = "-1";
                 }
 
+                if (UPI_number.isShown() && !UPI_number.getText().toString().trim().isEmpty()){
+                    upi_no = UPI_number.getText().toString();
+                }else{
+                    upi_no ="-1";
+                }
+
+                if (dobirth.isShown() && !dobirth.getText().toString().trim().isEmpty()){
+                    birth_cert_no =dobirth.getText().toString();
+                }else{
+                    birth_cert_no="-1";
+                }
+
                 //*******check empty values and set them to -1***
 
                 /* Encrypt */
@@ -1742,7 +1876,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                 String newupns = AppendFunction.AppendUniqueIdentifier(upnS);
                 String myccnumber = cccS + newupns;
 
-                String sendSms = myccnumber + "*" + fileserialS + "*" + f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + buddyphoneNumber + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code+"*"+new_grouping_code+"*"+locatorcountyS+"*"+locatorsubcountyS+"*"+locatorlocationS+"*"+locatorwardS+"*"+locatorvillageS;
+                String sendSms = myccnumber + "*" + fileserialS + "*" + f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" +upi_no+ "*" + birth_cert_no + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + buddyphoneNumber + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code+"*"+new_grouping_code+"*"+locatorcountyS+"*"+locatorsubcountyS+"*"+locatorlocationS+"*"+locatorwardS+"*"+locatorvillageS;
+               // String sendSms = myccnumber + "*" + fileserialS + "*" + f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" +upi_no+ "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + buddyphoneNumber + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code+"*"+new_grouping_code+"*"+locatorcountyS+"*"+locatorsubcountyS+"*"+locatorlocationS+"*"+locatorwardS+"*"+locatorvillageS;
+
 
 //                    String sendSms = "Reg*" + cccS + "*" + f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + language_code + "*" + sms_code + "*" +wkly_code+"*"+pnt_code+"*"+message_code+"*"+ status_code;
 

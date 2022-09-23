@@ -337,10 +337,11 @@
                             android:id="@+id/UPIno"
                             android:inputType="text"
                             android:textStyle="bold"
-                            android:hint="Enter UPI NO."
+                            android:hint="UPI NO."
                             android:textColorHint="#000"
                             android:maxLength="24"
                             android:textSize="12dp"
+
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
