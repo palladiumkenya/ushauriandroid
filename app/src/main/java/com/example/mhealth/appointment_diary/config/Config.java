@@ -110,11 +110,11 @@ public class Config extends AppCompatActivity {
        /* Bundle bundle =getIntent().getExtras();
         z= bundle.getString("url");
         zz =bundle.getString("stage_key");*/
-        getAlert();
+       // getAlert();
 
-        x.setText("You are connected to" + " " +zz);
+       // x.setText("You are connected to" + " " +zz);
         //Toast.makeText(Config.this, BASE_URL, Toast.LENGTH_LONG).show();
-        x.setTextColor(Color.parseColor("#F32013"));
+       // x.setTextColor(Color.parseColor("#F32013"));
 
     }
 

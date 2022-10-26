@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,8 +75,30 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    UrlTable.deleteAll(UrlTable.class);
+                    UrlTable urlTable =new UrlTable("https://ushauriapi.nascop.org", "Facility live server");
+                    urlTable.save();
+                }catch(Exception e){
+
+                }
+
+            }
+        }; handler.post(runnable);
 
 
+        /*try {
+            //UrlTable urlTable =new UrlTable(base_url, stage_name);
+            UrlTable.deleteAll(UrlTable.class);
+            UrlTable urlTable =new UrlTable("https://ushauriapi.nascop.org", "Facility live server");
+            urlTable.save();
+        }catch(Exception e){
+
+        }*/
 
         /*UrlTable urlTable =new UrlTable(base_url, stage_name);
         urlTable.save();*/

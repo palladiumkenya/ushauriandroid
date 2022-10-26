@@ -80,7 +80,8 @@ public class SelectUrls extends AppCompatActivity {
 
 
                 try {
-                    UrlTable urlTable =new UrlTable(base_url, stage_name);
+                    //UrlTable urlTable =new UrlTable(base_url, stage_name);
+                    UrlTable urlTable =new UrlTable("https://ushauriapi.nascop.org", "Facility live server");
                     urlTable.save();
                 }catch(Exception e){
 
@@ -112,7 +113,7 @@ public class SelectUrls extends AppCompatActivity {
                  // Toast.makeText(MainActivity.this, x, Toast.LENGTH_SHORT).show();
 
 
-                 if (dataId!=1 && dataId!=2){
+                 /*if (dataId!=1 && dataId!=2){
                      Toast.makeText(SelectUrls.this, "Invalid", Toast.LENGTH_LONG).show();
                  }else {
                      //Toast.makeText(SelectUrls.this, getValue, Toast.LENGTH_LONG).show();
@@ -120,7 +121,11 @@ public class SelectUrls extends AppCompatActivity {
                      intent.putExtra("url", z);
                      intent.putExtra("stage_key", zz);
                      startActivity(intent);
-                 }
+                 }*/
+                 Intent intent = new Intent(SelectUrls.this, Config.class);
+                 intent.putExtra("url", z);
+                 intent.putExtra("stage_key", zz);
+                 startActivity(intent);
 
 
 
