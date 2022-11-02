@@ -120,7 +120,7 @@ public class MainOptions extends AppCompatActivity {
         dashboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://ushaurinew.mhealthkenya.co.ke/";
+                String url = "https://ushauri.mod.go.ke/";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);

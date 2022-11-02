@@ -207,7 +207,7 @@ public class Consent extends AppCompatActivity implements AdapterView.OnItemSele
 
                             ctimeE.setText(selectedHour + ":" + selectedMinute);
                         }
-                    }, hour, minute, true);
+                    }, hour, minute, false);
                     mTimePicker.setTitle("Select Preferred Time");
                     mTimePicker.show();
 
