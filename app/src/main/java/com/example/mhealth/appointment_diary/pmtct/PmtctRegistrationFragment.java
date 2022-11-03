@@ -202,9 +202,10 @@ public class PmtctRegistrationFragment extends Fragment {
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(mfl_code.getText().toString())){
+                /* if (TextUtils.isEmpty(mfl_code.getText().toString())){
                     mfl_code.setError("Please enter MFL code");
-                }else if (TextUtils.isEmpty(ccc_no.getText().toString())){
+                }*/
+                if (TextUtils.isEmpty(ccc_no.getText().toString())){
                     ccc_no.setError("Please enter CCC Number");
                 }else {
                     breastfeeding_layout.setVisibility(View.GONE);
@@ -267,9 +268,10 @@ public class PmtctRegistrationFragment extends Fragment {
         btn_submit_no_hei.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(mfl_code.getText().toString())){
+                /*if (TextUtils.isEmpty(mfl_code.getText().toString())){
                     mfl_code.setError("Please enter MFL code");
-                }else if (TextUtils.isEmpty(ccc_no.getText().toString())){
+                }*/
+                if (TextUtils.isEmpty(ccc_no.getText().toString())){
                     ccc_no.setError("Please enter CCC Number");
                 }else {
 //                    breastfeeding_layout.setVisibility(View.GONE);
@@ -330,11 +332,11 @@ public class PmtctRegistrationFragment extends Fragment {
     private boolean validateRegisterHei() {
         boolean valid = true;
 
-        if (TextUtils.isEmpty(mfl_code.getText().toString())) {
+        /*if (TextUtils.isEmpty(mfl_code.getText().toString())) {
             mfl_code.setError(getString(R.string.mfl_code_required));
             valid = false;
             return valid;
-        }
+        }*/
 
         if (TextUtils.isEmpty(ccc_no.getText().toString())) {
             ccc_no.setError(getString(R.string.KDO_required));

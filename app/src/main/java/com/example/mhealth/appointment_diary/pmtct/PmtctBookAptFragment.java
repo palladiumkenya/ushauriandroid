@@ -162,9 +162,11 @@ public class PmtctBookAptFragment extends Fragment {
         btn_check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(mfl_code.getText().toString())){
+               /* if (TextUtils.isEmpty(mfl_code.getText().toString())){
                     mfl_code.setError("Please enter MFL code");
-                }else if (TextUtils.isEmpty(ccc_no.getText().toString())){
+                }*/
+
+              if (TextUtils.isEmpty(ccc_no.getText().toString())){
                     ccc_no.setError("Please enter CCC Number");
                 }else {
                     getHeis();
