@@ -79,7 +79,7 @@ public class AppointmentAdapter extends BaseAdapter implements Filterable {
     public AppointmentAdapter(Context cont, List<AppointmentModel> mlist) {
 
         this.mycont = cont;
-        mylist = new ArrayList<>();
+        //mylist = new ArrayList<>();
         this.mylist = mlist;
         this.filterList = mlist;
 

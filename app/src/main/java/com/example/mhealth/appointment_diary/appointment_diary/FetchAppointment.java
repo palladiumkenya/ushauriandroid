@@ -501,6 +501,7 @@ public class FetchAppointment extends AppCompatActivity implements SmsReceiver.M
         //refreshSmsInbox();
         try {
             myadapt.getFilter().filter(s.toString());
+            //Toast.makeText(getApplicationContext(), "searching Client"+ " "+s, Toast.LENGTH_SHORT).show();
         }
         catch(Exception e){
 
