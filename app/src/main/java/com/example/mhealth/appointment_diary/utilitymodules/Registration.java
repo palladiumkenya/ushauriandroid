@@ -1270,11 +1270,12 @@ public static final String TAG ="Registration";
                 Toast.makeText(this, "Please Select transaction type", Toast.LENGTH_SHORT).show();
 
 
-            } else if (cccS.trim().isEmpty()) {
+            }
+            /*else if (cccS.trim().isEmpty()) {
 
                 cccE.setError("mfl code is required");
 
-            }
+            }*/
 
 
             /*else if (upnS.trim().isEmpty()) {
@@ -1572,7 +1573,8 @@ public static final String TAG ="Registration";
 
                 String newupns = AppendFunction.AppendUniqueIdentifier(upnS);
                 //String myccnumber = cccS + newupns;
-                String myccnumber = cccS;
+               // String myccnumber = cccS;
+                String myccnumber =newupns;
 
                //main String sendSms = myccnumber +  "*" + Service_No+ "*"+ f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + emailS + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" +serviceID + "*" + serviceUnitID+ "*" + ranksID;
                 String sendSms = myccnumber +  "*" + Service_No+ "*"+ f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + emailS + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" +serviceID + "*" + serviceUnitID+ "*" + ranksID;
@@ -1853,11 +1855,35 @@ public static final String TAG ="Registration";
 //
                                    /* if (serviceID !=0)
                                         Toast.makeText(Registration.this, "getting units", Toast.LENGTH_LONG).show();*/
-                                try {
+
+                                 if (serviceID==1 || serviceID==2 || serviceID==3){
+                                    try {
+                                        serviceUnitSpinner.setVisibility(View.VISIBLE);
+                                        rankSpin.setVisibility(View.VISIBLE);
+                                        getDepartments(serviceID);
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                }else{
+                                    serviceUnitSpinner.setVisibility(View.GONE);
+                                    rankSpin.setVisibility(View.GONE);
+                                }
+
+                                  /*  try {
+                                        getDepartments(serviceID);
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }*/
+
+
+
+
+
+                               /* try {
                                     getDepartments(serviceID);
                                 }catch (Exception e){
                                     e.printStackTrace();
-                                }
+                                }*/
 
                                 //getDepartments(serviceID);
 

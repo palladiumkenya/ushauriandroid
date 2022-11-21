@@ -798,6 +798,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
+                                    android:visibility="gone"
                                      />
 
                                 <!-- end search spinner -->
@@ -831,6 +832,7 @@
                         android:paddingLeft="@dimen/spacing_small"
                         android:paddingRight="@dimen/spacing_small"
                         android:text="Please Enter Ranks"
+                        android:visibility="gone"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/grey_90"
 
@@ -856,6 +858,7 @@
                                     android:id="@+id/RankSpinner"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:visibility="gone"
                                      />
 
 
