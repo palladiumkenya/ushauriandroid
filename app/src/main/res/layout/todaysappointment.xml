@@ -349,6 +349,7 @@
                                 <!-- begin request -->
 
                                 <androidx.cardview.widget.CardView
+                                    android:visibility="gone"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:id="@+id/card_request"
