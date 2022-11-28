@@ -1577,7 +1577,7 @@ public static final String TAG ="Registration";
                 String myccnumber =newupns;
 
                //main String sendSms = myccnumber +  "*" + Service_No+ "*"+ f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + emailS + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" +serviceID + "*" + serviceUnitID+ "*" + ranksID;
-                String sendSms = myccnumber +  "*" + Service_No+ "*"+ f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + emailS + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" +serviceID + "*" + serviceUnitID+ "*" + ranksID;
+                String sendSms = myccnumber +  "*" + Service_No+ "*"+ f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*"+ emailS + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" +serviceID + "*" + serviceUnitID+ "*" + ranksID;
                     //Service_No
                 //String sendSms =  f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + emailS + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" +serviceID + "*" + serviceUnitID;
 
@@ -1859,14 +1859,14 @@ public static final String TAG ="Registration";
                                  if (serviceID==1 || serviceID==2 || serviceID==3){
                                     try {
                                         serviceUnitSpinner.setVisibility(View.VISIBLE);
-                                        rankSpin.setVisibility(View.VISIBLE);
+                                       // rankSpin.setVisibility(View.VISIBLE);
                                         getDepartments(serviceID);
                                     }catch (Exception e){
                                         e.printStackTrace();
                                     }
                                 }else{
                                     serviceUnitSpinner.setVisibility(View.GONE);
-                                    rankSpin.setVisibility(View.GONE);
+                                    //rankSpin.setVisibility(View.GONE);
                                 }
 
                                   /*  try {

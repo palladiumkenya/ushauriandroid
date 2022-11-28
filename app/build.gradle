@@ -5,7 +5,8 @@ android {
     buildToolsVersion '30.0.3'
     defaultConfig {
 
-        applicationId "com.mhealth.ushauriv2"
+        //applicationId "com.mhealth.ushauriv2"
+        applicationId "com.DOD.ushauriv2"
         minSdkVersion 16
         targetSdkVersion 33
         versionCode 42
