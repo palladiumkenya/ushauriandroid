@@ -301,7 +301,7 @@ public class AppCal extends AppCompatActivity {
                     for (int x = 0; x < response.length(); x++) {
                         //  Toast.makeText(AppCal.this, String.valueOf(response.length()), Toast.LENGTH_SHORT).show();
                         textView1.setVisibility(View.VISIBLE);
-                        textView1.setText("Total appointments on"+ " "+ datex + " " +" is "+ String.valueOf(response.length()));
+                        textView1.setText("Total appointments on"+ " "+ dates + " " +" is "+ String.valueOf(response.length()));
 
 
                         try {
