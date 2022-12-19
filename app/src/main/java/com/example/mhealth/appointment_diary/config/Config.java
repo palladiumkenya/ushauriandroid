@@ -26,7 +26,7 @@ import java.util.List;
 
 public class Config extends AppCompatActivity {
 
-   // public static String BASE_URL= "";
+    // public static String BASE_URL= "";
     //https://ushaurinode.mhealthkenya.co.ke
 
     public static String STAGE_NAME= "";
@@ -49,6 +49,9 @@ public class Config extends AppCompatActivity {
     public static final String S_COUNTIES ="/locator/scounties?county=";
     public static final String WARDS="/locator/wards?scounty=";
     public static final String COUNTRIES="/locator/countries";
+    public static final String CALENDER_LIST="/appnt/applist";
+
+
     //https://ushauriapi.kenyahmis.org
     //
     public static final String CALIST="/appnt/applist";
