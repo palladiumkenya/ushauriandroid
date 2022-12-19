@@ -51,6 +51,8 @@ android {
 repositories {
 
     mavenCentral()
+
+
 }
 
 dependencies {
@@ -114,6 +116,7 @@ dependencies {
 
     //calender
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.3'
+
     implementation 'com.github.mahimrocky:EventCalender:v1.0.0'
     implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
 
