@@ -60,7 +60,7 @@ import java.util.Objects;
 
 public class AppCal extends AppCompatActivity {
     CompactCalendarView compactCalendar;
-    CollapsibleCalendar collapsibleCalendar;
+    //CollapsibleCalendar collapsibleCalendar;
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM- yyyy", Locale.getDefault());
     private SimpleDateFormat dateFormatMonth2 = new SimpleDateFormat("MM yyyy", Locale.getDefault());
     TextView month_name;
@@ -88,7 +88,7 @@ public class AppCal extends AppCompatActivity {
         setToolbar();
 
         textView1 =findViewById(R.id.datelist);
-        collapsibleCalendar =findViewById(R.id.collapse_view);
+       /* collapsibleCalendar =findViewById(R.id.collapse_view);
 
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
@@ -140,7 +140,7 @@ public class AppCal extends AppCompatActivity {
             public void onDayChanged() {
 
             }
-        });
+        });*/
         calist= new ArrayList<>();
 
         calAdapter =new CalAdapter(AppCal.this, calist);
@@ -282,7 +282,7 @@ public class AppCal extends AppCompatActivity {
 
         // String urls ="https://ushauriapi.kenyahmis.org/appnt/applist?telephone=0746537136 &start="+dates;
         String urls ="?telephone="+phone;
-        String tt ="&start="+datex;
+        String tt ="&start="+dates;
         JsonArrayRequest jsonArrayRequest =new JsonArrayRequest(Request.Method.GET,  z+Config.CALENDER_LIST+urls+tt, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
