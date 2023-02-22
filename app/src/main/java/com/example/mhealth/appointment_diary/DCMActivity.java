@@ -31,6 +31,7 @@ import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.config.VolleyErrors;
 import com.example.mhealth.appointment_diary.defaulters_diary.DefaulterMainActivity;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
+import com.example.mhealth.appointment_diary.tables.Mflcode;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.example.mhealth.appointment_diary.utilitymodules.Appointment;
 import com.example.mhealth.appointment_diary.utilitymodules.SpinnerAdapter;
@@ -58,10 +59,6 @@ public class DCMActivity extends AppCompatActivity {
     private Button btn_check,btn_submit_apt,btn_dcm_submit_apt;
 
     SweetAlertDialog mdialog;
-
-
-
-
 
     private String WELLNESS_LEVEL = "";
     private String APT_TYPE = "";
@@ -98,6 +95,7 @@ public class DCMActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_c_m);
 
+
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -106,6 +104,7 @@ public class DCMActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("DSD Clients");
+        //populateMflCode();
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
@@ -510,11 +509,11 @@ public class DCMActivity extends AppCompatActivity {
     private boolean validateNotOnDcm() {
         boolean valid = true;
 
-        if (TextUtils.isEmpty(mfl_code.getText().toString())) {
+        /*if (TextUtils.isEmpty(mfl_code.getText().toString())) {
             mfl_code.setError(getString(R.string.mfl_code_required));
             valid = false;
             return valid;
-        }
+        }*/
 
         if (TextUtils.isEmpty(ccc_no.getText().toString())) {
             ccc_no.setError(getString(R.string.KDO_required));
@@ -568,11 +567,11 @@ public class DCMActivity extends AppCompatActivity {
     private boolean validateUnstable() {
         boolean valid = true;
 
-        if (TextUtils.isEmpty(mfl_code.getText().toString())) {
+        /*if (TextUtils.isEmpty(mfl_code.getText().toString())) {
             mfl_code.setError(getString(R.string.mfl_code_required));
             valid = false;
             return valid;
-        }
+        }*/
 
         if (TextUtils.isEmpty(ccc_no.getText().toString())) {
             ccc_no.setError(getString(R.string.KDO_required));
@@ -620,7 +619,7 @@ public class DCMActivity extends AppCompatActivity {
     private void bookNormalTca(String endpoint) {
         JSONObject payload = new JSONObject();
         try {
-            payload.put("clinic_number", mfl_code.getText().toString()+ccc_no.getText().toString());
+            payload.put("clinic_number",mfl_code.getText().toString() + ccc_no.getText().toString());
             payload.put("phone_no", phone_no);
             payload.put("appointment_date", APPOINTMENT_DATE);
             payload.put("appointment_type", java.util.Arrays.asList(appnment).indexOf(APT_TYPE));
@@ -666,7 +665,7 @@ public class DCMActivity extends AppCompatActivity {
                         community_based_model_spinner.setSelection(0);
                         appointment_type_spinner.setSelection(0);
 
-                        mfl_code.getText().clear();
+                        //mfl_code.getText().clear();
                         ccc_no.getText().clear();
                         stable_appointment_date.getText().clear();
                         clinical_review_date.getText().clear();
@@ -761,7 +760,7 @@ public class DCMActivity extends AppCompatActivity {
 
         JSONObject payload = new JSONObject();
         try {
-            payload.put("clinic_number", mfl_code.getText().toString()+ccc_no.getText().toString());
+            payload.put("clinic_number",mfl_code.getText().toString() + ccc_no.getText().toString());
             payload.put("phone_no", phone_no);
             payload.put("refill_date", STABLE_REFILL_DATE);
             payload.put("review_date", CLINICAL_REVIEW_DATE);
@@ -807,7 +806,7 @@ public class DCMActivity extends AppCompatActivity {
                         community_based_model_spinner.setSelection(0);
                         appointment_type_spinner.setSelection(0);
 
-                        mfl_code.getText().clear();
+                      ///  mfl_code.getText().clear();
                         ccc_no.getText().clear();
                         stable_appointment_date.getText().clear();
                         clinical_review_date.getText().clear();
@@ -916,7 +915,7 @@ public class DCMActivity extends AppCompatActivity {
     private void getDuration() {
         JSONObject payload = new JSONObject();
         try {
-            payload.put("clinic_number", mfl_code.getText().toString()+ccc_no.getText().toString());
+            payload.put("clinic_number", ccc_no.getText().toString());
             payload.put("phone_no", phone_no);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -939,6 +938,7 @@ public class DCMActivity extends AppCompatActivity {
                     if (success) {
 
                         if (months >= 12) {
+                            populateMflCode();
                             wellness_level_layout.setVisibility(View.GONE);
                             stability_layout.setVisibility(View.VISIBLE);
                         }else {
@@ -1166,4 +1166,22 @@ public class DCMActivity extends AppCompatActivity {
         });
 
     }
-}
+    private void populateMflCode() {
+
+        try {
+
+            List<Mflcode> myl = Mflcode.findWithQuery(Mflcode.class, "select * from Mflcode limit 1");
+            String mflcode = "";
+
+            for (int x = 0; x < myl.size(); x++) {
+
+                mflcode = myl.get(x).getMfl();
+
+            }
+            mfl_code.setText(mflcode);
+
+        } catch (Exception e) {
+
+            Toast.makeText(this, "error occured populating mflcode", Toast.LENGTH_SHORT).show();
+        }
+}}
