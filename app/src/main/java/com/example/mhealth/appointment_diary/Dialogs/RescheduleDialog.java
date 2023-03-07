@@ -60,6 +60,7 @@ public class RescheduleDialog extends BottomSheetDialogFragment {
     private String phone_no;
 
     RequestQueue queue;
+    String  z;
 
 
     private String APPOINTMENT_DATE = "";
@@ -171,8 +172,20 @@ public class RescheduleDialog extends BottomSheetDialogFragment {
 
 
     private void reschedule() {
-        UrlTable _url = SugarRecord.findById(UrlTable.class, 1);
-        String  z=  _url.base_url1;
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                    //zz=_url.get(x).getStage_name1();
+                    // Toast.makeText(LoginActivity.this, "You are connected to" + " " +zz, Toast.LENGTH_LONG).show();
+                }
+            }
+        }catch(Exception e){
+
+        }
+       /* UrlTable _url = SugarRecord.findById(UrlTable.class, 1);
+        String  z=  _url.base_url1;*/
 
         JSONObject payload = new JSONObject();
         try {
