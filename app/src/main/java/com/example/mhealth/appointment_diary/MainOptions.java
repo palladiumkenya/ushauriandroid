@@ -42,6 +42,22 @@ import java.util.concurrent.TimeUnit;
 
 public class MainOptions extends AppCompatActivity {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     long  diffdate;
     Button appointmentbtn, defaultersbtn, mlabbtn, webbtn, reportbtn, welnessbtn, pmtct;
     LoadMessages lm;
