@@ -18,8 +18,15 @@ import android.os.SystemClock;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.example.mhealth.appointment_diary.DCMActivity;
 import com.example.mhealth.appointment_diary.Progress.Progress;
+import com.example.mhealth.appointment_diary.adapter.RequestsAdapter;
+import com.example.mhealth.appointment_diary.models.RescheduledRequestsModel;
+import com.example.mhealth.appointment_diary.tables.UrlTable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.cardview.widget.CardView;
@@ -31,6 +38,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,6 +78,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,17 +99,64 @@ import static com.example.mhealth.appointment_diary.StringSplitter.SplitString.s
 
 public class TodaysAppointment extends AppCompatActivity {
 
+    //messages
+    ListView listView;
+    ArrayAdapter arrayAdapter;
+    EditText input;
+    int appointmentCounter;
+
+    RequestsAdapter requestsAdapter;
+
+    CheckInternet chkInternet;
+    AccessServer acs;
+
+    String z, dates, phone;
+    private AppointmentAdapter myadapt;
+    private List<RescheduledRequestsModel> mymesslist = new ArrayList<>();
+    private List<RescheduledRequestsModel> requestlist= new ArrayList<>();
+
+
+    //messages
+
     Progress progress;
 
     Button btnRegister, btnReport, bookedappointments, broadcast, transfer, consent,transitCl,moveClinic, todayapp;
-    CardView card_register, card_book, card_consent, card_dsd, card_transfer, card_transit, card_clinic, card_today, card_calender;
+    CardView card_register, card_reschedule, card_book, card_consent, card_dsd, card_transfer, card_transit, card_clinic, card_today, card_calender;
     Button missed,honored;
     String passedUname,passedPassword;
+
+    TextView messages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todaysappointment);
+
+        //messages
+
+        try{
+
+          //  appCounterTxtV=(TextView) findViewById(R.id.appointmentcount);
+            chkInternet=new CheckInternet(TodaysAppointment.this);
+            appointmentCounter=0;
+            acs=new AccessServer(TodaysAppointment.this);
+           // fab=(FloatingActionButton) findViewById(R.id.fabtodays);
+            passedUname="";
+            passedPassword="";
+            listView = (ListView)findViewById(R.id.messages);
+            //messages = (ListView) findViewById(R.id.messages);
+           // input = (EditText) findViewById(R.id.input);
+
+        }
+        catch(Exception e){
+
+        }
+
+        postapi();
+
+
+
+        //messages
         progress =new Progress(TodaysAppointment.this);
 
         setToolbar();
@@ -117,6 +175,18 @@ public class TodaysAppointment extends AppCompatActivity {
         card_clinic= (CardView)  findViewById(R.id.card_clin);
         card_today= (CardView) findViewById(R.id.card_todey);
         card_calender= (CardView) findViewById(R.id.card_calender);
+        card_reschedule= (CardView) findViewById(R.id.card_reschedule);
+        messages = (TextView) findViewById(R.id.msg_reschedule);
+
+        messages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), RescheduledRequests.class);
+                startActivity(intent);
+
+            }
+        });
 
         card_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +195,17 @@ public class TodaysAppointment extends AppCompatActivity {
                 intent.putExtra("username",passedUname);
                 intent.putExtra("password",passedPassword);
                 startActivity(intent);
+
+            }
+        });
+
+        card_reschedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), RescheduledRequests.class);
+                startActivity(intent);
+
 
             }
         });
@@ -373,6 +454,143 @@ public class TodaysAppointment extends AppCompatActivity {
         catch(Exception e){
 
         }
+    }
+
+    //messages
+    public  void postapi() {
+
+        JSONArray jsonArray = new JSONArray();
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            List<Activelogin> al=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin limit 1");
+            for(int x=0;x<al.size();x++) {
+                String myuname = al.get(x).getUname();
+                List<Registrationtable> myl = Registrationtable.findWithQuery(Registrationtable.class, "select * from Registrationtable where username=? limit 1", myuname);
+                for (int y = 0; y < myl.size(); y++) {
+
+                    phone = myl.get(y).getPhone();
+
+                }
+            }
+
+            jsonObject.put("phone_no", phone);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        jsonArray.put(jsonObject);
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                }
+            }
+
+        } catch(Exception e){
+
+        }
+        String urls ="?telephone="+phone;
+
+        AndroidNetworking.get(z+Config.Reschedule_LIST+urls)
+                .addHeaders("Content-Type", "application.json")
+                .addHeaders("Connection","keep-alive")
+                .addHeaders("Accept", "application/json")
+
+                .setPriority(Priority.MEDIUM)
+                .build().getAsJSONArray(new JSONArrayRequestListener() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        Log.d("SERVER RESPONSE", response.toString());
+                        Log.d("total number", String.valueOf(response.length()));
+
+
+
+                        if (response.length()>0){
+                            messages.setVisibility(View.VISIBLE);
+                        }
+                        messages.setText(String.valueOf(response.length()));
+
+                        String test =response.toString();
+
+                        if (test==null){
+                            Toast.makeText(TodaysAppointment.this, "success", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        //Toast.makeText(UPIErrorList.this, "success"+response, Toast.LENGTH_SHORT).show();
+                        requestlist= new ArrayList<>();
+                        for (int i = 0; i < response.length(); i++) {
+
+
+
+
+
+                            try {
+                                JSONObject item = (JSONObject) response.get(i);
+
+
+                                // JSONObject jsonObject = jsonArray1.getJSONObject(i);
+
+                                String  client_name1 = item.getString("client_name");
+                                String clinic_no1 =item.getString("clinic_no");
+                                String client_phone_no1 = item.getString("client_phone_no");
+                                String appntmnt_date1= item.getString("appntmnt_date");
+                                String reschedule_date1 = item.getString("reschedule_date");
+                                String reason1= item.getString("reason");
+                                int clinic_id1= item.getInt("clinic_id");
+                                String appointment_type= item.getString("appointment_type");
+
+                                int appointment_id= item.getInt("appointment_id");
+                                int reschedule_id= item.getInt("reschedule_id");
+
+
+
+
+                                requestsAdapter =new RequestsAdapter(TodaysAppointment.this, requestlist);
+
+
+
+                                RescheduledRequestsModel rescheduledRequestsModel= new RescheduledRequestsModel(clinic_id1, clinic_no1, client_name1, client_phone_no1, appntmnt_date1, reschedule_date1, reason1, appointment_type, appointment_id, reschedule_id);
+                                //upilist=new ArrayList<>();
+                                requestlist.add(rescheduledRequestsModel);
+
+                                listView.setAdapter(requestsAdapter);
+
+
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }}
+
+
+
+                    }
+
+
+
+
+                    @Override
+                    public void onError(ANError anError) {
+
+                        Toast.makeText(TodaysAppointment.this, anError.getMessage(), Toast.LENGTH_LONG).show();
+
+                        Log.d("", anError.getMessage());
+
+                    }
+                });
+
+
+
+
+
+
+
+
     }
 
 

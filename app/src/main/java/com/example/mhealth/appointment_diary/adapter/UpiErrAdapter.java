@@ -34,12 +34,6 @@ import java.util.List;
 public class UpiErrAdapter extends BaseAdapter implements Filterable {
 
     private RequestQueue rq;
-
-
-
-
-
-
     private Context mycont;
     private List<UpiErrModel> mylist;
     UpiErrAdapter.CustomFilter filter;

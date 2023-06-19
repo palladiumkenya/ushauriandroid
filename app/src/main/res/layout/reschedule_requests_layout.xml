@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:text="Client Name"
+            android:padding="5dp"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/client_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.40"
+            android:gravity="left"
+            android:padding="5dp"
+            android:text="client_name"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:text="CCC Number"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/clinic_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.39"
+            android:gravity="left"
+            android:padding="5dp"
+            android:text="clinic_no"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:text="Client Phone Number"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/client_phone_no"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.39"
+            android:gravity="left"
+            android:padding="5dp"
+            android:text="client_phone_no"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:textStyle="bold"
+
+            android:padding="5dp"
+            android:text="Current Date"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/appntmnt_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.39"
+            android:gravity="left"
+            android:padding="5dp"
+            android:text="appntmnt_date"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:orientation="horizontal"
+
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:padding="5dp"
+            android:textStyle="bold"
+
+            android:text="Rescheduled Date"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/reschedule_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.39"
+            android:gravity="left"
+            android:padding="5dp"
+            android:text="reschedule_date"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/mybutton"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:text="Approve"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/reject"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/mybutton"
+            android:gravity="center"
+            android:layout_weight="1.3"
+            android:padding="5dp"
+            android:text="Reject"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+
+            android:textSize="13sp" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
