@@ -80,7 +80,7 @@
                 <LinearLayout
 
                     android:layout_width="match_parent"
-                    android:weightSum="2"
+                    android:weightSum="3"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
 
@@ -94,13 +94,10 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/ccc"
                             android:inputType="number"
-
                             android:hint="MFL Code*"
                             android:textStyle="bold"
                             android:maxLength="5"
                             android:textSize="13sp"
-
-
                             />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,12 +112,23 @@
                             android:id="@+id/upn"
                             android:inputType="number"
                             android:hint="CCC No*"
-
                             android:maxLength="5"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:onClick="submitUPIrequest"
+                        android:id="@+id/btnSearch1"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:text="Search"
+                        android:background="@drawable/background_round_corner_button"
+                        android:fontFamily="serif"
+                        android:textColor="#FFFFFF"
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 

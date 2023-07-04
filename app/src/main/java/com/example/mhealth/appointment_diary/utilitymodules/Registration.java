@@ -133,7 +133,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
 
     LinearLayout smslayoutL, idnoL, orphanL, altphoneL, disableL, groupingL, birthL, UPIL;
-    Button upibtn;
+    Button upibtn,  btnSearch11;
 
     EditText cccE, upnE, fileserialE, f_nameE, s_nameE, o_nameE, dobE, enrollment_dateE, art_dateE, phoneE, buddyphoneE, idnoE, altphoneE, ageinyearsE, locatorcountyE, locatorsubcountyE, locatorlocationE, locatorwardE, locatorvillageE, UPI_number, dobirth;
 
@@ -197,6 +197,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
         birthSpinner = findViewById(R.id.birthCountySpinner);
         countrySpinner = findViewById(R.id.countrySpinner);
         upibtn =findViewById(R.id.btnRSubmit);
+        btnSearch11=findViewById(R.id. btnSearch1);
 
 
 
