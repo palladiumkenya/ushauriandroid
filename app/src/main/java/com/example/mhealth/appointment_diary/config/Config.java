@@ -59,9 +59,10 @@ public class Config extends AppCompatActivity {
 
     public static final String UPIERR_DETAILS="/mohupi/search";
     public static final String POSTUPI_DETAILS="/mohupi/getupdateUPI";
+    public static final String SEARCH_CLIENT="/mohupi/search_ccc";
 
 
-    //https://ushauriapi.kenyahmis.org
+    //https://ushauriapi.kenyahmis.org/past_appointments
     //
     public static final String CALIST="/appnt/applist";
 

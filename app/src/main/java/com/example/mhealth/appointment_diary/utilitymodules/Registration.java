@@ -42,6 +42,10 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.mhealth.appointment_diary.AccessServer.AccessServer;
 import com.example.mhealth.appointment_diary.AppendFunction.AppendFunction;
 import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
@@ -90,6 +94,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class Registration extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private RequestQueue rq;
+    boolean a;
+    Progress pr;
 
     ArrayList<String> countiesList;
     ArrayList<counties> countiess;
@@ -140,6 +146,8 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
     Spinner genderS, maritalS, conditionS, enrollmentS, languageS, smsS, wklymotivation, messageTime, SelectstatusS, patientStatus, GroupingS, orphanS, schoolS, newGroupingS;
 
     String gender_code, marital_code, condition_code, grouping_code, new_grouping_code, category_code, language_code, sms_code, Selectstatus_code, wklyMotivation_code, messageTime_code, patientStatus_code, school_code, orphan_code, idnoS, upi_no, birth_cert_no, locatorcountyS, locatorsubcountyS, locatorlocationS, locatorwardS, locatorvillageS;
+    String fname1, mname1, lname1, dobb, CCCenroledDate, DateEnrolledCare, primaryPhone, smsenable, clientStatus, village1, location1;
+    int sex, marital, grouping1, language1;
 
     DatePickerDialog datePickerDialog;
     CheckInternet chkinternet;
@@ -197,7 +205,8 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
         birthSpinner = findViewById(R.id.birthCountySpinner);
         countrySpinner = findViewById(R.id.countrySpinner);
         upibtn =findViewById(R.id.btnRSubmit);
-        btnSearch11=findViewById(R.id. btnSearch1);
+        btnSearch11=findViewById(R.id.btnSearch1);
+
 
 
 
@@ -280,6 +289,18 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
         submitUPIrequest.setEnabled(true);
 
         Stetho.initializeWithDefaults(this);
+
+
+        btnSearch11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(Registration.this, "Please check your internet connection", Toast.LENGTH_LONG).show();
+
+                searchClient();
+
+            }
+        });
+
 
 
     }
@@ -1168,15 +1189,27 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             patientStatus_code = Integer.toString(position);
 
             if (patientStatus_code.contentEquals("1")) {
-                populateStatusNew();
+               // clearFields();
+                populateStatusNew();     //Active
                 cccE.setEnabled(false);
                 populateMflCode();
+                btnSearch11.setVisibility(View.GONE);
 
-
-            } else {
+            } else if(patientStatus_code.contentEquals("2")){
+               // clearFields();
                 cccE.setEnabled(true);
                 cccE.setText("");
                 populateStatus();
+                btnSearch11.setVisibility(View.VISIBLE);
+
+            }
+
+            else {
+                //clearFields();
+                cccE.setEnabled(true);
+                cccE.setText("");
+                populateStatus();
+                btnSearch11.setVisibility(View.GONE);
 
             }
 
@@ -3747,5 +3780,224 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
 
     }
+    public void searchClient(){
+
+       // pr.showProgress("Getting Clients Details");
+
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                }
+            }
+
+        } catch(Exception e){
+
+        }
+
+        String urls ="?client_id=" + cccE.getText().toString()+upnE.getText().toString();
+        AndroidNetworking.get(z+Config.SEARCH_CLIENT+urls)
+                .addHeaders("Content-Type", "application.json")
+                .addHeaders("Accept", "*/*")
+                .addHeaders("Accept", "gzip, deflate, br")
+                .addHeaders("Connection", "keep-alive")
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("DATAA", response.toString());
+                        //pr.dissmissProgress();
+                        //Toast.makeText(UPIUpdateActivity.this, "sucess", Toast.LENGTH_SHORT).show();
+                        try {
+                            a = response.getBoolean("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (a) {
+
+                            try {
+
+                                JSONObject jsonObject = response.getJSONObject("message");
+
+                                        /*"id": 1768055,
+                                        "group_id": 1,
+                                        "language_id": 1,
+                                        "clinic_number": "1234500001",
+                                        "f_name": "Betty",
+                                        "m_name": "Mary",
+                                        "l_name": "Edward",
+                                        "dob": "1992-11-01",
+                                        "txt_frequency": 168,
+                                        "txt_time": 15,
+                                        "phone_no": "0718373569",
+                                        "alt_phone_no": null,
+                                        "buddy_phone_no": null,
+                                        "shared_no_name": null,
+                                        "partner_id": 14,
+                                        "mfl_code": 12345,
+                                        "status": "Active",
+                                        "client_status": "ART",
+                                        "gender": 1,
+                                        "marital": 3,
+                                        "smsenable": "Yes",
+                                        "enrollment_date": "2020-01-01T12:02:30.000Z",
+                                        "art_date": "2020-01-01T12:02:41.000Z",
+                                        "wellness_enable": "Yes",
+                                        "motivational_enable": "Yes",
+                                        "welcome_sent": "No",
+                                        "client_type": "New",
+                                        "consent_date": null,
+                                        "physical_address": null,
+                                        "transfer_date": null,
+                                        "entry_point": "Mobile",
+                                        "gods_number": null,
+                                        "date_deceased": null,
+                                        "patient_source": null,
+                                        "prev_clinic": null,
+                                        "ushauri_id": null,
+                                        "db_source": null,
+                                        "clnd_dob": null,
+                                        "clinic_id": 2,
+                                        "national_id": "00764352",
+                                        "upi_no": "MOH1223232332",
+                                        "birth_cert_no": null,
+                                        "file_no": "00001",
+                                        "locator_county": "0",
+                                        "locator_sub_county": "0",
+                                        "locator_ward": "0",
+                                        "locator_location": null,
+                                        "locator_village": null,
+                                        "created_by": null,
+                                        "updated_by": 1565,
+                                        "hei_no": null,
+                                        "citizenship": 0,
+                                        "county_birth": 0,
+                                        "createdAt": "2022-11-24T09:02:01.000Z",
+                                        "updatedAt": "2023-06-26T10:16:24.000Z",
+                                        "deletedAt": null*/
+
+                                fname1 = jsonObject.getString("f_name");
+                                mname1 = jsonObject.getString("m_name");
+                                lname1 = jsonObject.getString("l_name");
+                                dobb = jsonObject.getString("dob");
+                                CCCenroledDate = jsonObject.getString("enrollment_date");
+                                DateEnrolledCare = jsonObject.getString("art_date");
+                                primaryPhone = jsonObject.getString("phone_no");
+                                smsenable= jsonObject.getString("smsenable");
+                                clientStatus= jsonObject.getString("client_status");
+                                village1= jsonObject.getString("locator_village");
+                                location1= jsonObject.getString("locator_location");
+
+                                sex= jsonObject.getInt("gender");
+                                marital= jsonObject.getInt("marital");
+                               /* grouping1= jsonObject.getInt("f_name");
+                                language1= jsonObject.getInt("f_name");*/
+
+
+
+                               // SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                                // enroldate_format = format.format(Enrollment_date);
+
+                               /* county_code1 = Integer.parseInt(jsonObject.getString("locator_county"));
+                                scounty_code1= Integer.parseInt(jsonObject.getString("locator_sub_county"));
+                                ward_code1= Integer.parseInt(jsonObject.getString("locator_ward"));
+                                Log.d("COUNTY",String.valueOf(county_code1));*/
+
+                                // county1 =jsonObject.getString("locator_county");
+                                // county_code1 = Integer.parseInt(jsonObject.getString("locator_county"));
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                           f_nameE.setText(fname1);
+                            s_nameE.setText(mname1);
+                            o_nameE.setText(lname1);
+                            dobE.setText(dobb);
+                            enrollment_dateE.setText(CCCenroledDate);
+                            art_dateE.setText(DateEnrolledCare);
+                            phoneE.setText(primaryPhone);
+                            locatorvillageE.setText(village1);
+                           // buddyphoneE.setText();
+                           // idnoE.setText();,
+                           // altphoneE
+                           // ageinyearsE,
+                            //locatorcountyE
+                            // locatorsubcountyE,
+                            // locatorlocationE,
+                            // locatorwardE,
+
+                            //UPI_number,
+                            //dobirth.setText;
+
+                            //enroldate_format = new SimpleDateFormat("yyyy.MM.dd").format(Enrollment_date);
+                            // SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                            //enrollment_date=format.format(Enrollment_date);
+                            // enrollment_date.setText(enroldate_format);
+
+                           /* gender_code = sex;
+                            marital_code = marital;
+                            condition_code = "";
+                            category_code = "";
+                            language_code = "";*/
+                            sms_code = smsenable;
+                            //marital_code = marital;
+                            // sms_code=sms_id;
+                            //populateGender();
+                            //populateMarital();
+                            populateSms();
+                            /*county_code1=countyID;
+                            scounty_code1=scountyID;
+                            ward_code1=wardID;*/
+                            //getFacilities();
+
+                           // Log.d("SMS", sms_code);
+                            // Toast.makeText(UPIUpdateActivity.this, gender_code, Toast.LENGTH_SHORT).show();
+
+                         //   o_name.setText(lname);
+                        } else {
+                           // dialogs.showSuccessDialog("", "No record found" );
+                            Toast.makeText(Registration.this, "No record found", Toast.LENGTH_SHORT).show();
+                            clearFields();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Toast.makeText(Registration.this, anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+    }
+
+   // {
+
+
+        /*try {
+
+            if (isUcsf()) {
+                SpinnerAdapter customAdapter = new SpinnerAdapter(getApplicationContext(), gendersUcsf);
+
+                genderS.setAdapter(customAdapter);
+
+            } else {
+
+                SpinnerAdapter customAdapter = new SpinnerAdapter(getApplicationContext(), genders);
+
+                genderS.setAdapter(customAdapter);
+
+            }
+
+
+        } catch (Exception e) {
+
+
+        }*/
+
+   // }
 
 }
