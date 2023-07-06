@@ -1194,6 +1194,18 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                 cccE.setEnabled(false);
                 populateMflCode();
                 btnSearch11.setVisibility(View.GONE);
+                f_nameE.setText("");
+                s_nameE.setText("");
+                o_nameE.setText("");
+                dobE.setText("");
+                enrollment_dateE.setText("");
+                art_dateE.setText("");
+                phoneE.setText("");
+                locatorvillageE.setText("");
+                cccE.setText("");
+                fileserialE.setText("");
+                upnE.setText("");
+
 
             } else if(patientStatus_code.contentEquals("2")){
                // clearFields();
@@ -1210,6 +1222,20 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                 cccE.setText("");
                 populateStatus();
                 btnSearch11.setVisibility(View.GONE);
+
+                f_nameE.setText("");
+                s_nameE.setText("");
+                o_nameE.setText("");
+                dobE.setText("");
+                enrollment_dateE.setText("");
+                art_dateE.setText("");
+                phoneE.setText("");
+                locatorvillageE.setText("");
+
+                cccE.setText("");
+                fileserialE.setText("");
+                upnE.setText("");
+
 
             }
 
@@ -3948,7 +3974,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                             // sms_code=sms_id;
                             //populateGender();
                             //populateMarital();
-                            populateSms();
+                           // populateSms();
                             /*county_code1=countyID;
                             scounty_code1=scountyID;
                             ward_code1=wardID;*/
