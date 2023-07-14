@@ -660,9 +660,10 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                                 public void onDateSet(DatePicker view, int year,
                                                       int monthOfYear, int dayOfMonth) {
                                     // set day of month , month and year value in the edit text
+
+
                                     art_dateE.setText(dayOfMonth + "/"
                                             + (monthOfYear + 1) + "/" + year);
-
                                 }
                             }, mYear, mMonth, mDay);
                     datePickerDialog.show();
