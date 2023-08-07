@@ -35,8 +35,12 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class RequestsAdapter extends BaseAdapter implements Filterable {
@@ -93,6 +97,7 @@ public class RequestsAdapter extends BaseAdapter implements Filterable {
             TextView client_phone_no = (TextView) v.findViewById(R.id.client_phone_no);
             TextView appntmnt_date= (TextView) v.findViewById(R.id.appntmnt_date);
             TextView reschedule_date= (TextView) v.findViewById(R.id.reschedule_date);
+            TextView reschedule_reason= (TextView) v.findViewById(R.id.reschedule_reason);
 //            final TextView patientID = (TextView) v.findViewById(R.id.patientid);
 
 
@@ -106,9 +111,25 @@ public class RequestsAdapter extends BaseAdapter implements Filterable {
             String client_phone_no1 = mylist.get(position).getClient_phone_no();
             String appntmnt_date1= mylist.get(position).getAppntmnt_date();
             String reschedule_date1 = mylist.get(position).getReschedule_date();
+            String reschedule_Reason = mylist.get(position).getReason();
 
             int r_id =mylist.get(position).getReschedule_id();
             int r_status =mylist.get(position).getAppointment_id();
+
+            //date format
+            Calendar calendar = Calendar.getInstance();
+
+            long date_ship_millis = calendar.getTimeInMillis();
+            SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);
+
+             appntmnt_date1 = newFormat.format(new Date(date_ship_millis));
+              reschedule_date1 = newFormat.format(new Date(date_ship_millis));
+
+           // enrollment_dateE.setText(ENROLMENT_DATE);
+
+
+
+            //date format
 
 
             chkinternet=new CheckInternet(mycont);
@@ -121,6 +142,7 @@ public class RequestsAdapter extends BaseAdapter implements Filterable {
             client_phone_no.setText(client_phone_no1);
             appntmnt_date.setText(appntmnt_date1);
             reschedule_date.setText(reschedule_date1);
+            reschedule_reason.setText(reschedule_Reason);
 
 
 

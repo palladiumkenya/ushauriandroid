@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_5sdp"
                 android:layout_weight="1"
-                app:sb_text="CALL"/>
+                app:sb_text="Phone Tracing"/>
 
             <co.ceryle.segmentedbutton.SegmentedButton
                 android:id="@+id/txtRegister"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_5sdp"
                 android:layout_weight="1"
-                app:sb_text="HOME VISIT"/>
+                app:sb_text="Physical Tracing"/>
 
         </co.ceryle.segmentedbutton.SegmentedButtonGroup>
 

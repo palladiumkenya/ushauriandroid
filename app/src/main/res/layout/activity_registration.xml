@@ -853,13 +853,14 @@
 
                 <!-- county of birth spinner -->
                 <LinearLayout
+                    android:id="@+id/birthCountyLinear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="?attr/actionBarSize"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/birth_facility"
+                        android:id="@+id/birth_facilityText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
@@ -1066,6 +1067,8 @@
 
 
                 <LinearLayout
+                    android:id="@+id/btnNew"
+
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_marginBottom="20dp"
@@ -1115,13 +1118,13 @@
 
 
                 <Button
-                    android:visibility="gone"
 
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Submit"
+                    android:text="Update"
                     android:onClick="submitClicke"
-                    android:id="@+id/btnRSubmi"
+                    android:id="@+id/btnRUpdate"
                     android:fontFamily="serif"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"

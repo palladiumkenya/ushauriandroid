@@ -68,6 +68,8 @@ public class Config extends AppCompatActivity {
 
     //https://ushauriapi.kenyahmis.org/mohupi/verify
 
+    //https://ushauriapi.nascop.org/past_appointments
+
 
     public static final String GETTODAYSAPPOINTMENT_URL1 = "/today_appointments";
     public static final String GETUSERMFLCODE_URL1 = "/verifyMFLCode";
