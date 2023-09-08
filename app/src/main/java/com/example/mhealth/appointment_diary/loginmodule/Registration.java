@@ -83,7 +83,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
     Dialogs dialogs;
     Dialog mydialog;
 
-    private MaterialTextView privacy;
+    private MaterialTextView privacy, otpphone1;;
     private CheckBox consent;
 
     EditText username, password, repassword, securityhint, securityanswerE, affiliationE, trcidnoE, userphoneE, otp1,otp2,otp3,otp4,otp5;
@@ -406,6 +406,8 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
             btnSendOtp = (Button) findViewById(R.id.submit_otp);
             cancel = (Button) findViewById(R.id.cancel_btn);
             check = (CheckBox) findViewById(R.id.checkBox1);
+
+            otpphone1 =findViewById(R.id.otpphone);
 
 
             spinner1 = (Spinner) findViewById(R.id.spinnerreg);
@@ -930,10 +932,14 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
                                     if (!mfl_code.isEmpty()){
                                         linearotp.setVisibility(View.VISIBLE);
                                         btnSendOtp.setVisibility(View.VISIBLE);
+                                        otpphone1.setVisibility(View.VISIBLE);
+                                        otpphone1.setText("OTP Sent to"+ " "+userphoneE.getText().toString());
 
                                     }else{
                                         linearotp.setVisibility(View.GONE);
                                         btnSendOtp.setVisibility(View.GONE);
+                                        otpphone1.setVisibility(View.GONE);
+
                                         Toast.makeText(Registration.this, userphoneE.getText().toString()+" " +"is not mapped", Toast.LENGTH_SHORT).show();
                                     }
                                    // Log.d("Value for OTP", otp);
@@ -972,6 +978,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
                     public void onError(ANError error) {
                         linearotp.setVisibility(View.GONE);
                         btnSendOtp.setVisibility(View.GONE);
+                        otpphone1.setVisibility(View.GONE);
                         dialogs.showErrorDialog("No server connection", "Server Response");
                         System.out.println("***error 3****"+error.getMessage());
                         // handle error

@@ -122,6 +122,17 @@
         <!-- remove -->
 
         <!-- get OTP -->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/otpphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+
+            android:text=""
+
+            android:textColor="@color/black_darker"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/validate_phone"
