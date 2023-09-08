@@ -86,5 +86,73 @@
     <string name="babydob"><font size="30">Baby Date of Birth</font></string>
     <string name="dateStartedprophy"><font size="30">Date Started</font></string>
 
+    <string name="privacy_information">
+ This Privacy Policy ("Policy") describes how we, as KenyaHMIS project providing the Health Information System ("System"), collects, uses, discloses, and protects personal information in connection with the System. We are committed to safeguarding your privacy and ensuring the confidentiality and security of your personal data.
+
+Collection of Personal Information
+
+We may collect personal information from various stakeholders, including healthcare providers, health facilities, patients, clients, and system users, as necessary for the functioning of the System.
+
+Personal information may include but is not limited to names, contact details, health records, and other information relevant to the provision of healthcare services and system usage.
+
+Use of Personal Information
+
+Personal information collected will be used for the purposes of healthcare provision, health data management (Includes access, processing, sharing, use etc.), retention, analysis, and improvement of healthcare services.
+
+We may also use personal information to communicate with system users, provide support, and facilitate the proper functioning of the System.
+
+Disclosure of Personal Information
+
+We may share personal information with authorized personnel, including healthcare providers, administrators, and other stakeholders involved in the provision of healthcare services.
+
+Personal information may also be disclosed to comply with legal obligations, enforce our rights, or protect the rights, safety, or security of individuals or the public.
+
+Data Security
+
+We implement appropriate technical and organizational measures to protect personal information from unauthorized access, loss, misuse, or disclosure.
+
+We maintain security protocols, access controls, and encryption measures to ensure the confidentiality, integrity, and availability of personal data within the System.
+
+Data Retention
+
+Personal information will be retained for as long as necessary to fulfill the purposes for which it was collected and in accordance with applicable Kenyan laws and regulations including but not limited to The Kenya Data Protection Act 2019.
+
+We adhere to data retention policies and procedures to ensure that personal information is retained securely and in compliance with privacy requirements.
+
+Data Subject Rights
+
+Individuals have the right to access, rectify, or request the deletion of their personal information as permitted by applicable data protection laws.
+
+Requests related to personal information should be submitted to the healthcare provider, designated contact person or administrator as applicable by law.
+
+Third-Party Services and Links
+
+The System may integrate with or provide links to third-party services or systems within the healthcare eco-system.
+
+This Privacy Policy applies solely to the System, and we are not responsible for the privacy practices or content of third-party services or systems.
+
+Updates to the Privacy Policy
+
+We reserve the right to update or modify this Privacy Policy at any time.
+
+Changes to the Policy will be communicated through appropriate channels or by posting an updated version on the System or our website.
+
+Contact Information
+
+If you have any questions, concerns, or requests regarding this Privacy Policy or the handling of personal information, please contact the KenyaHMIS Project through https://kenyahmis.org/contact/
+
+By using the System, you consent to the collection, use, and disclosure of personal information as described in this Privacy Policy. If you do not agree with any part of this Policy, please refrain from using the System.
+
+
+
+This Privacy Policy is effective as of version released in May 2023 and shall remain in effect until modified or replaced.
+
+
+
+By accessing or using the System, you acknowledge that you have read, understood, and agreed to this Privacy Policy.
+
+
+    </string>
+
 
 </resources>

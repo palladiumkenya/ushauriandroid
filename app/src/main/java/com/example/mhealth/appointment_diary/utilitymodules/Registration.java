@@ -1268,7 +1268,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                 locatorvillageE.setText("");
                // cccE.setText("");
                 fileserialE.setText("");
-                upnE.setText("");
+              //  upnE.setText("");
                 getFacilities();
 
 
@@ -1282,11 +1282,11 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 //              populateStatus();
                 populateweekly();
                 populatemsg();
-                populatepntstatus();
+                //populatepntstatus();
                 populategrouping();
 
-                gender_code1 = 0;
-                marital_code1 = 0;
+                //gender_code1 = 0;
+                //marital_code1 = 0;
                // condition_code1 = "";
                 category_code = "";
                 language_code1 = 0;
@@ -1305,7 +1305,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                // clearFields();
                 cccE.setEnabled(true);
                 cccE.setText("");
-                upnE.setText("");
+               // upnE.setText("");
                 populateStatus();
                 btnSearch11.setVisibility(View.VISIBLE);
                // getFacilities1();
@@ -1352,7 +1352,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 //              populateStatus();
                 populateweekly();
                 populatemsg();
-                populatepntstatus();
+                //populatepntstatus();
                 populategrouping();
                 gender_code1 = 0;
                 marital_code1 = 0;

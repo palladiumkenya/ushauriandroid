@@ -8,6 +8,10 @@
 
     <dimen name="shr_product_grid_reveal_height">200dp</dimen>
 
+    <dimen name="et_otp_width">40dp</dimen>
+    <dimen name="et_otp_height">40dp</dimen>
+    <dimen name="margin_right_otp">20dp</dimen>
+
     <!-- Dimens for staggered asymmetric grid layout cards-->
     <dimen name="shr_staggered_product_grid_spacing_large">30dp</dimen>
     <dimen name="shr_staggered_product_grid_spacing_small">26dp</dimen>

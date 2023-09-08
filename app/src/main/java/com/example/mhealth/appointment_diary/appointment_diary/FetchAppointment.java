@@ -586,16 +586,6 @@ public class FetchAppointment extends AppCompatActivity implements SmsReceiver.M
             }
         };
         handler.postDelayed(r, 100);
-
-       /* boolean alarmRunning = (PendingIntent.getBroadcast(FetchAppointment.this, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
-        if (alarmRunning == false) {
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(FetchAppointment.this, 0, alarm, 0);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 5000, pendingIntent);
-        }*/
-
-        //background code
-
     }
     public void onMessageReceived(@NotNull String otp) {
         Intrinsics.checkParameterIsNotNull(otp, "otp");

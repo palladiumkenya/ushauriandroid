@@ -69,7 +69,7 @@ public class Config extends AppCompatActivity {
     //https://ushauriapi.kenyahmis.org/mohupi/verify
 
     //https://ushauriapi.nascop.org/past_appointments
-
+    //https://ushauriapi.kenyahmis.org/verifyMFLCode
 
     public static final String GETTODAYSAPPOINTMENT_URL1 = "/today_appointments";
     public static final String GETUSERMFLCODE_URL1 = "/verifyMFLCode";
@@ -128,6 +128,9 @@ public class Config extends AppCompatActivity {
     public static final String PNCstart="/pmtct/pnc";
 
     public static final String HEIpost= "/pmtct/hei";
+
+    public static final String VERIFYMFL= "/verifyMFLCode";
+    public static final String VERIFYOTP= "/verifyMFLCode/verifyotp/";
 
     /*
     https://ushauriapi.kenyahmis.org/pmtct/pnc

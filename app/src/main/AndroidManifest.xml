@@ -24,6 +24,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
+            android:name=".loginmodule.Registration2otp"
+            android:exported="false" />
+        <activity
             android:name=".appointment_diary.RescheduledRequests"
             android:exported="false" />
         <activity
@@ -97,7 +100,7 @@
             android:value="ushauridb.db" />
         <meta-data
             android:name="VERSION"
-            android:value="28" />
+            android:value="29" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
