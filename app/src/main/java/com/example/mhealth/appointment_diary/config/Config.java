@@ -63,6 +63,7 @@ public class Config extends AppCompatActivity {
 
 
     //https://ushauriapi.kenyahmis.org/past_appointments
+    //https://ushauriapi.kenyahmis.org/mohupi/search_ccc+?client_id=1234500002
     //
     public static final String CALIST="/appnt/applist";
 

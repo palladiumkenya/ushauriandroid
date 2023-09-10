@@ -275,10 +275,10 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 //        Toast.makeText(this, ""+sha256("Reg*12345*ken*sit*nav*15/6/1991*1*3*1*13/6/2017*0713559850*1*2*2"), Toast.LENGTH_LONG).show();
 
         DobdateListener();
-       // ArtdateListener();
-       // EnrollmentdateListener();
+        ArtdateListener();
+        EnrollmentdateListener();
 
-        enrollment_dateE.setOnClickListener(new View.OnClickListener() {
+       /* enrollment_dateE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EnrollmentdateListener();
@@ -290,7 +290,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             public void onClick(View v) {
                 ArtdateListener();
             }
-        });
+        });*/
         gender_code1 = 0;
         marital_code1 = 0;
 
@@ -652,7 +652,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
 
     public void EnrollmentdateListener() {
-        Calendar cur_calender = Calendar.getInstance();
+       /* Calendar cur_calender = Calendar.getInstance();
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(Registration.this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -674,9 +674,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                 cur_calender.get(Calendar.DAY_OF_MONTH));
 
         datePickerDialog.getDatePicker();
-        datePickerDialog.show();
+        datePickerDialog.show();*/
 
-       /* try {
+        try {
 
             enrollment_dateE.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -705,12 +705,12 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
         } catch (Exception e) {
 
 
-        }*/
+        }
     }
 
     public void ArtdateListener() {
 
-        Calendar cur_calender = Calendar.getInstance();
+        /*Calendar cur_calender = Calendar.getInstance();
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(Registration.this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -732,10 +732,10 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                 cur_calender.get(Calendar.DAY_OF_MONTH));
 
         datePickerDialog.getDatePicker();
-        datePickerDialog.show();
+        datePickerDialog.show();*/
 
 
-        /*try {
+        try {
 
             art_dateE.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -765,7 +765,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
         } catch (Exception e) {
 
 
-        }*/
+        }
     }
 
 
@@ -2512,7 +2512,10 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
 
         } catch (Exception e) {
-            Toast.makeText(this, "error in submission, try again " + e, Toast.LENGTH_SHORT).show();
+            Log.d("Error", e.getMessage());
+            Log.d("Error2", e.toString());
+            e.printStackTrace();
+            Toast.makeText(this, "error in submission, try again please" + e, Toast.LENGTH_SHORT).show();
 
 
         }
@@ -4159,6 +4162,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                         //Toast.makeText(UPIUpdateActivity.this, "sucess", Toast.LENGTH_SHORT).show();
                         try {
                             a = response.getBoolean("success");
+                            Log.d("DATAA2222", String.valueOf(a));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -4276,87 +4280,144 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
                                 // county1 =jsonObject.getString("locator_county");
                                 // county_code1 = Integer.parseInt(jsonObject.getString("locator_county"));
+                                f_nameE.setText(fname1);
+                                s_nameE.setText(mname1);
+                                o_nameE.setText(lname1);
+                              //  dobE.setText(dobb);
+                               // enrollment_dateE.setText(CCCenroledDate);
+                               //  art_dateE.setText(DateEnrolledCare);
+                                phoneE.setText(primaryPhone);
+                                locatorlocationE.setText(location1);
+                                locatorvillageE.setText(village1);
+
+                                //format 1
+
+                                /*Calendar calendar = Calendar.getInstance();
+                                int year,  month,  day;
+                                calendar.set(Calendar.YEAR, year);
+                                calendar.set(Calendar.MONTH, month);
+                                calendar.set(Calendar.DAY_OF_MONTH, day);
+                                long date_ship_millis = calendar.getTimeInMillis();
+                                SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.UK);
+
+                                ART_DATE = newFormat.format(new Date(date_ship_millis));
+
+                                art_dateE.setText(ART_DATE);*/
+
+                                //end format1
+
+
+                                //FORMATE DATES
+                               // dd/MM/yyyy
+                                SimpleDateFormat newFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+                                //DateEnrolledCare = newFormat.format(new Date(date_ship_millis));
+                               // art_dateE.setText(DateEnrolledCare);
+
+                                //CCCenroledDate = newFormat.format(new Date(date_ship_millis));
+                               //enrollment_dateE.setText(CCCenroledDate);
+
+                              // dobb =newFormat.format(new Date(date_ship_millis));
+
+                                //FORMAT art
+                                SimpleDateFormat inputFormatart = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                                Date dateart = inputFormatart.parse(DateEnrolledCare);
+                                SimpleDateFormat outputFormatart = new SimpleDateFormat("dd/MM/yyyy");
+                                String formattedDateart= outputFormatart.format(dateart);
+                                art_dateE.setText(formattedDateart);
+
+                                //FORMAT enrolment
+                                SimpleDateFormat inputFormatenrol = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                                Date dateenrol = inputFormatenrol.parse(CCCenroledDate);
+                                SimpleDateFormat outputFormatenrol = new SimpleDateFormat("dd/MM/yyyy");
+                                String formattedDateenrol= outputFormatenrol.format(dateenrol);
+                                enrollment_dateE.setText(formattedDateenrol);
+
+
+                                //FORMAT dob
+                                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                                // Parse the input date string into a Date object
+                                Date date = inputFormat.parse(dobb);
+
+                                // Create a SimpleDateFormat object for the output format
+                                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+                                // Format the Date object into the desired output format
+                                String formattedDateofbirth = outputFormat.format(date);
+                                dobE.setText(formattedDateofbirth);
+
+
+                                gender_code1 = genderid;
+                                marital_code1 = marital_id;
+                                language_code1 =language_id1;
+                                time1 = txt_time;
+                                if (smsenable.contentEquals("Yes")){
+                                    smsCodeA =1;
+                                }else if (smsenable1.contentEquals("No")){
+                                    smsCodeA=2;
+                                }else{
+                                    smsCodeA=0;
+                                }
+                                //sms_code1 = smsenable;
+                                // smsCodeA =smsenable1;
+                                //
+
+                                if (motivational_enable.contentEquals("Yes")){
+                                    moteA =1;
+                                }else if(motivational_enable.contentEquals("No")){
+                                    moteA=2;
+                                }else{
+                                    moteA=0;
+                                }
+
+                                if (SelectStatus.contentEquals("Active")){
+                                    selectStatusCode=1;
+                                }else if (SelectStatus.contentEquals("Disabled")){
+                                    selectStatusCode=2;
+
+                                }else if (SelectStatus.contentEquals("Deceased")){
+                                    selectStatusCode=3;
+
+                                }else if(SelectStatus.contentEquals("Transfer Out")){
+                                    selectStatusCode=4;
+
+                                }else{
+                                    selectStatusCode=0;
+                                }
+
+                                if ( client_status.contentEquals("ART")){
+                                    client_statusCode=1;
+                                }else if (client_status.contentEquals("Pre-Art")){
+                                    client_statusCode=2;
+                                }else{
+                                    client_statusCode=0;
+                                }
+                                groupCode=group_id;
+
+
+                                populateGenderUpdate();
+                                populateMaritalUpdate();
+                                populateSms1();
+                                populateLanguage1();
+                                populatemsg1();
+                                populateweekly1();
+                                populateStatus1();
+                                populateCondition1();
+                                populateNewGrouping1();
 
 
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                           f_nameE.setText(fname1);
-                            s_nameE.setText(mname1);
-                            o_nameE.setText(lname1);
-                            dobE.setText(dobb);
-                            //enrollment_dateE.setText(CCCenroledDate);
-                           // art_dateE.setText(DateEnrolledCare);
-                            phoneE.setText(primaryPhone);
-                            locatorlocationE.setText(location1);
-                            locatorvillageE.setText(village1);
+                             }
+                        else {
+                            // dialogs.showSuccessDialog("", "No record found" );
+                            Log.d("No record", "No record found");
+                            Toast.makeText(Registration.this, "No record found", Toast.LENGTH_SHORT).show();
+                           clearFields();
+                        }
 
-
-                            //FORMATE DATES
-                            SimpleDateFormat newFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.UK);
-
-                            DateEnrolledCare = newFormat.format(new Date(date_ship_millis));
-                            art_dateE.setText(DateEnrolledCare);
-                            CCCenroledDate = newFormat.format(new Date(date_ship_millis));
-                            enrollment_dateE.setText(CCCenroledDate);
-
-                            gender_code1 = genderid;
-                            marital_code1 = marital_id;
-                            language_code1 =language_id1;
-                            time1 = txt_time;
-                            if (smsenable.contentEquals("Yes")){
-                                smsCodeA =1;
-                            }else if (smsenable1.contentEquals("No")){
-                                smsCodeA=2;
-                            }else{
-                                smsCodeA=0;
-                            }
-                            //sms_code1 = smsenable;
-                           // smsCodeA =smsenable1;
-                            //
-
-                            if (motivational_enable.contentEquals("Yes")){
-                                moteA =1;
-                            }else if(motivational_enable.contentEquals("No")){
-                                moteA=2;
-                            }else{
-                                moteA=0;
-                            }
-
-                            if (SelectStatus.contentEquals("Active")){
-                                selectStatusCode=1;
-                            }else if (SelectStatus.contentEquals("Disabled")){
-                                selectStatusCode=2;
-
-                            }else if (SelectStatus.contentEquals("Deceased")){
-                                selectStatusCode=3;
-
-                            }else if(SelectStatus.contentEquals("Transfer Out")){
-                                selectStatusCode=4;
-
-                            }else{
-                                selectStatusCode=0;
-                            }
-
-                           if ( client_status.contentEquals("ART")){
-                                client_statusCode=1;
-                            }else if (client_status.contentEquals("Pre-Art")){
-                                client_statusCode=2;
-                            }else{
-                               client_statusCode=0;
-                           }
-                           groupCode=group_id;
-
-
-                           populateGenderUpdate();
-                            populateMaritalUpdate();
-                            populateSms1();
-                            populateLanguage1();
-                            populatemsg1();
-                            populateweekly1();
-                            populateStatus1();
-                           populateCondition1();
-                           populateNewGrouping1();
 
 
                             //art_dateE.setText(ART_DATE);
@@ -4399,16 +4460,18 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
                             // Toast.makeText(UPIUpdateActivity.this, gender_code, Toast.LENGTH_SHORT).show();
 
                          //   o_name.setText(lname);
-                        } else {
+                       /* }
+                        else {
                            // dialogs.showSuccessDialog("", "No record found" );
                             Toast.makeText(Registration.this, "No record found", Toast.LENGTH_SHORT).show();
                             clearFields();
-                        }
+                        }*/
 
                     }
 
                     @Override
                     public void onError(ANError anError) {
+                        Log.d("noErr", "err");
                         Toast.makeText(Registration.this, anError.getErrorDetail(), Toast.LENGTH_SHORT).show();
 
                     }

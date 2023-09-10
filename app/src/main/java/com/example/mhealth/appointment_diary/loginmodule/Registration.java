@@ -1063,6 +1063,16 @@ public void submitOtp(String phone, String otpA){
                                 Intent intent = new Intent(Registration.this, Registration2otp.class);
                                 intent.putExtra("PhoneNo", userphoneE.getText().toString());
                                 startActivity(intent);
+                                userphoneE.setText("");
+                                otp1.setText("");
+                                otp2.setText("");
+                                otp3.setText("");
+                                otp4.setText("");
+                                otp5.setText("");
+                                linearotp.setVisibility(View.GONE);
+                                btnSendOtp.setVisibility(View.GONE);
+                                otpphone1.setVisibility(View.GONE);
+                                consent.setChecked(false);
                                // dialogs.showErrorDialog(response,"Server responses"+id_result);
 
                             } catch (JSONException e) {
@@ -1077,6 +1087,17 @@ public void submitOtp(String phone, String otpA){
                             System.out.println("***error 1****"+response);
 
                             dialogs.showErrorDialog(response,"Server responses");
+                            userphoneE.setText("");
+                            otp1.setText("");
+                            otp2.setText("");
+                            otp3.setText("");
+                            otp4.setText("");
+                            otp5.setText("");
+                            linearotp.setVisibility(View.GONE);
+                            btnSendOtp.setVisibility(View.GONE);
+                            otpphone1.setVisibility(View.GONE);
+                            consent.setChecked(false);
+                            // dialogs.showErrorDialog(response,"Server responses"+id_result);
                         }
 
 
@@ -1092,6 +1113,17 @@ public void submitOtp(String phone, String otpA){
 
 //                            Toast.makeText(ctx,  ""+error.networkResponse.statusCode+" error mess "+new String(htmlBodyBytes), Toast.LENGTH_SHORT).show();
                             //dialogs.showErrorDialog(new String(htmlBodyBytes),"Server Response");
+                            userphoneE.setText("");
+                            otp1.setText("");
+                            otp2.setText("");
+                            otp3.setText("");
+                            otp4.setText("");
+                            otp5.setText("");
+                            linearotp.setVisibility(View.GONE);
+                            btnSendOtp.setVisibility(View.GONE);
+                            otpphone1.setVisibility(View.GONE);
+                            consent.setChecked(false);
+                            // dialogs.showErrorDialog(response,"Server responses"+id_result);
                             dialogs.showErrorDialog("No server connection", "Server Response");
                             System.out.println("***error 3****"+error.getMessage());
                             //Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_LONG).show();
