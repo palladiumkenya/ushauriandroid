@@ -1577,7 +1577,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 
                 for(int i=0;i<filterList.size();i++){
 
-                    if(filterList.get(i).getThename().toUpperCase().contains(constraint)|| filterList.get(i).ccnumber.toUpperCase().contains(constraint) || filterList.get(i).apptype.toUpperCase().contains(constraint)){
+                    if(filterList.get(i).ccnumber.toUpperCase().contains(constraint)){
 
 
                         LosttoFollowModel am=new LosttoFollowModel(filterList.get(i).getCcnumber(),filterList.get(i).getThename(),filterList.get(i).getPhone(),filterList.get(i).getApptype(),filterList.get(i).getDate(),filterList.get(i).getRead(),filterList.get(i).getPatientid(),filterList.get(i).getFileserial(),filterList.get(i).getInformantnumber(),filterList.get(i).getLastdateread(),filterList.get(i).getReadcount());
