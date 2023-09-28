@@ -453,7 +453,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
         try {
             //getRemoteData();
             setFacilityAdapter();
-            addListenerToAffiliationSpinnerEdt();
+           // addListenerToAffiliationSpinnerEdt();
 
 
         } catch (Exception e) {
@@ -462,7 +462,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
         }
     }
 
-    public void addListenerToAffiliationSpinnerEdt() {
+   /* public void addListenerToAffiliationSpinnerEdt() {
 
         try {
 
@@ -512,7 +512,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
 
 
         }
-    }
+    }*/
 
     public void setSpinnerListeners() {
 

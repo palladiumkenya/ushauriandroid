@@ -251,7 +251,7 @@ public class Registration2otp extends AppCompatActivity implements AdapterView.O
         try {
             //getRemoteData();
             setFacilityAdapter();
-            addListenerToAffiliationSpinnerEdt();
+           // addListenerToAffiliationSpinnerEdt();
 
 
         } catch (Exception e) {
@@ -260,7 +260,7 @@ public class Registration2otp extends AppCompatActivity implements AdapterView.O
         }
     }
 
-    public void addListenerToAffiliationSpinnerEdt() {
+    /*public void addListenerToAffiliationSpinnerEdt() {
 
         try {
 
@@ -310,7 +310,7 @@ public class Registration2otp extends AppCompatActivity implements AdapterView.O
 
 
         }
-    }
+    }*/
 
     public void setSpinnerListeners() {
 
