@@ -355,7 +355,7 @@ public class DCMActivity extends AppCompatActivity {
                 Log.e("months:", String.valueOf(months));
                 if (months >= 12) {
                     Log.e("Stability level: ", STABILITY_LEVEL);
-                    if(STABILITY_LEVEL.equals("Stable")){
+                    if(STABILITY_LEVEL.equals("Established")){
                         //continue with stable logic
                         Log.e("On DCM status: ", ON_DCM_STATUS);
                         if (ON_DCM_STATUS.equals("On DSD")){
@@ -367,7 +367,7 @@ public class DCMActivity extends AppCompatActivity {
                             if (validateNotOnDcm())
                                 bookNormalTca(z+Config.NOT_ON_DCM_BOOKING1);
                         }
-                    }else if (STABILITY_LEVEL.equals("Unstable")){
+                    }else if (STABILITY_LEVEL.equals("Unestablished")){
                         if (validateUnstable())
                             bookNormalTca(z+Config.UNSTABLE_BOOKING1);
                     }
@@ -386,7 +386,7 @@ public class DCMActivity extends AppCompatActivity {
                 Log.e("months:", String.valueOf(months));
                 if (months >= 12) {
                     Log.e("Stability level: ", STABILITY_LEVEL);
-                    if(STABILITY_LEVEL.equals("Stable")){
+                    if(STABILITY_LEVEL.equals("Established")){
                         //continue with stable logic
                         Log.e("On DCM status: ", ON_DCM_STATUS);
                         if (ON_DCM_STATUS.equals("On DSD")){
@@ -405,7 +405,7 @@ public class DCMActivity extends AppCompatActivity {
                                 bookNormalTca(z+Config.NOT_ON_DCM_BOOKING1);
 
                         }
-                    }else if (STABILITY_LEVEL.equals("Unstable")){
+                    }else if (STABILITY_LEVEL.equals("Unestablished")){
                         List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
                         if (_url.size()==1){
                             for (int x=0; x<_url.size(); x++){
