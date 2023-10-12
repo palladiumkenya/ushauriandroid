@@ -22,6 +22,8 @@ import com.example.mhealth.appointment_diary.AccessServer.AccessServer;
 import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.encryption.Base64Encoder;
+import com.example.mhealth.appointment_diary.tables.Activelogin;
+import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -38,6 +40,7 @@ public class HtsresultsTab extends AppCompatActivity {
     CheckInternet chk;
     Base64Encoder encoder;
     AccessServer acs;
+    String phone;
 
     String[] tabTitle = {"Positive", "Negative"};
     int[] Counts = {0,0};
@@ -74,17 +77,22 @@ public class HtsresultsTab extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String userPhoneNumber="";
+               // String userPhoneNumber="";
 
-                List<UsersTable> myl=UsersTable.findWithQuery(UsersTable.class,"select * from Users_table limit 1");
-                for(int y=0;y<myl.size();y++){
+                List<Activelogin> al=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin limit 1");
+                for(int x=0;x<al.size();x++){
+                    String myuname=al.get(x).getUname();
+                    List<Registrationtable> myl=Registrationtable.findWithQuery(Registrationtable.class,"select * from Registrationtable where username=? limit 1",myuname);
+                    for(int y=0;y<myl.size();y++){
 
-                    userPhoneNumber=myl.get(y).getPhonenumber();
+                        phone=myl.get(y).getPhone();
+
+                    }
                 }
 
                 if(chk.isInternetAvailable()){
 
-                    acs.getHtsResultsFromDb(userPhoneNumber);
+                    acs.getHtsResultsFromDb(phone);
 
                 }
                 else{

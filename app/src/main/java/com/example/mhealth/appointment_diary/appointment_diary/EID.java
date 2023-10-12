@@ -81,6 +81,7 @@ import java.util.List;
 import kotlin.jvm.internal.Intrinsics;
 
 public class EID extends AppCompatActivity {
+    String phone="";
 
     public static final String SMS_BUNDLE = "pdus";
     public static final String LOGGED_IN = "logged_in";
@@ -220,7 +221,7 @@ public class EID extends AppCompatActivity {
 
                     userPhoneNumber=myl.get(y).getPhonenumber();
                 }*/
-                String phone="";
+               // String phone="";
                 List<Activelogin> al=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin limit 1");
                 for(int x=0;x<al.size();x++){
                     String myuname=al.get(x).getUname();

@@ -23,12 +23,16 @@ import com.example.mhealth.appointment_diary.DateTimePicker.DateTimePicker;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.encryption.Base64Encoder;
+import com.example.mhealth.appointment_diary.tables.Activelogin;
+import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class HtsSampleRemoteLogin extends AppCompatActivity {
+
+    String phone;
     DateTimePicker dtp;
     LinearLayout testkit1ll,testkit2ll, llsecondtestkitL;
     EditText samplenumber,clientname,dob,telephone,testdate,lotnumber1,expirydate1,lotnumber2,expirydate2,sampletestername,dbsdate,dbsdispatchdate,requestingprovider;
@@ -372,7 +376,7 @@ public class HtsSampleRemoteLogin extends AppCompatActivity {
                     labId = "7";
                 }
 
-                String userPhoneNumber="";
+              //  String userPhoneNumber="";
                 if(!llsecondtestkitL.isShown()){
 
                     Selectedtestkit2="-1";
@@ -382,10 +386,15 @@ public class HtsSampleRemoteLogin extends AppCompatActivity {
 
                 }
 
-                List<UsersTable> myl=UsersTable.findWithQuery(UsersTable.class,"select * from Users_table limit 1");
-                for(int y=0;y<myl.size();y++){
+                List<Activelogin> al=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin limit 1");
+                for(int x=0;x<al.size();x++){
+                    String myuname=al.get(x).getUname();
+                    List<Registrationtable> myl=Registrationtable.findWithQuery(Registrationtable.class,"select * from Registrationtable where username=? limit 1",myuname);
+                    for(int y=0;y<myl.size();y++){
 
-                    userPhoneNumber=myl.get(y).getPhonenumber();
+                        phone=myl.get(y).getPhone();
+
+                    }
                 }
 //                Toast.makeText(this, "submitting", Toast.LENGTH_SHORT).show();
                 String message=samplenumberS+"*"+clientnameS+"*"+dobS+"*"+SelectedSex+"*"+telephoneS+"*"+testdateS+"*"
@@ -394,7 +403,7 @@ public class HtsSampleRemoteLogin extends AppCompatActivity {
                         "*"+dbsdispatchdateS+"*"+requestingproviderS +"*"+labId+"*"+SelectedLab;
 
                 System.out.println(message);
-                acs.submitHtsData(Base64Encoder.encryptString(userPhoneNumber), Base64Encoder.encryptString(message));
+                acs.submitHtsData(Base64Encoder.encryptString(phone), Base64Encoder.encryptString(message));
                 clearfields();
 
 

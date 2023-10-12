@@ -34,7 +34,7 @@ public class Config extends AppCompatActivity {
     public static String sendSmsShortcode="40147";
     public static String registerShortcode="40147";
 
-    public static final String JSON_ARRAYRESULTS = "result";
+    public static final String JSON_ARRAYRESULTS1 = "result";
 
     public static final String KEY_MESSAGECODE="message";
 
@@ -185,7 +185,7 @@ public class Config extends AppCompatActivity {
     public static final String KEY_AFFILIATION_NAME = "name";
     public static final String KEY_AFFILIATION_ID = "id";
 
-   // public static final String JSON_ARRAYRESULTS = "result";
+    public static final String JSON_ARRAYRESULTS = "result";
    // public static final String KEY_MESSAGECODE="message";
 
     public static final String KEY_MFLCODE="mfl_code";

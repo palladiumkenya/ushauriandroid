@@ -25,6 +25,8 @@ import com.example.mhealth.appointment_diary.DateTimePicker.DateTimePicker;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.encryption.Base64Encoder;
+import com.example.mhealth.appointment_diary.tables.Activelogin;
+import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.Calendar;
@@ -41,6 +43,8 @@ public class EidSamples extends AppCompatActivity {
     DateTimePicker dtp;
     DatePickerDialog dp;
     AccessServer acs;
+
+    String phone="";
 
     final Calendar myCalendar = Calendar.getInstance();
 
@@ -418,12 +422,15 @@ public class EidSamples extends AppCompatActivity {
                     Toast.makeText(this, "other entry point is required", Toast.LENGTH_SHORT).show();
                 }
 
-                String userPhoneNumber="";
+                List<Activelogin> al=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin limit 1");
+                for(int x=0;x<al.size();x++){
+                    String myuname=al.get(x).getUname();
+                    List<Registrationtable> myl=Registrationtable.findWithQuery(Registrationtable.class,"select * from Registrationtable where username=? limit 1",myuname);
+                    for(int y=0;y<myl.size();y++){
 
-                List<UsersTable> myl=UsersTable.findWithQuery(UsersTable.class,"select * from Users_table limit 1");
-                for(int y=0;y<myl.size();y++){
+                        phone=myl.get(y).getPhone();
 
-                    userPhoneNumber=myl.get(y).getPhonenumber();
+                    }
                 }
 
                 if(!infantcccnumberE.isShown()){
@@ -442,7 +449,7 @@ public class EidSamples extends AppCompatActivity {
 
                 }
 //                Toast.makeText(this, "submitting", Toast.LENGTH_SHORT).show();
-                System.out.println(userPhoneNumber);
+                System.out.println(phone);
 
               /*  String message="EID*"+selectedSex+"*"+selectedRegimen+"*"+selectedAlive+"*"+heinumberS+"*"+patientnameS
                         +"*"+dobS+"*"+selectedEntrypoint+"*"+otherEntrypointS+"*"+collectiondateS+"*"+selectedProphylaxiscode+"*"+otherProphylaxiscodeS+"*"+selectedInfantfeeding+"*"
@@ -454,10 +461,10 @@ public class EidSamples extends AppCompatActivity {
                         +selectedPcr+"*"+alivedeadS+"*"+motherageS+"*"+haartdateS +"*"+ labNameS+"*"+ labId ;//+ "*" + infantcccnumberS;
                 System.out.println(labNameS);
                 System.out.println(labId);
-                System.out.println("**phone encrypted**********"+ Base64Encoder.encryptString(userPhoneNumber)+"***message encrypted******"+Base64Encoder.encryptString(message));
+                System.out.println("**phone encrypted**********"+ Base64Encoder.encryptString(phone)+"***message encrypted******"+Base64Encoder.encryptString(message));
 
 
-                acs.submitEidVlData(Base64Encoder.encryptString(userPhoneNumber), Base64Encoder.encryptString(message));
+                acs.submitEidVlData(Base64Encoder.encryptString(phone), Base64Encoder.encryptString(message));
 
             }
         }

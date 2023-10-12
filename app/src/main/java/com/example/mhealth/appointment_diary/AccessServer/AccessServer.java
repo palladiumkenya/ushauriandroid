@@ -238,7 +238,7 @@ public class AccessServer {
                                 JSONObject j = null;
                                 try {
                                     j = new JSONObject(response);
-                                    id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS);
+                                    id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS1);
                                     System.out.println("****length****"+id_result.length());
                                     if(id_result.length()==0){
 
@@ -377,7 +377,7 @@ public class AccessServer {
                                 JSONObject j = null;
                                 try {
                                     j = new JSONObject(response);
-                                    id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS);
+                                    id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS1);
                                     System.out.println("****length****"+id_result.length());
                                     if(id_result.length()==0){
 
@@ -521,7 +521,7 @@ public class AccessServer {
                                 JSONObject j = null;
                                 try {
                                     j = new JSONObject(response);
-                                    id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS);
+                                    id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS1);
 
 
                                     if(id_result.length()==0){

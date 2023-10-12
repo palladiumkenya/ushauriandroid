@@ -25,12 +25,16 @@ import com.example.mhealth.appointment_diary.DateTimePicker.DateTimePicker;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.encryption.Base64Encoder;
+import com.example.mhealth.appointment_diary.tables.Activelogin;
+import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class ViralLoadSamples extends AppCompatActivity {
+
+    String phone;
 
     MaterialBetterSpinner SpinnerSex, Spinnertype, SpinnerCurrentRegimen, SpinnerArtLine, SpinnerJustcode;
     EditText ccnumber, patientname, dob, datecollection, artstart, dateartregimen;
@@ -249,12 +253,17 @@ public class ViralLoadSamples extends AppCompatActivity {
                 Toast.makeText(this, "sex is required", Toast.LENGTH_SHORT).show();
             } else {
 
-                String userPhoneNumber = "";
+                //String userPhoneNumber = "";
 
-                List<UsersTable> myl = UsersTable.findWithQuery(UsersTable.class, "select * from Users_table limit 1");
-                for (int y = 0; y < myl.size(); y++) {
+                List<Activelogin> al=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin limit 1");
+                for(int x=0;x<al.size();x++){
+                    String myuname=al.get(x).getUname();
+                    List<Registrationtable> myl=Registrationtable.findWithQuery(Registrationtable.class,"select * from Registrationtable where username=? limit 1",myuname);
+                    for(int y=0;y<myl.size();y++){
 
-                    userPhoneNumber = myl.get(y).getPhonenumber();
+                        phone=myl.get(y).getPhone();
+
+                    }
                 }
 
                 String message = "VL*" + ccnumberS + "*" + patientnameS + "*" + dobS + "*" + datecollectionS + "*" + artstartS + "*"
@@ -263,9 +272,9 @@ public class ViralLoadSamples extends AppCompatActivity {
 
                 System.out.println(labId);
                 System.out.println(labNameS);
-                System.out.println("**phone encrypted**********" + Base64Encoder.encryptString(userPhoneNumber) + "***message encrypted******" + Base64Encoder.encryptString(message));
+                System.out.println("**phone encrypted**********" + Base64Encoder.encryptString(phone) + "***message encrypted******" + Base64Encoder.encryptString(message));
 
-                acs.submitEidVlData(Base64Encoder.encryptString(userPhoneNumber), Base64Encoder.encryptString(message));
+                acs.submitEidVlData(Base64Encoder.encryptString(phone), Base64Encoder.encryptString(message));
 
                 Toast.makeText(this, "submitting", Toast.LENGTH_SHORT).show();
             }
