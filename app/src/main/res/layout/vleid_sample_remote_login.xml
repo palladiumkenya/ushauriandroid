@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_alignParentBottom="true"
+    android:layout_height="match_parent">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/eidvlremotelogintoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_alignParentTop="true"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/vleid_testinglab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30sp"
+                android:hint="Select Testing Lab"
+                android:textColorHint="@color/textcolorblack"
+                app:met_floatingLabel="normal" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:id="@+id/vleid_vlbuttons"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:text="Viral Load Samples"
+                    android:background="@drawable/background_round_corner_button"
+                    android:textColor="@color/white"
+                    android:onClick="goToViralLoadSamples"
+                    android:layout_marginTop="30sp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:background="@drawable/background_round_corner_button"
+                    android:onClick="goToEidSamples"
+                    android:text="Early infant diagnosis"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/sampleTrasnButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:background="@color/darkblue"
+                    android:onClick="goToSampleTransportation"
+                    android:text="Sample transportation"
+                    android:visibility="gone"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/sampleTransStatusButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:background="@color/darkblue"
+                    android:visibility="gone"
+                    android:onClick="goToSampleTransportationStatus"
+                    android:text="Sample transportation status"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/checkRejectedSamplesButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30sp"
+                    android:background="@color/darkblue"
+                    android:visibility="gone"
+                    android:onClick="goToCheckRejectedSamples"
+                    android:text="Check Rejected Samples"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:text="Barcode/QR Reader"
+                android:layout_marginTop="30sp"
+                android:background="@color/darkblue"
+                android:textColor="@color/white"
+                android:onClick="goToBarcodeReader"
+                android:visibility="gone"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

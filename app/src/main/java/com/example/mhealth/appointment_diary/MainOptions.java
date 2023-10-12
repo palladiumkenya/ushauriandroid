@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.mhealth.appointment_diary.LoadMessages.LoadMessages;
 
+import com.example.mhealth.appointment_diary.appointment_diary.EID;
+import com.example.mhealth.appointment_diary.appointment_diary.MlabOptions;
 import com.example.mhealth.appointment_diary.appointment_diary.TodaysAppointment;
 import com.example.mhealth.appointment_diary.config.SelectUrls;
 import com.example.mhealth.appointment_diary.defaulters_diary.DefaulterMainActivity;
@@ -142,7 +144,7 @@ public class MainOptions extends AppCompatActivity {
         mlab_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getPackageManager().getLaunchIntentForPackage("com.mhealth.mLab");
+                /*Intent intent = getPackageManager().getLaunchIntentForPackage("com.mhealth.mLab");
                 if (intent != null) {
                     // We found the activity now start the activity
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -153,7 +155,10 @@ public class MainOptions extends AppCompatActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.setData(Uri.parse("market://details?id=" + "com.mhealth.mLab"));
                     startActivity(intent);
-                }
+                }*/
+
+                Intent intent =new Intent(MainOptions.this, MlabOptions.class);
+                startActivity(intent);
             }
         });
 

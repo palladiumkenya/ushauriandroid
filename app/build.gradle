@@ -71,6 +71,7 @@ dependencies {
     implementation 'com.github.mHealthKenya:SegmentedButton:v2.0.2'
 
 
+
 //    implementation 'com.github.ceryle:SegmentedButton:v1.0'
     //removed
     //implementation 'com.github.ceryle:SegmentedButton:v2.0.2'
@@ -104,6 +105,9 @@ dependencies {
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
+
+    implementation 'com.aurelhubert:ahbottomnavigation:2.0.4'
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 
 
     implementation 'com.mikhaellopez:circularimageview:3.2.0'          // circle image view

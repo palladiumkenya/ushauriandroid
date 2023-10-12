@@ -24,6 +24,54 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
+            android:name=".appointment_diary.CheckRejectedSamples"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.ViralLoadSamples"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.EidSamples"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.VleidSampleRemoteLogin"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.eidvlOptions"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.HtsresultsTab"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.HtsOptions"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.DeviceListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.Settings"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.BluetoothDemo"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.VLsamplelogin"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.eidSamplelogin"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.HtsSampleRemoteLogin"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.HTS"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.EID"
+            android:exported="false" />
+        <activity
+            android:name=".appointment_diary.MlabOptions"
+            android:exported="false" />
+        <activity
             android:name=".loginmodule.Registration2otp"
             android:exported="false" />
         <activity

@@ -25,6 +25,7 @@ import com.example.mhealth.appointment_diary.ProcessReceivedMessage.ProcessMessa
 import com.example.mhealth.appointment_diary.Progress.Progress;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.config.Config;
+import com.example.mhealth.appointment_diary.encryption.Base64Encoder;
 import com.example.mhealth.appointment_diary.models.Appointments;
 import com.example.mhealth.appointment_diary.pmtct.ANCVisit;
 import com.example.mhealth.appointment_diary.pmtct.LaborAndDelivery;
@@ -69,6 +70,7 @@ public class AccessServer {
     SweetAlertDialog mdialog;
     Dialog mydialog;
     private JSONArray id_result;
+    Dialog sweetdialog;
 
 
 
@@ -83,6 +85,9 @@ public class AccessServer {
 
     }
 
+
+
+
     //    *******************function to initialise variables in the constructor
     public void initialise(Context ctx) {
 
@@ -91,6 +96,7 @@ public class AccessServer {
             pr = new Progress(ctx);
             mydialog = new Dialog(ctx);
             dialogs=new Dialogs(ctx);
+            sweetdialog = new Dialog(ctx);
             pm=new ProcessMessage();
 
         } catch (Exception e) {
@@ -98,6 +104,527 @@ public class AccessServer {
 
         }
     }
+
+    //start mlab
+
+    public void submitEidVlData(final String phone,final String message) {
+       // HttpsTrustManager.allowAllSSL();
+
+        pr.showProgress("Submitting data.....");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.EIDVL_DATA_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        pr.dissmissProgress();
+                        System.out.println("****response ***");
+                        System.out.println(response);
+
+                        if(response.contains("Phone Number not Authorised to send remote samples")){
+
+                            dialogs.showErrorDialog("Phone Number not Authorised to send remote samples", "Error");
+                        } else {
+                            // sweetdialog.showSuccessDialog("Sample Remote Login Completed Succesfully", "SUCCESS"+response);
+                            dialogs.showSuccessDialog("Sample Remote Login Completed Succesfully", response);
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pr.dissmissProgress();
+                        System.out.println("*** error ***"+error);
+
+                        dialogs.showErrorDialog("Error occured "+error.toString(), "Error");
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("message", message);
+                params.put("phone", phone);
+
+
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(ctx);
+        requestQueue.add(stringRequest);
+
+    }
+
+
+    public void submitHtsData(final String phone,final String message) {
+       // HttpsTrustManager.allowAllSSL();
+
+        pr.showProgress("Submitting Hts data.....");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.HTS_DATA_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        pr.dissmissProgress();
+
+                        dialogs.showSuccessDialog("Submit response "+response,"SUCCESS");
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pr.dissmissProgress();
+
+                        dialogs.showErrorDialog("Error occured "+error.toString(), "Error");
+
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("message", message);
+                params.put("phone", phone);
+
+
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(ctx);
+        requestQueue.add(stringRequest);
+
+    }
+
+
+
+
+    public void getVlEidResultsFromDb(final String phone){
+
+//        Toast.makeText(ctx, ""+phone, Toast.LENGTH_SHORT).show();
+
+        try{
+
+            pr.showProgress("getting results...");
+
+
+            StringRequest stringRequest = new StringRequest(POST,Config.RESULTS_DATA_URL,
+                    new Response.Listener<String>() {
+
+                        //
+                        @Override
+                        public void onResponse(String response) {
+//                            pd.dismissDialog();
+
+                            System.out.println("**************messages*********************");
+                            System.out.println(response);
+//                            Toast.makeText(ctx, " "+response, Toast.LENGTH_SHORT).show();
+
+                            pr.dissmissProgress();
+                            if(response.trim().equalsIgnoreCase("Phone Number not attached to any Facility")){
+
+                                Toast.makeText(ctx, ""+response, Toast.LENGTH_LONG).show();
+
+                            }
+                            else{
+
+                                JSONObject j = null;
+                                try {
+                                    j = new JSONObject(response);
+                                    id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS);
+                                    System.out.println("****length****"+id_result.length());
+                                    if(id_result.length()==0){
+
+                                        Toast.makeText(ctx, "You do not have any results", Toast.LENGTH_LONG).show();
+
+                                    }
+                                    else{
+
+                                        getMyVlEidResultsFromDb(id_result);
+
+                                    }
+
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(ctx, "error getting results, try again", Toast.LENGTH_SHORT).show();
+
+                                }
+
+                            }
+
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+//                            pd.dismissDialog();
+                            pr.dissmissProgress();
+
+                            System.out.println("******************error*************");
+                            System.out.println(error);
+                            Toast.makeText(ctx, "error occured, try again", Toast.LENGTH_LONG).show();
+
+
+                        }
+                    })
+
+            {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("phone_no", Base64Encoder.encryptString(phone));
+
+                    return params;
+                }
+
+//                @Override
+//                public Map<String, String> getHeaders() throws AuthFailureError {
+//                    HashMap<String, String> headers = new HashMap<>();
+//                    headers.put("Content-Type", "application/json; charset=utf-8");
+//
+//                    return headers;
+//                }
+
+            };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    800000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            RequestQueue requestQueue = Volley.newRequestQueue(ctx);
+            requestQueue.add(stringRequest);
+
+
+        }
+        catch(Exception e){
+
+            Toast.makeText(ctx, "error getting results "+e, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
+    private void getMyVlEidResultsFromDb(JSONArray j){
+
+        for(int i=0;i<j.length();i++){
+            try {
+                JSONObject json = j.getJSONObject(i);
+
+
+                String message = json.getString(Config.KEY_MESSAGECODE);
+
+                pm.processReceivedMessage(message);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(ctx, "error occured "+ e, Toast.LENGTH_SHORT).show();
+                System.out.println("********json error*********");
+                System.out.println(e);
+            }
+        }
+
+
+
+
+    }
+
+
+
+
+    public void getHtsResultsFromDb(final String phone){
+
+        Toast.makeText(ctx, ""+phone, Toast.LENGTH_SHORT).show();
+
+        try{
+
+            pr.showProgress("getting hts results...");
+
+
+            StringRequest stringRequest = new StringRequest(POST,Config.GETHTSRESULTS_DATA_URL,
+                    new Response.Listener<String>() {
+
+                        //
+                        @Override
+                        public void onResponse(String response) {
+//                            pd.dismissDialog();
+
+                            System.out.println("**************messages*********************");
+                            System.out.println(response);
+//                            Toast.makeText(ctx, " "+response, Toast.LENGTH_SHORT).show();
+
+                            pr.dissmissProgress();
+                            if(response.trim().equalsIgnoreCase("Phone Number not attached to any Facility")){
+
+                                Toast.makeText(ctx, ""+response, Toast.LENGTH_LONG).show();
+
+                            }
+                            else{
+
+                                JSONObject j = null;
+                                try {
+                                    j = new JSONObject(response);
+                                    id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS);
+                                    System.out.println("****length****"+id_result.length());
+                                    if(id_result.length()==0){
+
+                                        Toast.makeText(ctx, "You do not have any results", Toast.LENGTH_LONG).show();
+
+                                    }
+                                    else{
+
+                                        getMyHtsResultsFromDb(id_result);
+
+                                    }
+
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(ctx, "error getting results, try again", Toast.LENGTH_SHORT).show();
+
+                                }
+
+                            }
+
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+//                            pd.dismissDialog();
+                            pr.dissmissProgress();
+
+                            System.out.println("******************error*************");
+                            System.out.println(error);
+                            Toast.makeText(ctx, "error occured, try again", Toast.LENGTH_LONG).show();
+
+
+                        }
+                    })
+
+            {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("phone_no", Base64Encoder.encryptString(phone));
+
+                    return params;
+                }
+
+//                @Override
+//                public Map<String, String> getHeaders() throws AuthFailureError {
+//                    HashMap<String, String> headers = new HashMap<>();
+//                    headers.put("Content-Type", "application/json; charset=utf-8");
+//
+//                    return headers;
+//                }
+
+            };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    800000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            RequestQueue requestQueue = Volley.newRequestQueue(ctx);
+            requestQueue.add(stringRequest);
+
+
+        }
+        catch(Exception e){
+
+            Toast.makeText(ctx, "error getting results, try again ", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
+    private void getMyHtsResultsFromDb(JSONArray j){
+
+        for(int i=0;i<j.length();i++){
+            try {
+                JSONObject json = j.getJSONObject(i);
+
+
+                String message = json.getString(Config.KEY_MESSAGECODE);
+
+                pm.processReceivedMessage(message);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(ctx, "error occured "+ e, Toast.LENGTH_SHORT).show();
+                System.out.println("********json error*********");
+                System.out.println(e);
+            }
+        }
+
+
+
+
+    }
+
+
+
+
+    public void getHistoricalResultsFromDb(final String phone,final String message){
+
+        Toast.makeText(ctx, "the phone number"+phone, Toast.LENGTH_SHORT).show();
+        System.out.println("*********number***********"+phone);
+        System.out.println("*********encrypted number**********"+Base64Encoder.encryptString(phone));
+
+        try{
+
+            pr.showProgress("getting historical results...");
+
+
+            StringRequest stringRequest = new StringRequest(POST,Config.HISTORICALRESULTS_DATA_URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+//                            pd.dismissDialog();
+
+                            System.out.println("**************historical messages*********************");
+                            System.out.println(response);
+//                            Toast.makeText(ctx, " "+response, Toast.LENGTH_SHORT).show();
+
+                            pr.dissmissProgress();
+                            if(response.trim().contains("No results were found for this period")){
+
+                                Toast.makeText(ctx, ""+response, Toast.LENGTH_SHORT).show();
+
+                            }
+                            else if(response.trim().contains("Phone Number not Authorised to receive results")){
+
+                                Toast.makeText(ctx, ""+response, Toast.LENGTH_SHORT).show();
+
+                            }
+                            else{
+
+                                JSONObject j = null;
+                                try {
+                                    j = new JSONObject(response);
+                                    id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS);
+
+
+                                    if(id_result.length()==0){
+
+                                        Toast.makeText(ctx, "You do not have any results", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else{
+
+                                        getMyHistoricalResultsFromDb(id_result);
+
+                                    }
+
+
+
+                                } catch (JSONException e) {
+
+                                    e.printStackTrace();
+                                    Toast.makeText(ctx, "error getting results "+e, Toast.LENGTH_LONG).show();
+
+                                }
+
+                            }
+
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+//                            pd.dismissDialog();
+                            pr.dissmissProgress();
+                            System.out.println("******************error*************");
+                            System.out.println(error);
+                            Toast.makeText(ctx, "error occured, try again ", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    })
+
+            {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("phone_no", Base64Encoder.encryptString(phone));
+                    params.put("message", Base64Encoder.encryptString(message));
+
+                    return params;
+                }
+
+//                @Override
+//                public Map<String, String> getHeaders() throws AuthFailureError {
+//                    HashMap<String, String> headers = new HashMap<>();
+//                    headers.put("Content-Type", "application/json; charset=utf-8");
+//
+//                    return headers;
+//                }
+
+            };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    800000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            RequestQueue requestQueue = Volley.newRequestQueue(ctx);
+            requestQueue.add(stringRequest);
+
+
+        }
+        catch(Exception e){
+
+            Toast.makeText(ctx, "error getting results "+e, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
+    private void getMyHistoricalResultsFromDb(JSONArray j){
+
+        for(int i=0;i<j.length();i++){
+            try {
+                JSONObject json = j.getJSONObject(i);
+
+
+                String message=json.getString(Config.KEY_MESSAGECODE);
+
+                pm.processReceivedMessage(message);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+//                Toast.makeText(CreateUser.this, "an error getting facilities "+ e, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+
+
+    }
+    //end mlab
 
 
     public void sendDetailsToDb(final String message) throws MalformedURLException, URISyntaxException {

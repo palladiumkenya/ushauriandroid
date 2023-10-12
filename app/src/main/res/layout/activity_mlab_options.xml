@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".appointment_diary.MlabOptions">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="0dp"
+        android:background="@drawable/border1"
+        >
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp"
+            android:layout_gravity="top"
+            android:orientation="vertical" >
+
+
+
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lab Results"
+                android:textSize="15dp"
+                android:textColor="#000"
+                android:gravity="center"/>
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:onClick="goToResults"
+
+                android:textAllCaps="false"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="9dp"
+                android:background="@drawable/button1"
+                android:drawableLeft="@drawable/eidvl"
+                android:paddingLeft="10sp"
+                android:text="EID/VL"
+                android:id="@+id/button" />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:onClick="HTSResults"
+
+                android:textAllCaps="false"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:paddingLeft="10sp"
+                android:layout_marginTop="9dp"
+                android:drawableLeft="@drawable/htsicon"
+                android:background="@drawable/button1"
+                android:text="HTS"
+                android:id="@+id/htsbutton" />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:onClick="TB"
+
+                android:textAllCaps="false"
+                android:visibility="gone"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="9dp"
+                android:paddingLeft="10sp"
+                android:drawableLeft="@drawable/tbicon"
+                android:background="@drawable/button1"
+                android:text="TB"
+                android:id="@+id/Tbbutton" />
+
+
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:onClick="goToClients"
+                android:paddingLeft="10sp"
+                android:visibility="gone"
+
+                android:drawableLeft="@drawable/notifyclient"
+                android:textAllCaps="false"
+                android:background="@drawable/button1"
+                android:text="Notify Client"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:onClick="historicalResults"
+                android:visibility="gone"
+
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/historicalresults"
+                android:background="@drawable/button1"
+                android:paddingLeft="10sp"
+                android:text="Historical Results"/>
+
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="version"
+            android:textStyle="italic"
+            android:visibility="gone"
+            android:id="@+id/version"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</ScrollView>

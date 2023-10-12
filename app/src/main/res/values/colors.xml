@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#a3c1ad</color>-->
 
     <color name="otp_editext_color">#DAE2DFDF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="navigationBarColor">#3F51B5</color>
 
     <color name="colorPrimary">  #00ced1</color>
     <color name="colorPrimaryDark">  #00ced1</color>
@@ -16,6 +18,7 @@
     <color name="tab_background_selected">#f5f5f5</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="textcolorblack">#000000</color>
+    <color name="darkblue">#000050</color>
 
 
     <color name="black_darker">#282828</color>

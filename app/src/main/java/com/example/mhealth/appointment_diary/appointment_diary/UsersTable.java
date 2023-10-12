@@ -1,0 +1,62 @@
+package com.example.mhealth.appointment_diary.appointment_diary;
+
+import com.orm.SugarRecord;
+
+public class UsersTable extends SugarRecord {
+
+    public String username;
+    public String password;
+    public String securityqn;
+    public String securityans;
+    public String phonenumber;
+
+    public UsersTable(){}
+
+    public UsersTable(String uname,String pwd,String secqn,String secans,String phonenumber){
+        this.phonenumber=phonenumber;
+        this.username=uname;
+        this.password=pwd;
+        this.securityqn=secqn;
+        this.securityans=secans;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getSecurityqn() {
+        return securityqn;
+    }
+
+    public void setSecurityqn(String securityqn) {
+        this.securityqn = securityqn;
+    }
+
+    public String getSecurityans() {
+        return securityans;
+    }
+
+    public void setSecurityans(String securityans) {
+        this.securityans = securityans;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+}

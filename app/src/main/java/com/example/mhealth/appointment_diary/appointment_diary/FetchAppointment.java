@@ -288,7 +288,6 @@ public class FetchAppointment extends AppCompatActivity implements SmsReceiver.M
 
     private String getUserPhoneNumber(){
         String phone="";
-
         List<Activelogin> al=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin limit 1");
         for(int x=0;x<al.size();x++){
             String myuname=al.get(x).getUname();
