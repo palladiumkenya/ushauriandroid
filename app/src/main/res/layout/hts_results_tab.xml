@@ -4,33 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
+   <!-- <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">-->
 
-        <androidx.appcompat.widget.Toolbar
+        <!--<androidx.appcompat.widget.Toolbar
             android:id="@+id/htstabtoolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/colorPrimary"
+
+            android:background="@color/colorPrimaryDark"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/AppTheme.PopupOverlay" />-->
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/htstabstabs"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?android:attr/actionBarSize"
             app:tabMaxWidth="0dp"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabBackground="@drawable/tab_colour_selector"
+            app:tabBackground="@color/navigationBarColor"
             app:tabSelectedTextColor="@color/textcolorblack"
             app:tabTextColor="@color/textColorPrimary"
             />
 
 
-    </com.google.android.material.appbar.AppBarLayout>
+  <!--  </com.google.android.material.appbar.AppBarLayout>-->
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/htstabviewpager"

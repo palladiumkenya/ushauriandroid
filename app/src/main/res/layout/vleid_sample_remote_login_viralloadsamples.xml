@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
 
-    <com.google.android.material.appbar.AppBarLayout
+   <!-- <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -22,7 +22,7 @@
 
 
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>-->
 
 
     <ScrollView
@@ -151,7 +151,7 @@
                     android:text="Cancel"
                     android:onClick="CancelVlSamples"
                     android:layout_weight="1"
-                    android:background="@color/darkblue"
+                    android:background="@drawable/background_round_corner_button"
                     android:textColor="@color/white"
                     android:layout_height="wrap_content" />
 
@@ -159,7 +159,8 @@
                     android:layout_width="match_parent"
                     android:text="Submit Sample"
                     android:layout_weight="1"
-                    android:background="@color/darkblue"
+                    android:background="@drawable/background_round_corner_button"
+
                     android:textColor="@color/white"
                     android:onClick="SubmitSample"
                     android:layout_height="wrap_content" />

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".appointment_diary.HtsSampleRemoteLogin">
 
-    <com.google.android.material.appbar.AppBarLayout
+   <!-- <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -22,7 +22,7 @@
 
 
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>-->
 
 
     <ScrollView
@@ -233,6 +233,9 @@
                 <Button
                     android:layout_width="match_parent"
                     android:text="Cancel"
+                    android:background="@drawable/background_round_corner_button"
+                    android:onClick="CancelHtsSamples"
+                    
 
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
@@ -240,8 +243,10 @@
                 <Button
                     android:layout_width="match_parent"
                     android:text="Submit Sample"
+                    android:background="@drawable/background_round_corner_button"
 
                     android:layout_weight="1"
+                    android:onClick="SubmitHtsSample"
 
                     android:layout_height="wrap_content" />
             </LinearLayout>

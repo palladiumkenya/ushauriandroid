@@ -42,12 +42,13 @@ public class eidvlOptions extends AppCompatActivity {
     public void setToolBar(){
 
         try{
+            getSupportActionBar().setTitle("EID/VL Results");
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.eidvloptionstoolbar);
+           /* Toolbar toolbar = (Toolbar) findViewById(R.id.eidvloptionstoolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("EID/VL Options");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);*/
 
         }
         catch(Exception e){

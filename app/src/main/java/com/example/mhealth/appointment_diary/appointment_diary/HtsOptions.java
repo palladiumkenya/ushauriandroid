@@ -38,12 +38,13 @@ public class HtsOptions extends AppCompatActivity {
     public void setToolBar(){
 
         try{
+            getSupportActionBar().setTitle("HTS Options");
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.htsoptionstoolbar);
+           /* Toolbar toolbar = (Toolbar) findViewById(R.id.htsoptionstoolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("HTS Options");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);*/
 
         }
         catch(Exception e){

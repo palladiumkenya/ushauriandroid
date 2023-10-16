@@ -680,12 +680,13 @@ public class ViralLoadSamples extends AppCompatActivity {
     public void setToolBar() {
 
         try {
+            getSupportActionBar().setTitle("Viral Load samples");
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.eidvlremoteloginviralloadtoolbar);
+            /*Toolbar toolbar = (Toolbar) findViewById(R.id.eidvlremoteloginviralloadtoolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("Viral Load samples");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);*/
 
         } catch (Exception e) {
 

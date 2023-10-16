@@ -82,6 +82,7 @@ public class HtsresultsTab extends AppCompatActivity {
                 List<Activelogin> al=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin limit 1");
                 for(int x=0;x<al.size();x++){
                     String myuname=al.get(x).getUname();
+
                     List<Registrationtable> myl=Registrationtable.findWithQuery(Registrationtable.class,"select * from Registrationtable where username=? limit 1",myuname);
                     for(int y=0;y<myl.size();y++){
 
@@ -130,11 +131,12 @@ public class HtsresultsTab extends AppCompatActivity {
 
         try{
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.htstabtoolbar);
-            setSupportActionBar(toolbar);
+           /* Toolbar toolbar = (Toolbar) findViewById(R.id.htstabtoolbar);
+            setSupportActionBar(toolbar);*/
             getSupportActionBar().setTitle("HTS Results");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+           // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+           // getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         }
         catch(Exception e){

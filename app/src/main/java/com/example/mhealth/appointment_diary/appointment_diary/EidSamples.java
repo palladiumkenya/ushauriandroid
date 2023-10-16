@@ -884,12 +884,13 @@ public class EidSamples extends AppCompatActivity {
     public void setToolBar(){
 
         try{
+            getSupportActionBar().setTitle("Eid samples");
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.eidvlremotelogineidtoolbar);
+            /*Toolbar toolbar = (Toolbar) findViewById(R.id.eidvlremotelogineidtoolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle("Eid samples");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);*/
 
         }
         catch(Exception e){

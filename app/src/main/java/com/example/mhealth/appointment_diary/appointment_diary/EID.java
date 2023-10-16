@@ -81,7 +81,6 @@ import java.util.List;
 import kotlin.jvm.internal.Intrinsics;
 
 public class EID extends AppCompatActivity {
-    String phone="";
 
     public static final String SMS_BUNDLE = "pdus";
     public static final String LOGGED_IN = "logged_in";
@@ -154,12 +153,15 @@ public class EID extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eid);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+
+       /*toolbar = (Toolbar) findViewById(R.id.toolbar);
+       setSupportActionBar(toolbar);*/
+        getSupportActionBar().setTitle("EID/VL Results");
+
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //SSLTrust.nuke();
 
-       Stetho.initializeWithDefaults(this);
+       //Stetho.initializeWithDefaults(this);
         initialise();
 //        changeStatusBarColor();
 
@@ -221,7 +223,7 @@ public class EID extends AppCompatActivity {
 
                     userPhoneNumber=myl.get(y).getPhonenumber();
                 }*/
-               // String phone="";
+                String phone="";
                 List<Activelogin> al=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin limit 1");
                 for(int x=0;x<al.size();x++){
                     String myuname=al.get(x).getUname();
@@ -1139,12 +1141,12 @@ public class EID extends AppCompatActivity {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         statusBarColour = sp.getString("status_bar_colours", "#000066");
-        toolBarColour = sp.getString("tool_bar_colours", "#3333ff");
+        //toolBarColour = sp.getString("tool_bar_colours", "#3333ff");
         tabLayoutColour = sp.getString("tablayout_colours", "#4d4dff");
         backgroundColour = sp.getString("background_colours", "#f2f2f2");
 
         sbColour = Color.parseColor(statusBarColour);
-        tbColour = Color.parseColor(toolBarColour);
+       // tbColour = Color.parseColor(toolBarColour);
         tlColour = Color.parseColor(tabLayoutColour);
         bgColour = Color.parseColor(backgroundColour);
 
@@ -1153,7 +1155,7 @@ public class EID extends AppCompatActivity {
 
         }
 
-        toolbar.setBackgroundColor(tbColour);
+        //toolbar.setBackgroundColor(tbColour);
         tabLayout.setBackgroundColor(tlColour);
         viewPager.setBackgroundColor(bgColour);
 

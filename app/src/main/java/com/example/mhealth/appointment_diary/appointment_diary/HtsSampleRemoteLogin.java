@@ -583,12 +583,13 @@ public class HtsSampleRemoteLogin extends AppCompatActivity {
     private void setToolBar(){
 
         try{
+            getSupportActionBar().setTitle("HTS Sample Remote Login");
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.htssampletoolbar);
+           /* Toolbar toolbar = (Toolbar) findViewById(R.id.htssampletoolbar);
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("HTS Sample remote login");
+
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);*/
 
         }
         catch(Exception e){

@@ -34,7 +34,8 @@ public class Config extends AppCompatActivity {
     public static String sendSmsShortcode="40147";
     public static String registerShortcode="40147";
 
-    public static final String JSON_ARRAYRESULTS1 = "result";
+    public static final String JSON_ARRAYRESULTS1 = "results";
+
 
     public static final String KEY_MESSAGECODE="message";
 
