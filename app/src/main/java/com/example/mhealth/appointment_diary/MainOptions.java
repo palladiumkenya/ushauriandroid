@@ -30,6 +30,7 @@ import com.example.mhealth.appointment_diary.pmtct.PMTCT1;
 import com.example.mhealth.appointment_diary.report.Report;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Ucsftracers;
+import com.example.mhealth.appointment_diary.utilitymodules.CaseManagement;
 import com.example.mhealth.appointment_diary.wellnesstab.UPIErrorList;
 import com.example.mhealth.appointment_diary.wellnesstab.WellnesTabs;
 import com.facebook.stetho.Stetho;
@@ -58,7 +59,7 @@ public class MainOptions extends AppCompatActivity {
     String passedUname,passedPassword;
     TextView title_header, help_desk;
 
-    private CardView appointment_diary, defaulter_diary,pmtct_menu, mlab_menu, dashboard, wellness_menu, edit_appointments, upi_menu_card;
+    private CardView appointment_diary, defaulter_diary,pmtct_menu, mlab_menu, dashboard, wellness_menu, edit_appointments, upi_menu_card, caseM;
 
 
     @Override
@@ -136,8 +137,17 @@ public class MainOptions extends AppCompatActivity {
         pmtct_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent1 = new Intent(MainOptions.this, CaseManagement.class);
+                startActivity(intent1);
+            }
+        });
+
+        caseM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent1 = new Intent(MainOptions.this, PMTCT1.class);
                 startActivity(intent1);
+
             }
         });
 
@@ -171,6 +181,7 @@ public class MainOptions extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
 
         wellness_menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -404,6 +415,7 @@ public class MainOptions extends AppCompatActivity {
             edit_appointments = findViewById(R.id.edit_appointments);
             help_desk = findViewById(R.id.helpContact);
             upi_menu_card =findViewById(R.id.upi_menu_card);
+            caseM =findViewById(R.id.case_menu);
 
 
 
