@@ -26,7 +26,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/cc"
+                        android:id="@+id/ccsearch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Enter CCC Number"
@@ -56,9 +56,10 @@
 
 
             <LinearLayout
-                android:id="@+id/hei_details_layout"
+                android:id="@+id/cc_details_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
 
                 android:orientation="vertical">
 

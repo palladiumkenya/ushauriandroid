@@ -137,7 +137,7 @@ public class MainOptions extends AppCompatActivity {
         pmtct_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(MainOptions.this, CaseManagement.class);
+                Intent intent1 = new Intent(MainOptions.this, PMTCT1.class);
                 startActivity(intent1);
             }
         });
@@ -145,7 +145,7 @@ public class MainOptions extends AppCompatActivity {
         caseM.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(MainOptions.this, PMTCT1.class);
+                Intent intent1 = new Intent(MainOptions.this, CaseManagement.class);
                 startActivity(intent1);
 
             }

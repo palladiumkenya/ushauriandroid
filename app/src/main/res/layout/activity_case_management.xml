@@ -15,7 +15,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/wellness_menu"
+            android:id="@+id/add_menu"
             android:layout_margin="@dimen/spacing_medium"
             android:layout_weight="1"
             app:cardCornerRadius="2dp"
@@ -68,7 +68,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/edit_appointments"
+            android:id="@+id/homecheck"
             android:layout_margin="@dimen/spacing_medium"
             android:layout_weight="1"
             app:cardCornerRadius="2dp"
@@ -118,6 +118,12 @@
 
 
     </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragmentContainer1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFEEEE"
+        />
 
 
 </LinearLayout>
