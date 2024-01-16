@@ -24,6 +24,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
+            android:name=".utilitymodules.AddCaseManager"
+            android:exported="false" />
+        <activity
             android:name=".utilitymodules.CaseManagement"
             android:exported="false" />
         <activity

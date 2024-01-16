@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +50,8 @@ public class CaseManagement extends AppCompatActivity {
     EditText lname;
     EditText other;
 
+    Button startVisit;
+
     EditText sex;
     EditText phone;
     LinearLayout details;
@@ -89,6 +92,7 @@ public class CaseManagement extends AppCompatActivity {
                  fname = dialog.findViewById(R.id.fname);
                  lname = dialog.findViewById(R.id.lname);
                  other = dialog.findViewById(R.id.other);
+                startVisit = dialog.findViewById(R.id.btn_startVisit);
 
                  sex = dialog.findViewById(R.id.sex);
                  phone = dialog.findViewById(R.id.phone);
@@ -104,6 +108,15 @@ public class CaseManagement extends AppCompatActivity {
                     public void onClick(View v) {
                         searchcc1();
                      //   Toast.makeText(CaseManagement.this, "great", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                //stat visit
+                startVisit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(CaseManagement.this, AddCaseManager.class);
+                        startActivity(intent);
                     }
                 });
 
