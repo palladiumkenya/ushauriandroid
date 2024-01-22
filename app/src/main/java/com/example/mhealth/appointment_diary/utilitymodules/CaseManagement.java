@@ -124,6 +124,57 @@ public class CaseManagement extends AppCompatActivity {
                 //         getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer1, new CaseManager()).commit();
             }
         });
+
+        //checklist
+        card2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                final Dialog dialog =new Dialog(CaseManagement.this);
+                dialog.setContentView(R.layout.fragment_checklist);
+
+                Window mywindow = dialog.getWindow();
+                dialog.setCanceledOnTouchOutside(true);
+                mywindow.setLayout(ActionBar.LayoutParams.FILL_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+                dialog.show();
+
+                csearch = dialog.findViewById(R.id.ccsearch);
+                ccbtn = dialog.findViewById(R.id.btn_search);
+                ccno = dialog.findViewById(R.id.clinic_no);
+                fname = dialog.findViewById(R.id.fname);
+                lname = dialog.findViewById(R.id.lname);
+                other = dialog.findViewById(R.id.other);
+                startVisit = dialog.findViewById(R.id.btn_startVisit);
+
+                sex = dialog.findViewById(R.id.sex);
+                phone = dialog.findViewById(R.id.phone);
+
+                details =dialog.findViewById(R.id.cc_details_layout);
+
+
+
+                //searchbutton
+
+                ccbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        searchcc1();
+                        //   Toast.makeText(CaseManagement.this, "great", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                //stat visit
+                startVisit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(CaseManagement.this, AddCaseManager.class);
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        });
     }
 
     public void  searchcc1(){

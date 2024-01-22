@@ -24,6 +24,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.config.SelectUrls;
 import com.example.mhealth.appointment_diary.models.providerModel;
@@ -203,7 +207,8 @@ public class AddCaseManager extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                send(REASON, RSHIP, other1.getText().toString(), startDate1.getText().toString(), enddate1.getText().toString());
+                send1("0718373569", 123450005,  "LTFU", "Case Manager", other1.getText().toString(), 1573, startDate1.getText().toString(), enddate1.getText().toString());
+              //  String phone, int ccno, String REASON, String RSHIP, String other1, int prov,  String startDate1, String enddate1
                // String REASON, String RSHIP, EditText other1, EditText startDate1, EditText enddate1
 
 
@@ -306,17 +311,54 @@ public class AddCaseManager extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
-    private  void send(String REASON, String RSHIP, String other1, String startDate1, String enddate1){
+    private void send1(String phone, int ccno, String REASON, String RSHIP, String other1, int prov,  String startDate1, String enddate1){
+        JSONObject payload = new JSONObject();
+        try {
+
+            payload.put("phone_no", phone);
+            payload.put("clinic_number", ccno);
+            payload.put("reason_assign", REASON);
+            payload.put("relationship", RSHIP);
+            payload.put("other_reason", other1);
+            payload.put("provider_id", prov);
+            payload.put("start_date", startDate1);
+            payload.put("end_date", enddate1);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        AndroidNetworking.post("https://ushauriapi.kenyahmis.org/case/assign")
+                .addHeaders("Content-Type", "application.json")
+                // .addHeaders("Accept", "gzip, deflate, br")
+                .addHeaders("Connection","keep-alive")
+                .addHeaders("Accept", "application/json")
+                .addJSONObjectBody(payload) // posting json
+                .setPriority(Priority.MEDIUM)
+                .build().getAsJSONObject(new JSONObjectRequestListener() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(AddCaseManager.this, response.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                Toast.makeText(AddCaseManager.this, anError.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private  void send(String phone, int ccno, String REASON, String RSHIP, String other1, int prov,  String startDate1, String enddate1){
         RequestQueue queue = Volley.newRequestQueue(this);
         String saveurl ="https://ushauriapi.kenyahmis.org/case/assign";
         JSONObject payload = new JSONObject();
         try {
-
-            payload.put("phone_no", "0718373567");
-            payload.put("clinic_number", 1234500022);
+            payload.put("phone_no", phone);
+            payload.put("clinic_number", ccno);
             payload.put("reason_assign", REASON);
             payload.put("other_reason", other1);
-            payload.put("provider_id", 1573);
+            payload.put("provider_id", prov);
             payload.put("relationship", RSHIP);
             payload.put("start_date", startDate1);
             payload.put("end_date", enddate1);
