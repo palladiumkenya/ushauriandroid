@@ -1,9 +1,340 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".utilitymodules.HomeVisitChecklist">
+    <!-- 1 -->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text="1. Is the patient independent in the activities of daily living(e.g. feeding, grooming, toileting?)*" />
+
+        <Spinner
+            android:id="@+id/independent"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+    <!-- 2 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text="2. Are the patients basic needs being met (e.g. clothing, shelter, food?)*" />
+
+        <Spinner
+            android:id="@+id/needs"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+
+    <!-- 3 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text="3.Does the patient has a sexual partner and has disclosure been done( for 15 yrs and above or mature minors)*" />
+
+        <Spinner
+            android:id="@+id/disclosure"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+
+    <!-- 4 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text="4.Has the patient disclosed their HIV status to other household members?*" />
+
+        <Spinner
+            android:id="@+id/disclosehousehold"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/whodisdclosed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/notestextfield"
+                android:padding="10dp"
+                android:layout_marginRight="13dp"
+                android:hint="5.If Yes Who?"/>
+
+
+
+    <!-- arv stored-->
+
+
+            <EditText
+                android:id="@+id/ccsearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/notestextfield"
+                android:padding="10dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:hint="6.How are the patients ARVs stored?"/>
+
+
+
+
+            <!-- arv taken-->
+            <EditText
+                android:id="@+id/arvstaken"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/notestextfield"
+                android:padding="10dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:hint="7.How are the ARVs taken?(Assess for late taking of medication)"/>
+
+
+
+
+            <!-- socialsupport -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text="8.Does the patient receive social support from the household members?*" />
+
+        <Spinner
+            android:id="@+id/socialsupport"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+
+
+    <!-- socialsupport -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text="9.Is the patient receiving social support from the community?*" />
+
+        <Spinner
+            android:id="@+id/socialsupportcommunity"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+
+
+    <!-- nonclinical -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text="10.Is the patient linked to non clinical services (e.g. Spiritual, legal or nutritional)? *" />
+
+        <Spinner
+            android:id="@+id/nonclinical"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+
+    <!-- mental health -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text=" 11.Does the patient have mental health issues that need to be addressed(Use PHQ 9 to screen for depression)? *" />
+
+        <Spinner
+            android:id="@+id/mentalhealth"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+
+
+    <!-- stressful situation -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text="12.Is the patient suffering from a stressful situation or significant loss/grief? *" />
+
+        <Spinner
+            android:id="@+id/stressfulsituation"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+
+
+    <!-- drugs or alcohol -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text="13.Does the patient use drugs or alcohol?*" />
+
+        <Spinner
+            android:id="@+id/drugs_alcohol"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+
+
+
+    <!-- side_effects -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
+            android:layout_height="wrap_content"
+            android:text="14.Is the patient having any side effects from the medications?*" />
+
+        <Spinner
+            android:id="@+id/side_effects"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp" />
+
+    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:text="Notes" />
+
+            <EditText
+                android:id="@+id/yourEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/notestextfield"
+            android:padding="10dp"
+            android:hint="Enter notes here"/>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

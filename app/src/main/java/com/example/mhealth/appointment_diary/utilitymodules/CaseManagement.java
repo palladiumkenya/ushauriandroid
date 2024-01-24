@@ -168,7 +168,7 @@ public class CaseManagement extends AppCompatActivity {
                 startVisit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(CaseManagement.this, AddCaseManager.class);
+                        Intent intent = new Intent(CaseManagement.this, HomeVisitChecklist.class);
                         startActivity(intent);
                     }
                 });
@@ -248,13 +248,18 @@ public class CaseManagement extends AppCompatActivity {
                             String dob = jsonObject.getString("dob");
                             String upi_no = jsonObject.getString("upi_no");
 
-                            ccno.setText(clinicnumber);
+
+                          //  ccno.setText(clinicnumber);
                             fname.setText(f_name);
                             other.setText(m_name);
                             lname.setText(l_name);
                         //    reg.setText(currentregimen);
                          //   dobi.setText(dob);
-                         //   upino.setText(upi_no);
+                            phone.setText(upi_no);
+                            Log.d("phone no", upi_no);
+                            Log.d("DOB", dob);
+                            Log.d("CURRENT REGIMEN",currentregimen);
+                            Log.d("phone no", upi_no);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
