@@ -32,6 +32,8 @@ import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.config.SelectUrls;
 import com.example.mhealth.appointment_diary.models.providerModel;
 import com.example.mhealth.appointment_diary.pmtct.PNCVisitStart;
+import com.example.mhealth.appointment_diary.tables.Activelogin;
+import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.example.mhealth.appointment_diary.tables.urlModel;
 
 import org.json.JSONArray;
@@ -41,6 +43,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddCaseManager extends AppCompatActivity {
@@ -60,6 +63,8 @@ public class AddCaseManager extends AppCompatActivity {
 
     String newCC;
 
+    String  phone_no1;
+
 
     providerModel provider_Model;
     ArrayList<String> providerModelArrayList;
@@ -68,21 +73,38 @@ public class AddCaseManager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_case_manager);
+        List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-    //    setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Assign CaseManager");
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed(); // Handle the back arrow click to navigate to the previous activity
+        for(int x=0;x<myl.size();x++){
+            String un=myl.get(x).getUname();
+            List<Registrationtable> myl2=Registrationtable.findWithQuery(Registrationtable.class,"select * from Registrationtable where username=? limit 1",un);
+            for(int y=0;y<myl2.size();y++){
+                phone_no1=myl2.get(y).getPhone();
             }
-        });
+        }
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                newCC= null;
+            } else {
+                newCC= extras.getString("Client_CCC");
+            }
+        } else {
+            newCC= (String) savedInstanceState.getSerializable("Client_CCC");
+        }
+
+
+
+
+        try {
+            //getSupportActionBar().setDisplayShowHomeEnabled(true);
+            // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Add Case Manager");
+
+        } catch (Exception e) {
+
+        }
 
         AssignCaseM1 = (Spinner) findViewById(R.id.AssignCaseM);
         provider1 =(Spinner) findViewById(R.id.provider);
@@ -203,16 +225,9 @@ public class AddCaseManager extends AppCompatActivity {
         save1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*"phone_no": "0718373569",
-                        "clinic_number": "1234500006",
-                        "reason_assign": "LTFU",
-                        "other_reason": "",
-                        "provider_id": "1573",
-                        "relationship": "Case Manager",
-                        "start_date": "2024-01-10",
-                        "end_date": "2024-02-10"*/
 
-                send("0718373569", 1234500006,  "LTFU", "Case Manager", other1.getText().toString(), 1573, startDate1.getText().toString(), enddate1.getText().toString());
+
+                send(phone_no1, newCC,  REASON, RSHIP, other1.getText().toString(), providername, startDate1.getText().toString(), enddate1.getText().toString());
               //  String phone, int ccno, String REASON, String RSHIP, String other1, int prov,  String startDate1, String enddate1
                // String REASON, String RSHIP, EditText other1, EditText startDate1, EditText enddate1
 
@@ -318,66 +333,8 @@ public class AddCaseManager extends AppCompatActivity {
 
 
 
-    private void send1(String phone, int ccno, String REASON, String RSHIP, String other1, int prov,  String startDate1, String enddate1){
-        JSONObject payload = new JSONObject();
-        try {
 
-            payload.put("phone_no", phone);
-            payload.put("clinic_number", ccno);
-            payload.put("reason_assign", REASON);
-            payload.put("relationship", RSHIP);
-            payload.put("other_reason", other1);
-            payload.put("provider_id", prov);
-            payload.put("start_date", startDate1);
-            payload.put("end_date", enddate1);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        AndroidNetworking.post("https://ushauriapi.kenyahmis.org/case/assign")
-                .addHeaders("Content-Type", "application.json")
-                 .addHeaders("Accept", "gzip, deflate, br")
-                .addHeaders("Connection","keep-alive")
-                .addHeaders("Accept", "application/json")
-                .addJSONObjectBody(payload) // posting json
-                .setPriority(Priority.MEDIUM)
-                .build().getAsJSONObject(new JSONObjectRequestListener() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-                try {
-                    boolean success = response.getBoolean("success");
-                    String message = response.getString("message");
-
-                    // Check the "success" value and display the "message" accordingly
-                    if (success) {
-                        // Successful response
-                        // Display or handle the success message
-                        showToast(message); // Replace with your display logic
-                    } else {
-                        // Unsuccessful response
-                        // Display or handle the error message
-                        showToast(message); // Replace with your display logic
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    // Handle JSON parsing error
-                }
- //               Toast.makeText(AddCaseManager.this, response.toString(), Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onError(ANError anError) {
-
-
-//                Toast.makeText(AddCaseManager.this, "Error"+ " "+anError.toString(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-
-    private  void send(String phone, int ccno, String REASON, String RSHIP, String other1, int prov,  String startDate1, String enddate1){
+    private  void send(String phone, String ccno, String REASON, String RSHIP, String other1, String prov,  String startDate1, String enddate1){
         RequestQueue queue = Volley.newRequestQueue(this);
         String saveurl ="https://ushauriapi.kenyahmis.org/case/assign";
         JSONObject payload = new JSONObject();
@@ -423,11 +380,26 @@ public class AddCaseManager extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle the error response
-                if (error.networkResponse != null) {
-                    int statusCode = error.networkResponse.statusCode;
-                    // Handle HTTP errors
+                if (error.networkResponse != null && error.networkResponse.data != null) {
+                    try {
+                        // Convert error response data to JSON object
+                        JSONObject jsonObject = new JSONObject(new String(error.networkResponse.data));
+
+                        // Now you can extract information from the JSON object
+                        boolean success = jsonObject.optBoolean("success");
+                        String message = jsonObject.optString("message");
+
+                        // Handle the error message or any other information
+                        Log.e("ErrorResponse", "Success: " + success + ", Message: " + message);
+                        Toast.makeText(AddCaseManager.this, message, Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    // Handle network error or timeout
+                    // Handle other types of errors (e.g., network error or timeout)
+                    Log.e("ErrorResponse", "An error occurred: " + error.getMessage());
+
+                    Toast.makeText(AddCaseManager.this, "An error occurred: " + " "+ error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                // Log.d("Errors", error.toString());

@@ -131,6 +131,14 @@ public class CaseManagement extends AppCompatActivity {
                         Intent intent = new Intent(CaseManagement.this, AddCaseManager.class);
                         intent.putExtra("Client_CCC", sendCC);
                         startActivity(intent);
+
+
+                        ccno.setText("");
+                        fname.setText("");
+                        other.setText("");
+                        lname.setText("");
+                        phone.setText("");
+                        sex.setText("");
                     }
                 });
 
@@ -187,6 +195,13 @@ public class CaseManagement extends AppCompatActivity {
                         Intent intent = new Intent(CaseManagement.this, HomeVisitChecklist.class);
                         intent.putExtra("Client_CCC", sendCC);
                         startActivity(intent);
+
+                        ccno.setText("");
+                        fname.setText("");
+                        other.setText("");
+                        lname.setText("");
+                        phone.setText("");
+                        sex.setText("");
                     }
                 });
 
@@ -262,8 +277,6 @@ public class CaseManagement extends AppCompatActivity {
                                     JSONObject data = response.getJSONObject("data");
 
                                     // Now you can use the data as per your requirement
-                                    String fName = data.getString("f_name");
-                                    String mName = data.getString("m_name");
 
 
                                     String clinicnumber = data.getString("clinic_number");
