@@ -27,6 +27,8 @@ import com.example.mhealth.appointment_diary.Dialogs.Dialogs;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.pmtct.ANCVisit;
+import com.example.mhealth.appointment_diary.pmtct.PNCVisit;
+import com.example.mhealth.appointment_diary.pmtct.PNCVisitStart;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.example.mhealth.appointment_diary.tables.UrlTable;
@@ -67,6 +69,15 @@ public class CaseManagement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_case_management);
 
+        try {
+            //getSupportActionBar().setDisplayShowHomeEnabled(true);
+            // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Case Management");
+
+        } catch (Exception e) {
+
+        }
+
         chkinternet =new CheckInternet(CaseManagement.this);
         dialogs=new Dialogs(CaseManagement.this);
         details =(LinearLayout) findViewById(R.id.hei_details_layout);
@@ -88,7 +99,7 @@ public class CaseManagement extends AppCompatActivity {
 
                  csearch = dialog.findViewById(R.id.ccsearch);
                  ccbtn = dialog.findViewById(R.id.btn_search);
-                 ccno = dialog.findViewById(R.id.clinic_no);
+                 ccno = dialog.findViewById(R.id.clinicnocase);
                  fname = dialog.findViewById(R.id.fname);
                  lname = dialog.findViewById(R.id.lname);
                  other = dialog.findViewById(R.id.other);
@@ -115,7 +126,9 @@ public class CaseManagement extends AppCompatActivity {
                 startVisit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String sendCC =ccno.getText().toString();
                         Intent intent = new Intent(CaseManagement.this, AddCaseManager.class);
+                        intent.putExtra("Client_CCC", sendCC);
                         startActivity(intent);
                     }
                 });
@@ -141,7 +154,7 @@ public class CaseManagement extends AppCompatActivity {
 
                 csearch = dialog.findViewById(R.id.ccsearch);
                 ccbtn = dialog.findViewById(R.id.btn_search);
-                ccno = dialog.findViewById(R.id.clinic_no);
+                ccno = dialog.findViewById(R.id.clinicnocheck);
                 fname = dialog.findViewById(R.id.fname);
                 lname = dialog.findViewById(R.id.lname);
                 other = dialog.findViewById(R.id.other);
@@ -168,7 +181,10 @@ public class CaseManagement extends AppCompatActivity {
                 startVisit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        String sendCC =ccno.getText().toString();
                         Intent intent = new Intent(CaseManagement.this, HomeVisitChecklist.class);
+                        intent.putExtra("Client_CCC", sendCC);
                         startActivity(intent);
                     }
                 });
@@ -249,7 +265,7 @@ public class CaseManagement extends AppCompatActivity {
                             String upi_no = jsonObject.getString("upi_no");
 
 
-                          //  ccno.setText(clinicnumber);
+                            ccno.setText(clinicnumber);
                             fname.setText(f_name);
                             other.setText(m_name);
                             lname.setText(l_name);

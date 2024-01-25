@@ -3,6 +3,7 @@ package com.example.mhealth.appointment_diary.utilitymodules;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,46 +19,35 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mhealth.appointment_diary.R;
+import com.example.mhealth.appointment_diary.pmtct.PNCVisitStart;
+import com.example.mhealth.appointment_diary.tables.Activelogin;
+import com.example.mhealth.appointment_diary.tables.Registrationtable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class HomeVisitChecklist extends AppCompatActivity {
     Button send;
     EditText arvstoredE,  whodisdclosedE, arvstakenE, NotesE;
+    EditText memberNameE1, memberTelephoneE1, landmarkE1;
+    String  phone_no1;
 
     Spinner independentS, needsS, sexualpartnerS, disclosehouseholdS, socialsupportS, socialsupportcommunityS, nonclinicalS, mentalhealthS,
             stressfulsituationS, drugs_alcoholS, side_effectsS;
 
- /*    "patient_independent": "Yes",
-             "basic_need": "Yes",
-             "sexual_partner": "No",
-             "disclosed_hiv_status": "Yes",
-             "disclosed_person": "Partner Full Name", edit
-             "arv_stored": "Yes", edit
-             "arv_taken": "Yes",
-             "social_support_household": "Yes",
-             "social_support_community": "No",
-             "non_clinical_services": "No",
-             "mental_health": "No",
-             "stress_situation": "No",
-             "use_drug": "No",
-             "side_effect": "No",
-                other_note edit*/
 
-
-
-    String[] patient_independent = {"--Select Independence--", "Yes", "No"};
-    String[] basic_needs_met = {"--Select if Needs Met--", "Yes", "No"};
-    String[] sexual_partner = {"--Has  sexual_partner--", "Yes", "No"};
-    String[] disclosed_hiv_status = {"--Disclosed Hiv Status--", "Yes", "No"};
+    String[] patient_independent = {"--Patient Independent--", "Yes", "No"};
+    String[] basic_needs_met = {"--Basic Needs Met--", "Yes", "No"};
+    String[] sexual_partner = {"--Has Sexual Partner--", "Yes", "No"};
+    String[] disclosed_hiv_status = {"--Disclosed HIV Status--", "Yes", "No"};
     String[] social_support_household = {"--Household Social Support--", "Yes", "No"};
     String[] social_support_community = {"--Community Social Support--", "Yes", "No"};
-
     String[] non_clinical_services = {"--Non Clinical Services--", "Yes", "No"};
     String[] mental_health = {"--Have Mental Health--", "Yes", "No"};
     String[] stress_situation = {"--Stressful Situation--", "Yes", "No"};
-    String[] use_drug = {"--Use Drugs--", "Yes", "No"};
+    String[] use_drug = {"--Uses Drugs--", "Yes", "No"};
     String[] side_effect = {"--Side Effects--", "Yes", "No"};
 
     private String patient_independent_st = "";
@@ -72,6 +62,11 @@ public class HomeVisitChecklist extends AppCompatActivity {
     private String stress_situation_st = "";
     private String use_drug_st = "";
     private String side_effect_st = "";
+    String patient_independent_st_code, basic_needs_met_st_code, sexual_partner_st_code, disclosed_hiv_status_st_code, social_support_household_st_code,
+            social_support_community_st_code, non_clinical_services_st_code, mental_health_st_code, stress_situation_st_code, use_drug_st_code, getSide_effect_st_code;
+
+
+    String newCC;
 
 
 
@@ -81,12 +76,48 @@ public class HomeVisitChecklist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_visit_checklist);
 
+        List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
+
+        for(int x=0;x<myl.size();x++){
+            String un=myl.get(x).getUname();
+            List<Registrationtable> myl2=Registrationtable.findWithQuery(Registrationtable.class,"select * from Registrationtable where username=? limit 1",un);
+            for(int y=0;y<myl2.size();y++){
+                phone_no1=myl2.get(y).getPhone();
+            }
+        }
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                newCC= null;
+            } else {
+                newCC= extras.getString("Client_CCC");
+            }
+        } else {
+            newCC= (String) savedInstanceState.getSerializable("Client_CCC");
+        }
+
+        try {
+            //getSupportActionBar().setDisplayShowHomeEnabled(true);
+            // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Home Visit CheckList");
+
+        } catch (Exception e) {
+
+        }
+
 
         send= (Button) findViewById(R.id.btn_save);
         whodisdclosedE = (EditText) findViewById(R.id.whodisdclosed);
         arvstoredE = (EditText) findViewById(R.id.arvstored);
         arvstakenE = (EditText) findViewById(R.id.arvstaken);
         NotesE = (EditText) findViewById(R.id.Notes);
+
+        memberNameE1 = (EditText) findViewById(R.id.memberName);
+        memberTelephoneE1 = (EditText) findViewById(R.id.memberTelephone);
+        landmarkE1 = (EditText) findViewById(R.id.landmark);
+
+
 
         independentS = (Spinner) findViewById(R.id.independent);
         needsS = (Spinner) findViewById(R.id.needs);
@@ -109,6 +140,7 @@ public class HomeVisitChecklist extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 patient_independent_st = patient_independent[position];
+                patient_independent_st_code = Integer.toString(position);
 
 
                /* if (REASON.contentEquals("Other Specify")){
@@ -137,6 +169,8 @@ public class HomeVisitChecklist extends AppCompatActivity {
 
                 basic_needs_met_st = basic_needs_met[position];
 
+                basic_needs_met_st_code = Integer.toString(position);
+
 
             }
 
@@ -155,6 +189,8 @@ public class HomeVisitChecklist extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 sexual_partner_st = sexual_partner[position];
+
+                sexual_partner_st_code = Integer.toString(position);
 
 
             }
@@ -176,6 +212,8 @@ public class HomeVisitChecklist extends AppCompatActivity {
                 disclosed_hiv_status_st =disclosed_hiv_status[position];
 
 
+                disclosed_hiv_status_st_code = Integer.toString(position);
+
             }
 
             @Override
@@ -193,6 +231,8 @@ public class HomeVisitChecklist extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 social_support_household_st =social_support_household[position];
+
+                social_support_household_st_code = Integer.toString(position);
 
 
             }
@@ -213,6 +253,7 @@ public class HomeVisitChecklist extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 social_support_community_st =social_support_community[position];
+                social_support_community_st_code = Integer.toString(position);
 
 
             }
@@ -232,6 +273,7 @@ public class HomeVisitChecklist extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 non_clinical_services_st =non_clinical_services[position];
+                non_clinical_services_st_code = Integer.toString(position);
 
 
             }
@@ -253,6 +295,7 @@ public class HomeVisitChecklist extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 mental_health_st =mental_health[position];
+                mental_health_st_code = Integer.toString(position);
 
 
             }
@@ -274,6 +317,8 @@ public class HomeVisitChecklist extends AppCompatActivity {
 
                 stress_situation_st =stress_situation[position];
 
+                stress_situation_st_code = Integer.toString(position);
+
 
             }
 
@@ -292,6 +337,7 @@ public class HomeVisitChecklist extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 use_drug_st =use_drug[position];
+                use_drug_st_code = Integer.toString(position);
 
 
             }
@@ -311,6 +357,7 @@ public class HomeVisitChecklist extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 side_effect_st =side_effect[position];
+                getSide_effect_st_code = Integer.toString(position);
 
 
             }
@@ -324,15 +371,65 @@ public class HomeVisitChecklist extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sev("0718373569","1234500002",  "family one", "0712311264",
-                        "landmark Roysambu", patient_independent_st,   basic_needs_met_st,  sexual_partner_st,
+                   if (patient_independent_st_code.contentEquals("0")){
+                    Toast.makeText(HomeVisitChecklist.this, "Specify patient's independence", Toast.LENGTH_SHORT).show();
+                }else if (basic_needs_met_st_code.contentEquals("0")){
+                       Toast.makeText(HomeVisitChecklist.this, "Specify if patient's needs are met", Toast.LENGTH_SHORT).show();
+                   }
+
+                   else if (sexual_partner_st_code.contentEquals("0")){
+                       Toast.makeText(HomeVisitChecklist.this, "Specify if has sexual partner ", Toast.LENGTH_SHORT).show();
+                   }
+                   else if (disclosed_hiv_status_st_code.contentEquals("0")){
+                       Toast.makeText(HomeVisitChecklist.this, "Specify if HIV status is disclosed ", Toast.LENGTH_SHORT).show();
+                   }
+                   else if(arvstoredE.getText().toString().isEmpty()){
+                       Toast.makeText(HomeVisitChecklist.this, "Specify how ARVs are stored ", Toast.LENGTH_SHORT).show();
+                   }
+                   else if(arvstakenE.getText().toString().isEmpty()){
+                       Toast.makeText(HomeVisitChecklist.this, "Specify how ARVs are taken ", Toast.LENGTH_SHORT).show();
+                   }
+                   else if(social_support_household_st_code.contentEquals("0")){
+                       Toast.makeText(HomeVisitChecklist.this, "Specify if the patient receives social support from the household", Toast.LENGTH_SHORT).show();
+                   }
+
+                   else if(social_support_community_st_code.contentEquals("0")){
+                       Toast.makeText(HomeVisitChecklist.this, "Specify if the patient receives social support from the community", Toast.LENGTH_SHORT).show();
+                   }
+
+                   else if(non_clinical_services_st_code.contentEquals("0")){
+                       Toast.makeText(HomeVisitChecklist.this, "Patient linked to any non_clinical services", Toast.LENGTH_SHORT).show();
+                   }
+                   else if(mental_health_st_code.contentEquals("0")){
+                       Toast.makeText(HomeVisitChecklist.this, "Have any mental health issues", Toast.LENGTH_SHORT).show();
+                   }
+                   else if(stress_situation_st_code.contentEquals("0")){
+                       Toast.makeText(HomeVisitChecklist.this, "Have any stressful situation", Toast.LENGTH_SHORT).show();
+                   }
+                   else if(use_drug_st_code.contentEquals("0")){
+                       Toast.makeText(HomeVisitChecklist.this, "Takes drug or Alcohol?", Toast.LENGTH_SHORT).show();
+                   }
+                   else if(getSide_effect_st_code.contentEquals("0")){
+                       Toast.makeText(HomeVisitChecklist.this, "Any side effects from medication?", Toast.LENGTH_SHORT).show();
+                   }
+
+else{
+                sev(phone_no1, newCC, memberNameE1.getText().toString(), memberTelephoneE1.getText().toString(),
+                        landmarkE1.getText().toString(), patient_independent_st,   basic_needs_met_st,  sexual_partner_st,
                         disclosed_hiv_status_st,  whodisdclosedE.getText().toString(), arvstoredE.getText().toString(), arvstakenE.getText().toString(),
                         social_support_household_st,  social_support_community_st,  non_clinical_services_st,
                          mental_health_st, stress_situation_st, use_drug_st, side_effect_st, NotesE.getText().toString());
+
+                      // independentS.setSelection(0);
+                              // , needsS, sexualpartnerS, disclosehouseholdS, socialsupportS, socialsupportcommunityS, nonclinicalS, mentalhealthS,
+                             //  stressfulsituationS, drugs_alcoholS, side_effectsS;
+
+}
             }
         });
 
     }
+
 
     private void sev(String phone_no, String clinic_number, String family_member_name, String telephone_no,
                      String landmark, String patient_independent,  String basic_need, String sexual_partner,
@@ -398,11 +495,26 @@ public class HomeVisitChecklist extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle the error response
-                if (error.networkResponse != null) {
-                    int statusCode = error.networkResponse.statusCode;
-                    // Handle HTTP errors
+                if (error.networkResponse != null && error.networkResponse.data != null) {
+                    try {
+                        // Convert error response data to JSON object
+                        JSONObject jsonObject = new JSONObject(new String(error.networkResponse.data));
+
+                        // Now you can extract information from the JSON object
+                        boolean success = jsonObject.optBoolean("success");
+                        String message = jsonObject.optString("message");
+
+                        // Handle the error message or any other information
+                        Log.e("ErrorResponse", "Success: " + success + ", Message: " + message);
+                        Toast.makeText(HomeVisitChecklist.this, message, Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    // Handle network error or timeout
+                    // Handle other types of errors (e.g., network error or timeout)
+                    Log.e("ErrorResponse", "An error occurred: " + error.getMessage());
+
+                    Toast.makeText(HomeVisitChecklist.this, "An error occurred: " + " "+ error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 // Log.d("Errors", error.toString());

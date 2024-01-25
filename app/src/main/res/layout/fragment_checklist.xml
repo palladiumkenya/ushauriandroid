@@ -90,11 +90,11 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/clinicno"
+                        android:id="@+id/clinicnocheck"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="CCC Number"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:enabled="false"
                         android:textColorHint="#000" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -182,77 +182,7 @@
 
 
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:background="@drawable/background_round_corner_button"
-                    android:fontFamily="serif"
-                    android:text="Other Visit Details"
-                    android:textSize="12sp"
-                    android:textColor="#FFFFFF" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/memberName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Family Member Name"
-
-                        android:inputType="text"
-                        android:enabled="false"
-                        android:textColorHint="#000"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/memberTelephone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Telephone Number"
-
-                        android:inputType="text"
-                        android:enabled="false"
-                        android:textColorHint="#000"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/fileno"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="File No"
-
-                        android:inputType="text"
-                        android:textColorHint="#000"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/landmark"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Physical Landmark"
-
-                        android:inputType="text"
-                        android:textColorHint="#000"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/btn_startVisit"

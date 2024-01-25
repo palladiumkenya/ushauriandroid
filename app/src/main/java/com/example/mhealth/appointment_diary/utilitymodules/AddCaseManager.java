@@ -58,6 +58,8 @@ public class AddCaseManager extends AppCompatActivity {
     private String RSHIP = "";
     String providername;
 
+    String newCC;
+
 
     providerModel provider_Model;
     ArrayList<String> providerModelArrayList;
