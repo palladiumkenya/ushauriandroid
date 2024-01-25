@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+//import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +23,8 @@ import com.example.mhealth.appointment_diary.tables.UrlTable;
 import com.orm.SugarRecord;
 
 import java.util.List;
+
+//import javax.annotation.Nullable;
 
 public class Config extends AppCompatActivity {
 
@@ -234,6 +236,8 @@ public class Config extends AppCompatActivity {
     public static final String VERIFYMFL= "/verifyMFLCode";
     public static final String VERIFYOTP= "/verifyMFLCode/verifyotp/";
 
+    public static final String SERCH_CLIENT= "/clients/api/search/";
+
     /*
     https://ushauriapi.kenyahmis.org/pmtct/pnc
             10:15
@@ -247,7 +251,7 @@ public class Config extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
 

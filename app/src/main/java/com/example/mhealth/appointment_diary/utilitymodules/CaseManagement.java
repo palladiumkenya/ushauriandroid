@@ -21,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
 import com.example.mhealth.appointment_diary.Dialogs.Dialogs;
@@ -205,15 +206,18 @@ public class CaseManagement extends AppCompatActivity {
         }
 
         else{
-           searchCCC();}
+            searchCCC2();
+         //  searchCCC1();
+        }
         // details.setVisibility(View.VISIBLE);
 
    // }
 
     }
 
-    private void  searchCCC() {
 
+
+    public  void searchCCC2(){
         if (chkinternet.isInternetAvailable()) {
 
             List<Activelogin> al = Activelogin.findWithQuery(Activelogin.class, "select * from Activelogin limit 1");
@@ -238,110 +242,116 @@ public class CaseManagement extends AppCompatActivity {
             } catch (Exception e) {
 
             }
-            String urls1 = "?ccc=" + csearch.getText().toString();
-            String tt1 = "&phone_number=" + phoneurl;
-            //z+ Config.CALENDER_LIST+urls+tt,
-            //  String url1 ="https://ushauriapi.kenyahmis.org/pmtct/search?ccc=1305701529&phone_number=0780888928";
-            //https://ushauriapi.kenyahmis.org/pmtct/search?ccc=1305701529&phone_number=0780888928
-            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, z + Config.SEARCHANCPNC + urls1 + tt1, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-                    //Toast.makeText(ANCVisit.this, "SUCCESS", Toast.LENGTH_SHORT).show();
 
 
-                    details.setVisibility(View.VISIBLE);
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                    /*x = jsonObject.getBoolean("success");
-                    if (x==true){*/
+            String tt1 = "?phone_no=" + phoneurl;
+            String urls1 = "&clinic_number=" + csearch.getText().toString();
 
-                            String clinicnumber = jsonObject.getString("clinic_number");
-                            String f_name = jsonObject.getString("f_name");
-                            String m_name = jsonObject.getString("m_name");
-                            String l_name = jsonObject.getString("l_name");
-                            String currentregimen = jsonObject.getString("currentregimen");
-                            String dob = jsonObject.getString("dob");
-                            String upi_no = jsonObject.getString("upi_no");
+            // Create a JsonObjectRequest
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.GET, z + Config.SERCH_CLIENT + tt1+urls1, null, new Response.Listener<JSONObject>() {
 
-
-                            ccno.setText(clinicnumber);
-                            fname.setText(f_name);
-                            other.setText(m_name);
-                            lname.setText(l_name);
-                        //    reg.setText(currentregimen);
-                         //   dobi.setText(dob);
-                            phone.setText(upi_no);
-                            Log.d("phone no", upi_no);
-                            Log.d("DOB", dob);
-                            Log.d("CURRENT REGIMEN",currentregimen);
-                            Log.d("phone no", upi_no);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        for (int j = 0; j < response.length(); j++) {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // Handle the JSON response
                             try {
-                                JSONObject jsonObject = response.getJSONObject(i);
-                                x = jsonObject.getBoolean("success");
-                                y= jsonObject.getString("message");
+                                boolean success = response.getBoolean("success");
+                                if (success) {
+                                    details.setVisibility(View.VISIBLE);
+                                    // Extract data if success is true
+                                    JSONObject data = response.getJSONObject("data");
 
-                                if (!x){
-                                    dialogs.showSuccessDialog(y, "Server Response");
+                                    // Now you can use the data as per your requirement
+                                    String fName = data.getString("f_name");
+                                    String mName = data.getString("m_name");
+
+
+                                    String clinicnumber = data.getString("clinic_number");
+                                    String f_name = data.getString("f_name");
+                                    String m_name = data.getString("m_name");
+                                    String l_name = data.getString("l_name");
+                                   // String currentregimen = data.getString("currentregimen");
+                                    String sex1 = data.getString("gender");
+                                    String upi_no = data.getString("phone_no");
+
+
+                                    ccno.setText(clinicnumber);
+                                    fname.setText(f_name);
+                                    other.setText(m_name);
+                                    lname.setText(l_name);
+                                    phone.setText(upi_no);
+                                    sex.setText(sex1);
+                                    // ... and so on for other fields
+
+
+                                }else{
+                                    ccno.setText("");
+                                    fname.setText("");
+                                    other.setText("");
+                                    lname.setText("");
+                                    phone.setText("");
+                                    sex.setText("");
+
+                                    details.setVisibility(View.GONE);
+
+
+                                        String message = response.getString("message");
+
+                                        // Check the "success" value and display the "message" accordingly
+
+                                            // Successful response
+                                            // Display or handle the success message
+                                          //  showToast(message); // Replace with your display logic
+                                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+
                                 }
-                            }
-
-                            catch (Exception e){
+                            } catch (JSONException e) {
                                 e.printStackTrace();
-                            }}
-
-                    }
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    NetworkResponse response = error.networkResponse;
-                    if(response != null && response.data != null){
-                        String body;
-
-                        String statusCode = String.valueOf(error.networkResponse.statusCode);
-
-                        if(error.networkResponse.data!=null) {
-                            try {
-                                JSONArray jsonArray =new JSONArray(error.networkResponse.data);
-                                body = new String(error.networkResponse.data,"UTF-8");
-
-                                JSONObject json = new JSONObject(body);
-
-                                String message = json.has("message") ? json.getString("message") : "";
-                                dialogs.showErrorDialog(message, "Server");
-
-                            } catch (UnsupportedEncodingException | JSONException e) {
-                                e.printStackTrace();
+                                // Handle the JSON parsing error
                             }
                         }
+                    }, new Response.ErrorListener() {
 
-                    }else {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            ccno.setText("");
+                            fname.setText("");
+                            other.setText("");
+                            lname.setText("");
+                            phone.setText("");
+                            sex.setText("");
 
-                        Log.e("VOlley error :", error.getLocalizedMessage()+" message:"+error.getMessage());
-                        // dialogs.showErrorDialog(VolleyErrors.getVolleyErrorMessages(error, ANCVisit.this), "Server Response");
-                        dialogs.showErrorDialog("Invalid CCC Number", "Server Response");
-                        //  Toast.makeText(ANCVisit.this, VolleyErrors.getVolleyErrorMessages(error, ANCVisit.this),Toast.LENGTH_LONG).show();
-                    }
+                            details.setVisibility(View.GONE);
+                            // Handle the error
+                            if (error.networkResponse != null && error.networkResponse.data != null) {
+                                try {
+                                    // Convert error response data to JSON object
+                                    JSONObject jsonObject = new JSONObject(new String(error.networkResponse.data));
 
+                                    // Now you can extract information from the JSON object
+                                    boolean success = jsonObject.optBoolean("success");
+                                    String message = jsonObject.optString("message");
 
+                                    // Handle the error message or any other information
+                                    Log.e("ErrorResponse", "Success: " + success + ", Message: " + message);
+                                    Toast.makeText(CaseManagement.this, message, Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                // Handle other types of errors (e.g., network error or timeout)
+                                Log.e("ErrorResponse", "An error occurred: " + error.getMessage());
 
+                                Toast.makeText(CaseManagement.this, "An error occurred: " + " "+ error.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                           // Toast.makeText(getApplicationContext(), "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
-                    details.setVisibility(View.GONE);
-                    //Toast.makeText(ANCVisit.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-
-                }
-            });
-            RequestQueue requestQueue = Volley.newRequestQueue(CaseManagement.this);
-            requestQueue.add(jsonArrayRequest);
+// Add the request to the RequestQueue
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(jsonObjectRequest);
         }
-
     }
 }

@@ -82,7 +82,7 @@
                 android:id="@+id/cc_details_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:visibility="gone"
 
                 android:orientation="vertical">
 
@@ -180,22 +180,22 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-
+                <Button
+                    android:id="@+id/btn_startVisit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_round_corner_button"
+                    android:fontFamily="serif"
+                    android:text="Start Visit"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF" />
 
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_startVisit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_gravity="center"
-                android:background="@drawable/background_round_corner_button"
-                android:fontFamily="serif"
-                android:text="Start Visit"
-                android:textSize="12sp"
-                android:textColor="#FFFFFF" />
+
 
         </LinearLayout>
 
