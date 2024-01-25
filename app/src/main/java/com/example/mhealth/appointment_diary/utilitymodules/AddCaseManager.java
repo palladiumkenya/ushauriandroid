@@ -156,11 +156,6 @@ public class AddCaseManager extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 REASON =ReasonS[position];
-          //      HIV_status_Code = Integer.toString(position);
-
-            //    Toast.makeText(AddCaseManager.this, "Data is"+REASON, Toast.LENGTH_SHORT).show();
-
-                //hivResultL1
                 if (REASON.contentEquals("Other Specify")){
                     other1.setVisibility(View.VISIBLE);
 
@@ -206,8 +201,16 @@ public class AddCaseManager extends AppCompatActivity {
         save1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*"phone_no": "0718373569",
+                        "clinic_number": "1234500006",
+                        "reason_assign": "LTFU",
+                        "other_reason": "",
+                        "provider_id": "1573",
+                        "relationship": "Case Manager",
+                        "start_date": "2024-01-10",
+                        "end_date": "2024-02-10"*/
 
-                send1("0718373569", 123450005,  "LTFU", "Case Manager", other1.getText().toString(), 1573, startDate1.getText().toString(), enddate1.getText().toString());
+                send("0718373569", 1234500006,  "LTFU", "Case Manager", other1.getText().toString(), 1573, startDate1.getText().toString(), enddate1.getText().toString());
               //  String phone, int ccno, String REASON, String RSHIP, String other1, int prov,  String startDate1, String enddate1
                // String REASON, String RSHIP, EditText other1, EditText startDate1, EditText enddate1
 
@@ -311,6 +314,8 @@ public class AddCaseManager extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
+
+
     private void send1(String phone, int ccno, String REASON, String RSHIP, String other1, int prov,  String startDate1, String enddate1){
         JSONObject payload = new JSONObject();
         try {
@@ -329,7 +334,7 @@ public class AddCaseManager extends AppCompatActivity {
         }
         AndroidNetworking.post("https://ushauriapi.kenyahmis.org/case/assign")
                 .addHeaders("Content-Type", "application.json")
-                // .addHeaders("Accept", "gzip, deflate, br")
+                 .addHeaders("Accept", "gzip, deflate, br")
                 .addHeaders("Connection","keep-alive")
                 .addHeaders("Accept", "application/json")
                 .addJSONObjectBody(payload) // posting json
@@ -337,13 +342,34 @@ public class AddCaseManager extends AppCompatActivity {
                 .build().getAsJSONObject(new JSONObjectRequestListener() {
             @Override
             public void onResponse(JSONObject response) {
-                Toast.makeText(AddCaseManager.this, response.toString(), Toast.LENGTH_SHORT).show();
+
+                try {
+                    boolean success = response.getBoolean("success");
+                    String message = response.getString("message");
+
+                    // Check the "success" value and display the "message" accordingly
+                    if (success) {
+                        // Successful response
+                        // Display or handle the success message
+                        showToast(message); // Replace with your display logic
+                    } else {
+                        // Unsuccessful response
+                        // Display or handle the error message
+                        showToast(message); // Replace with your display logic
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    // Handle JSON parsing error
+                }
+ //               Toast.makeText(AddCaseManager.this, response.toString(), Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onError(ANError anError) {
-                Toast.makeText(AddCaseManager.this, anError.toString(), Toast.LENGTH_SHORT).show();
+
+
+//                Toast.makeText(AddCaseManager.this, "Error"+ " "+anError.toString(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -369,15 +395,41 @@ public class AddCaseManager extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.POST, saveurl, payload, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Toast.makeText(AddCaseManager.this, response.toString(), Toast.LENGTH_SHORT).show();
+
+                try {
+                    boolean success = response.getBoolean("success");
+                    String message = response.getString("message");
+
+                    // Check the "success" value and display the "message" accordingly
+                    if (success) {
+                        // Successful response
+                        // Display or handle the success message
+                        showToast(message); // Replace with your display logic
+                    } else {
+                        // Unsuccessful response
+                        // Display or handle the error message
+                        showToast(message); // Replace with your display logic
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    // Handle JSON parsing error
+                }
+ //               Toast.makeText(AddCaseManager.this, response.toString(), Toast.LENGTH_SHORT).show();
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                // Handle the error response
+                if (error.networkResponse != null) {
+                    int statusCode = error.networkResponse.statusCode;
+                    // Handle HTTP errors
+                } else {
+                    // Handle network error or timeout
+                }
 
-                Log.d("Errors", error.toString());
-                Toast.makeText(AddCaseManager.this, "Error"+error.toString(), Toast.LENGTH_SHORT).show();
+               // Log.d("Errors", error.toString());
+               // Toast.makeText(AddCaseManager.this, "Error"+error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
 
             }
@@ -388,6 +440,8 @@ public class AddCaseManager extends AppCompatActivity {
 
     }
 
-
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
 
 }
