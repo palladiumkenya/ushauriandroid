@@ -184,17 +184,39 @@
 
 
 
-                <Button
-                    android:id="@+id/btn_startVisit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/background_round_corner_button"
-                    android:fontFamily="serif"
-                    android:text="Start Visit"
-                    android:textSize="12sp"
-                    android:textColor="#FFFFFF" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btn_cancel"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+
+                        android:background="@drawable/background_round_corner_button"
+                        android:fontFamily="serif"
+                        android:text="Cancel"
+                        android:textSize="12sp"
+                        android:textColor="#FFFFFF" />
+
+
+                    <Button
+                        android:id="@+id/btn_startVisit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginTop="4dp"
+
+                        android:background="@drawable/background_round_corner_button"
+                        android:fontFamily="serif"
+                        android:text="Start Visit"
+                        android:textSize="12sp"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
 
             </LinearLayout>
 

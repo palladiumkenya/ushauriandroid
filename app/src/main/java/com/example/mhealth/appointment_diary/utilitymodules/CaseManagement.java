@@ -55,7 +55,7 @@ public class CaseManagement extends AppCompatActivity {
     EditText lname;
     EditText other;
 
-    Button startVisit;
+    Button startVisit, btn_cancel;
 
     EditText sex;
     EditText phone;
@@ -116,6 +116,7 @@ public class CaseManagement extends AppCompatActivity {
                  lname = dialog.findViewById(R.id.lname);
                  other = dialog.findViewById(R.id.other);
                 startVisit = dialog.findViewById(R.id.btn_startVisit);
+                btn_cancel= dialog.findViewById(R.id.btn_cancel);
 
                  sex = dialog.findViewById(R.id.sex);
                  phone = dialog.findViewById(R.id.phone);
@@ -154,6 +155,14 @@ public class CaseManagement extends AppCompatActivity {
                     }
                 });
 
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                        dialog.dismiss();
+                    }
+                });
+
 
                 //         getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer1, new CaseManager()).commit();
             }
@@ -185,6 +194,7 @@ public class CaseManagement extends AppCompatActivity {
                 phone = dialog.findViewById(R.id.phone);
 
                 details =dialog.findViewById(R.id.cc_details_layout);
+                btn_cancel= dialog.findViewById(R.id.btn_cancel);
 
 
 
@@ -217,6 +227,15 @@ public class CaseManagement extends AppCompatActivity {
                         details.setVisibility(View.GONE);
                     }
                 });
+
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                        dialog.dismiss();
+                    }
+                });
+
 
             }
         });
