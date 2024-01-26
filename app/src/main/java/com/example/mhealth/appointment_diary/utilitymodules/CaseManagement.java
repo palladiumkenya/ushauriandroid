@@ -25,9 +25,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
 import com.example.mhealth.appointment_diary.Dialogs.Dialogs;
+import com.example.mhealth.appointment_diary.MainOptions;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.pmtct.ANCVisit;
+import com.example.mhealth.appointment_diary.pmtct.PMTCT1;
 import com.example.mhealth.appointment_diary.pmtct.PNCVisit;
 import com.example.mhealth.appointment_diary.pmtct.PNCVisitStart;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
@@ -63,6 +65,15 @@ public class CaseManagement extends AppCompatActivity {
    // EditText ccno,clinicno,fname,Mname,lname,dobi,reg, upino;
     Dialogs dialogs;
     boolean x;
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+
+        Intent intent = new Intent(CaseManagement.this, MainOptions.class);
+        startActivity(intent);
+
+    }
 
 
     @Override
@@ -139,6 +150,7 @@ public class CaseManagement extends AppCompatActivity {
                         lname.setText("");
                         phone.setText("");
                         sex.setText("");
+                        details.setVisibility(View.GONE);
                     }
                 });
 
@@ -202,6 +214,7 @@ public class CaseManagement extends AppCompatActivity {
                         lname.setText("");
                         phone.setText("");
                         sex.setText("");
+                        details.setVisibility(View.GONE);
                     }
                 });
 

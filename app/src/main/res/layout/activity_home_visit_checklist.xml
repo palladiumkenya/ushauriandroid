@@ -119,6 +119,7 @@
                 android:background="@drawable/notestextfield"
                 android:padding="10dp"
                 android:layout_marginRight="13dp"
+                android:visibility="gone"
                 android:hint="5.If Yes Who?"/>
 
 

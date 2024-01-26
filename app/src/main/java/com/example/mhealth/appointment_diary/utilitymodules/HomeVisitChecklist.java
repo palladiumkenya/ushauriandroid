@@ -1,7 +1,10 @@
 package com.example.mhealth.appointment_diary.utilitymodules;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +21,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
+import com.example.mhealth.appointment_diary.Dialogs.Dialogs;
 import com.example.mhealth.appointment_diary.R;
+import com.example.mhealth.appointment_diary.pmtct.PMTCT1;
+import com.example.mhealth.appointment_diary.pmtct.PNCVisit;
 import com.example.mhealth.appointment_diary.pmtct.PNCVisitStart;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
@@ -29,10 +36,13 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class HomeVisitChecklist extends AppCompatActivity {
+    CheckInternet chkinternet;
     Button send;
     EditText arvstoredE,  whodisdclosedE, arvstakenE, NotesE;
     EditText memberNameE1, memberTelephoneE1, landmarkE1;
     String  phone_no1;
+
+    Dialogs dialogs;
 
     Spinner independentS, needsS, sexualpartnerS, disclosehouseholdS, socialsupportS, socialsupportcommunityS, nonclinicalS, mentalhealthS,
             stressfulsituationS, drugs_alcoholS, side_effectsS;
@@ -75,6 +85,9 @@ public class HomeVisitChecklist extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_visit_checklist);
+        dialogs=new Dialogs(HomeVisitChecklist.this);
+
+        chkinternet =new CheckInternet(HomeVisitChecklist.this);
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
@@ -210,6 +223,14 @@ public class HomeVisitChecklist extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 disclosed_hiv_status_st =disclosed_hiv_status[position];
+
+                if (disclosed_hiv_status_st.contentEquals("Yes")){
+                    whodisdclosedE.setVisibility(View.VISIBLE);
+
+                }else{
+                    whodisdclosedE.setVisibility(View.GONE);
+                    //other1.setText("");
+                }
 
 
                 disclosed_hiv_status_st_code = Integer.toString(position);
@@ -413,6 +434,12 @@ public class HomeVisitChecklist extends AppCompatActivity {
                        Toast.makeText(HomeVisitChecklist.this, "Any side effects from medication?", Toast.LENGTH_SHORT).show();
                    }
 
+                   else if (!chkinternet.isInternetAvailable()){
+
+                       Toast.makeText(HomeVisitChecklist.this, "Check Your Internet Connection", Toast.LENGTH_LONG).show();
+
+                   }
+
 else{
                 sev(phone_no1, newCC, memberNameE1.getText().toString(), memberTelephoneE1.getText().toString(),
                         landmarkE1.getText().toString(), patient_independent_st,   basic_needs_met_st,  sexual_partner_st,
@@ -420,8 +447,12 @@ else{
                         social_support_household_st,  social_support_community_st,  non_clinical_services_st,
                          mental_health_st, stress_situation_st, use_drug_st, side_effect_st, NotesE.getText().toString());
 
-                      // independentS.setSelection(0);
-                              // , needsS, sexualpartnerS, disclosehouseholdS, socialsupportS, socialsupportcommunityS, nonclinicalS, mentalhealthS,
+                       independentS.setSelection(0);
+                       needsS.setSelection(0); sexualpartnerS.setSelection(0);
+                       disclosehouseholdS.setSelection(0); socialsupportS.setSelection(0); socialsupportcommunityS.setSelection(0);
+                       nonclinicalS.setSelection(0); mentalhealthS.setSelection(0);
+
+
                              //  stressfulsituationS, drugs_alcoholS, side_effectsS;
 
 }
@@ -478,12 +509,70 @@ else{
                     if (success) {
                         // Successful response
                         // Display or handle the success message
-                        showToast(message); // Replace with your display logic
+
+
+
+
+                    androidx.appcompat.app.AlertDialog.Builder builder1 = new androidx.appcompat.app.AlertDialog.Builder(HomeVisitChecklist.this);
+                    builder1.setIcon(R.drawable.nascoplogonew);
+                    builder1.setTitle(message);
+                    builder1.setMessage( "Server Response");
+                    builder1.setCancelable(false);
+
+                    builder1.setPositiveButton(
+                            "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+
+
+                                    Intent intent = new Intent(HomeVisitChecklist.this, CaseManagement.class);
+
+                                    startActivity(intent);
+                                    dialog.dismiss();
+
+
+
+
+
+
+
+                                    //dialog.cancel();
+                                }
+                            });
+
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+
+
+
+               //         showToast(message); // Replace with your display logic
                     } else {
                         // Unsuccessful response
                         // Display or handle the error message
                         showToast(message); // Replace with your display logic
                     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     // Handle JSON parsing error

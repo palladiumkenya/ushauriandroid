@@ -2,10 +2,13 @@ package com.example.mhealth.appointment_diary.utilitymodules;
 
 import static android.R.layout.simple_spinner_item;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,9 +31,12 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
+import com.example.mhealth.appointment_diary.Dialogs.Dialogs;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.config.SelectUrls;
 import com.example.mhealth.appointment_diary.models.providerModel;
+import com.example.mhealth.appointment_diary.pmtct.PNCVisit;
 import com.example.mhealth.appointment_diary.pmtct.PNCVisitStart;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
@@ -48,6 +54,9 @@ import java.util.Map;
 
 public class AddCaseManager extends AppCompatActivity {
 
+    CheckInternet chkinternet;
+    Dialogs dialogs;
+
     EditText startDate1, enddate1, other1;
 
     Spinner AssignCaseM1, provider1, rship1;
@@ -57,6 +66,7 @@ public class AddCaseManager extends AppCompatActivity {
 
     String[] RshipS = {"--Select Relationship--", "Case Manager"};
     private String REASON = "";
+    String REASON_code, RSHIP_code, providername_code;
 
     private String RSHIP = "";
     String providername;
@@ -73,6 +83,9 @@ public class AddCaseManager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_case_manager);
+        dialogs=new Dialogs(AddCaseManager.this);
+
+        chkinternet =new CheckInternet(AddCaseManager.this);
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
         for(int x=0;x<myl.size();x++){
@@ -180,11 +193,14 @@ public class AddCaseManager extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 REASON =ReasonS[position];
+
+                REASON_code= Integer.toString(position);
                 if (REASON.contentEquals("Other Specify")){
                     other1.setVisibility(View.VISIBLE);
 
                 }else{
                     other1.setVisibility(View.GONE);
+                    other1.setText("");
                 }
 
 
@@ -207,9 +223,11 @@ public class AddCaseManager extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 RSHIP =RshipS[position];
+
+                RSHIP_code = Integer.toString(position);
                 //      HIV_status_Code = Integer.toString(position);
 
-                Toast.makeText(AddCaseManager.this, "Data is"+RSHIP, Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(AddCaseManager.this, "Data is"+RSHIP, Toast.LENGTH_SHORT).show();
 
                 //hivResultL1
 
@@ -226,11 +244,37 @@ public class AddCaseManager extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (REASON_code.contentEquals("0")){
+                    Toast.makeText(AddCaseManager.this, "Specify Reason for Assigning a Case Manager", Toast.LENGTH_SHORT).show();
 
-                send(phone_no1, newCC,  REASON, RSHIP, other1.getText().toString(), providername, startDate1.getText().toString(), enddate1.getText().toString());
-              //  String phone, int ccno, String REASON, String RSHIP, String other1, int prov,  String startDate1, String enddate1
-               // String REASON, String RSHIP, EditText other1, EditText startDate1, EditText enddate1
+                }else if(RSHIP_code.contentEquals("0")){
+                    Toast.makeText(AddCaseManager.this, "Specify Relationship", Toast.LENGTH_SHORT).show();
 
+                }else if(providername_code.contentEquals("0")){
+                    Toast.makeText(AddCaseManager.this, "Choose Provider", Toast.LENGTH_SHORT).show();
+                }
+                else if(startDate1.getText().toString().isEmpty()){
+                    Toast.makeText(AddCaseManager.this, "Enter Start Date", Toast.LENGTH_SHORT).show();
+                }else if (enddate1.getText().toString().isEmpty()){
+                    Toast.makeText(AddCaseManager.this, "Enter End Date", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (!chkinternet.isInternetAvailable()){
+
+                    Toast.makeText(AddCaseManager.this, "Check Your Internet Connection", Toast.LENGTH_LONG).show();
+
+                }
+                else {
+
+
+                    send(phone_no1, newCC, REASON, RSHIP, other1.getText().toString(), providername, startDate1.getText().toString(), enddate1.getText().toString());
+                    AssignCaseM1.setSelection(0);
+                    provider1.setSelection(0);
+                    rship1.setSelection(0);
+                    startDate1.setText("");
+                    enddate1.setText("");
+
+                }
 
             }
         });
@@ -298,6 +342,8 @@ public class AddCaseManager extends AppCompatActivity {
 
                             providername = names.get(position).getFull_name();
 
+                            providername_code= Integer.toString(position);
+
                        //         stage_name =names.get(position).getStage();
 
                       //      }
@@ -363,12 +409,52 @@ public class AddCaseManager extends AppCompatActivity {
                     if (success) {
                         // Successful response
                         // Display or handle the success message
-                        showToast(message); // Replace with your display logic
+
+
+
+
+                        androidx.appcompat.app.AlertDialog.Builder builder1 = new androidx.appcompat.app.AlertDialog.Builder(AddCaseManager.this);
+                        builder1.setIcon(R.drawable.nascoplogonew);
+                        builder1.setTitle(message);
+                        builder1.setMessage( "Server Response");
+                        builder1.setCancelable(false);
+
+                        builder1.setPositiveButton(
+                                "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+
+
+                                        Intent intent = new Intent(AddCaseManager.this, CaseManagement.class);
+
+                                        startActivity(intent);
+                                        dialog.dismiss();
+
+
+
+
+
+
+
+                                        //dialog.cancel();
+                                    }
+                                });
+
+
+                        AlertDialog alert11 = builder1.create();
+                        alert11.show();
+
+
+
+                        //         showToast(message); // Replace with your display logic
                     } else {
                         // Unsuccessful response
                         // Display or handle the error message
                         showToast(message); // Replace with your display logic
                     }
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     // Handle JSON parsing error
@@ -392,6 +478,7 @@ public class AddCaseManager extends AppCompatActivity {
                         // Handle the error message or any other information
                         Log.e("ErrorResponse", "Success: " + success + ", Message: " + message);
                         Toast.makeText(AddCaseManager.this, message, Toast.LENGTH_SHORT).show();
+                       // dialogs.showErrorDialog(message)
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
