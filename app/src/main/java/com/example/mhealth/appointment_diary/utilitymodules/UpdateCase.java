@@ -4,7 +4,6 @@ import static android.R.layout.simple_spinner_item;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -27,20 +26,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
 import com.example.mhealth.appointment_diary.Dialogs.Dialogs;
 import com.example.mhealth.appointment_diary.R;
-import com.example.mhealth.appointment_diary.config.SelectUrls;
 import com.example.mhealth.appointment_diary.models.providerModel;
-import com.example.mhealth.appointment_diary.pmtct.PNCVisit;
-import com.example.mhealth.appointment_diary.pmtct.PNCVisitStart;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
-import com.example.mhealth.appointment_diary.tables.urlModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,20 +39,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class AddCaseManager extends AppCompatActivity {
+public class UpdateCase extends AppCompatActivity {
 
     CheckInternet chkinternet;
     Dialogs dialogs;
 
-    EditText startDate1, enddate1, other1;
+    EditText startDate1, enddate1, other1, ccsearch;
 
     Spinner AssignCaseM1, provider1, rship1;
 
-    Button save1;
+    Button save1,btn_search;
     String[] ReasonS = {"--Select Reason--", "New Client", "Transfer In", "High VL", "Defaulters", "High VL", "LTFU", "High VL", "Co Infected", "Other Specify"};
 
     String[] RshipS = {"--Select Relationship--", "Case Manager"};
@@ -79,13 +68,14 @@ public class AddCaseManager extends AppCompatActivity {
     providerModel provider_Model;
     ArrayList<String> providerModelArrayList;
     ArrayList<providerModel> names;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_case_manager);
-        dialogs=new Dialogs(AddCaseManager.this);
+        setContentView(R.layout.activity_update_case);
+        dialogs=new Dialogs(UpdateCase.this);
 
-        chkinternet =new CheckInternet(AddCaseManager.this);
+        chkinternet =new CheckInternet(UpdateCase.this);
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
         for(int x=0;x<myl.size();x++){
@@ -113,7 +103,7 @@ public class AddCaseManager extends AppCompatActivity {
         try {
             //getSupportActionBar().setDisplayShowHomeEnabled(true);
             // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Add Case Manager");
+            getSupportActionBar().setTitle("Update Case");
 
         } catch (Exception e) {
 
@@ -130,6 +120,11 @@ public class AddCaseManager extends AppCompatActivity {
         enddate1 =(EditText) findViewById(R.id.endDate);
         other1 =(EditText) findViewById(R.id.other);
 
+        ccsearch=(EditText) findViewById(R.id.ccsearch);
+        btn_search=(Button) findViewById(R.id.btn_search);
+
+        ccsearch.setText(newCC);
+
         startDate1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,7 +133,7 @@ public class AddCaseManager extends AppCompatActivity {
                 final int day = calendar.get(Calendar.DAY_OF_MONTH);
                 final int year = calendar.get(Calendar.YEAR);
                 final int month = calendar.get(Calendar.MONTH);
-                DatePickerDialog datePicker = new DatePickerDialog(AddCaseManager.this  , new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePicker = new DatePickerDialog(UpdateCase.this  , new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
                         // adding the selected date in the edittext
@@ -165,7 +160,7 @@ public class AddCaseManager extends AppCompatActivity {
                 final int day = calendar.get(Calendar.DAY_OF_MONTH);
                 final int year = calendar.get(Calendar.YEAR);
                 final int month = calendar.get(Calendar.MONTH);
-                DatePickerDialog datePicker = new DatePickerDialog(AddCaseManager.this  , new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePicker = new DatePickerDialog(UpdateCase.this  , new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
                         // adding the selected date in the edittext
@@ -185,7 +180,7 @@ public class AddCaseManager extends AppCompatActivity {
 
 
         // Reason for assigning CM
-        ArrayAdapter<String> reasonAdapter = new ArrayAdapter<String>(AddCaseManager.this, android.R.layout.simple_spinner_item, ReasonS);
+        ArrayAdapter<String> reasonAdapter = new ArrayAdapter<String>(UpdateCase.this, android.R.layout.simple_spinner_item, ReasonS);
         reasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         AssignCaseM1.setAdapter(reasonAdapter);
         AssignCaseM1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -215,7 +210,7 @@ public class AddCaseManager extends AppCompatActivity {
 
         //Rships
 
-        ArrayAdapter<String> rshipAdapter = new ArrayAdapter<String>(AddCaseManager.this, android.R.layout.simple_spinner_item, RshipS);
+        ArrayAdapter<String> rshipAdapter = new ArrayAdapter<String>(UpdateCase.this, android.R.layout.simple_spinner_item, RshipS);
         reasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rship1.setAdapter(rshipAdapter);
         rship1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -227,7 +222,7 @@ public class AddCaseManager extends AppCompatActivity {
                 RSHIP_code = Integer.toString(position);
                 //      HIV_status_Code = Integer.toString(position);
 
-            //    Toast.makeText(AddCaseManager.this, "Data is"+RSHIP, Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(AddCaseManager.this, "Data is"+RSHIP, Toast.LENGTH_SHORT).show();
 
                 //hivResultL1
 
@@ -239,35 +234,41 @@ public class AddCaseManager extends AppCompatActivity {
             }
         });
         getproviders();
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         save1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (REASON_code.contentEquals("0")){
-                    Toast.makeText(AddCaseManager.this, "Specify Reason for Assigning a Case Manager", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateCase.this, "Specify Reason for Assigning a Case Manager", Toast.LENGTH_SHORT).show();
 
                 }else if(RSHIP_code.contentEquals("0")){
-                    Toast.makeText(AddCaseManager.this, "Specify Relationship", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateCase.this, "Specify Relationship", Toast.LENGTH_SHORT).show();
 
                 }else if(providername_code.contentEquals("0")){
-                    Toast.makeText(AddCaseManager.this, "Choose Provider", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateCase.this, "Choose Provider", Toast.LENGTH_SHORT).show();
                 }
                 else if(startDate1.getText().toString().isEmpty()){
-                    Toast.makeText(AddCaseManager.this, "Enter Start Date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateCase.this, "Enter Start Date", Toast.LENGTH_SHORT).show();
                 }else if (enddate1.getText().toString().isEmpty()){
-                    Toast.makeText(AddCaseManager.this, "Enter End Date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateCase.this, "Enter End Date", Toast.LENGTH_SHORT).show();
                 }
 
                 else if (!chkinternet.isInternetAvailable()){
 
-                    Toast.makeText(AddCaseManager.this, "Check Your Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdateCase.this, "Check Your Internet Connection", Toast.LENGTH_LONG).show();
 
                 }
                 else {
 
 
-                    send(phone_no1, newCC, REASON, RSHIP, other1.getText().toString(), providername, startDate1.getText().toString(), enddate1.getText().toString());
+                    send(phone_no1,newCC, REASON, RSHIP, other1.getText().toString(), providername, startDate1.getText().toString(), enddate1.getText().toString());
                     AssignCaseM1.setSelection(0);
                     provider1.setSelection(0);
                     rship1.setSelection(0);
@@ -300,7 +301,7 @@ public class AddCaseManager extends AppCompatActivity {
                     names.clear();
 
 
-                 //   JSONArray jsonArray =response.getJSONArray("USHAURI");
+                    //   JSONArray jsonArray =response.getJSONArray("USHAURI");
 
                     for (int i =0; i<response.length(); i++){
 
@@ -324,29 +325,29 @@ public class AddCaseManager extends AppCompatActivity {
                     providerModelArrayList.add("--Select the provider--");
 
 
-                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(AddCaseManager.this, simple_spinner_item, providerModelArrayList);
+                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(UpdateCase.this, simple_spinner_item, providerModelArrayList);
                     spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
                     provider1.setAdapter(spinnerArrayAdapter);
                     //removeSimpleProgressDialog();
 
                     provider1.setSelection(spinnerArrayAdapter.getCount()-1);
-                 //   dataId =names.get(spinnerArrayAdapter.getCount()-1).getId();
+                    //   dataId =names.get(spinnerArrayAdapter.getCount()-1).getId();
 
 
                     provider1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                      //      dataId = names.get(position).getId();
+                            //      dataId = names.get(position).getId();
 
-                       //     if (dataId==1){
+                            //     if (dataId==1){
 
                             providername = names.get(position).getFull_name();
 
                             providername_code= Integer.toString(position);
 
-                       //         stage_name =names.get(position).getStage();
+                            //         stage_name =names.get(position).getStage();
 
-                      //      }
+                            //      }
 
                         }
 
@@ -373,18 +374,21 @@ public class AddCaseManager extends AppCompatActivity {
                 800000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue = Volley.newRequestQueue(AddCaseManager.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(UpdateCase.this);
         requestQueue.add(jsonArrayRequest);
     }
 
 
 
 
-    private  void send(String phone, String ccno, String REASON, String RSHIP, String other1, String prov,  String startDate1, String enddate1){
+    private  void send(String phone,String ccno, String REASON, String RSHIP, String other1, String prov,  String startDate1, String enddate1){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String saveurl ="https://ushauriapi.kenyahmis.org/case/assign";
+        String saveurl ="https://ushauriapi.kenyahmis.org/case/assign/update/"+newCC;
+
+       // String cc =newCC;
         JSONObject payload = new JSONObject();
         try {
+           // JSONObject payload = new JSONObject();
             payload.put("phone_no", phone);
             payload.put("clinic_number", ccno);
             payload.put("reason_assign", REASON);
@@ -394,10 +398,15 @@ public class AddCaseManager extends AppCompatActivity {
             payload.put("start_date", startDate1);
             payload.put("end_date", enddate1);
 
+
+
+
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.POST, saveurl, payload, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest= new JsonObjectRequest(Request.Method.PUT, saveurl, payload, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
@@ -413,7 +422,7 @@ public class AddCaseManager extends AppCompatActivity {
 
 
 
-                        androidx.appcompat.app.AlertDialog.Builder builder1 = new androidx.appcompat.app.AlertDialog.Builder(AddCaseManager.this);
+                        androidx.appcompat.app.AlertDialog.Builder builder1 = new androidx.appcompat.app.AlertDialog.Builder(UpdateCase.this);
                         builder1.setIcon(R.drawable.nascoplogonew);
                         builder1.setTitle(message);
                         builder1.setMessage( "Server Response");
@@ -426,7 +435,7 @@ public class AddCaseManager extends AppCompatActivity {
 
 
 
-                                        Intent intent = new Intent(AddCaseManager.this, CaseManagement.class);
+                                        Intent intent = new Intent(UpdateCase.this, CaseManagement.class);
 
                                         startActivity(intent);
                                         dialog.dismiss();
@@ -451,8 +460,8 @@ public class AddCaseManager extends AppCompatActivity {
                     } else {
                         // Unsuccessful response
                         // Display or handle the error message
-                       // showToast(message); // Replace with your display logic
-                        androidx.appcompat.app.AlertDialog.Builder builder1 = new androidx.appcompat.app.AlertDialog.Builder(AddCaseManager.this);
+                        // showToast(message); // Replace with your display logic
+                        androidx.appcompat.app.AlertDialog.Builder builder1 = new androidx.appcompat.app.AlertDialog.Builder(UpdateCase.this);
                         builder1.setIcon(R.drawable.nascoplogonew);
                         builder1.setTitle(message);
                         builder1.setMessage( "Server Response");
@@ -465,7 +474,7 @@ public class AddCaseManager extends AppCompatActivity {
 
 
 
-                                        Intent intent = new Intent(AddCaseManager.this, CaseManagement.class);
+                                        Intent intent = new Intent(UpdateCase.this, CaseManagement.class);
 
                                         startActivity(intent);
                                         dialog.dismiss();
@@ -492,7 +501,9 @@ public class AddCaseManager extends AppCompatActivity {
                     e.printStackTrace();
                     // Handle JSON parsing error
                 }
- //               Toast.makeText(AddCaseManager.this, response.toString(), Toast.LENGTH_SHORT).show();
+                //               Toast.makeText(AddCaseManager.this, response.toString(), Toast.LENGTH_SHORT).show();
+
+
 
             }
         }, new Response.ErrorListener() {
@@ -510,8 +521,8 @@ public class AddCaseManager extends AppCompatActivity {
 
                         // Handle the error message or any other information
                         Log.e("ErrorResponse", "Success: " + success + ", Message: " + message);
-                        Toast.makeText(AddCaseManager.this, message, Toast.LENGTH_SHORT).show();
-                       // dialogs.showErrorDialog(message)
+                        Toast.makeText(UpdateCase.this, message, Toast.LENGTH_SHORT).show();
+                        // dialogs.showErrorDialog(message)
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -519,23 +530,23 @@ public class AddCaseManager extends AppCompatActivity {
                     // Handle other types of errors (e.g., network error or timeout)
                     Log.e("ErrorResponse", "An error occurred: " + error.getMessage());
 
-                    Toast.makeText(AddCaseManager.this, "An error occurred: " + " "+ error.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateCase.this, "An error occurred: " + " "+ error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
-               // Log.d("Errors", error.toString());
-               // Toast.makeText(AddCaseManager.this, "Error"+error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                // Log.d("Errors", error.toString());
+                // Toast.makeText(AddCaseManager.this, "Error"+error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
 
             }
         });
 
-       // RequestQueue requestQueue = Volley.newRequestQueue(AddCaseManager.this);
+        // RequestQueue requestQueue = Volley.newRequestQueue(AddCaseManager.this);
         queue.add(jsonObjectRequest);
 
     }
 
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
 
+    }
 }

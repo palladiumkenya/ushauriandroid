@@ -392,6 +392,12 @@ public class HomeVisitChecklist extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String memmer1 =memberNameE1.getText().toString();
+                String tel =memberTelephoneE1.getText().toString();
+                String landmark =landmarkE1.getText().toString();
+                String motes =NotesE.getText().toString();
+
                    if (patient_independent_st_code.contentEquals("0")){
                     Toast.makeText(HomeVisitChecklist.this, "Specify patient's independence", Toast.LENGTH_SHORT).show();
                 }else if (basic_needs_met_st_code.contentEquals("0")){
@@ -440,12 +446,18 @@ public class HomeVisitChecklist extends AppCompatActivity {
 
                    }
 
+
+
 else{
-                sev(phone_no1, newCC, memberNameE1.getText().toString(), memberTelephoneE1.getText().toString(),
+                sev(phone_no1, newCC,   memberNameE1.getText().toString(), memberTelephoneE1.getText().toString(),
                         landmarkE1.getText().toString(), patient_independent_st,   basic_needs_met_st,  sexual_partner_st,
                         disclosed_hiv_status_st,  whodisdclosedE.getText().toString(), arvstoredE.getText().toString(), arvstakenE.getText().toString(),
                         social_support_household_st,  social_support_community_st,  non_clinical_services_st,
-                         mental_health_st, stress_situation_st, use_drug_st, side_effect_st, NotesE.getText().toString());
+                         mental_health_st, stress_situation_st, use_drug_st, side_effect_st, motes);
+
+                       String code = phone_no1+ " " + newCC+ " " + memberNameE1.getText().toString()+ " " + memberTelephoneE1.getText().toString()+ " " + landmarkE1.getText().toString()+ " " + patient_independent_st + " " +  basic_needs_met_st+ " " +  sexual_partner_st+ " " + disclosed_hiv_status_st+ " " +  whodisdclosedE.getText().toString()+ " " + arvstoredE.getText().toString()+ " " + arvstakenE.getText().toString()+ " " +social_support_household_st+ " " +  social_support_community_st+ " " +  non_clinical_services_st+ " " + mental_health_st+ " " + stress_situation_st+ " " + use_drug_st+ " " + side_effect_st+ " " + NotesE.getText().toString();
+                        Log.d("Sent Data", " "+ code);
+                       //Toast.makeText(HomeVisitChecklist.this, "Data: " + " "+code, Toast.LENGTH_SHORT).show();
 
                        independentS.setSelection(0);
                        needsS.setSelection(0); sexualpartnerS.setSelection(0);
@@ -529,7 +541,7 @@ else{
                                     Intent intent = new Intent(HomeVisitChecklist.this, CaseManagement.class);
 
                                     startActivity(intent);
-                                    dialog.dismiss();
+                                  //  dialog.dismiss();
 
 
 
@@ -549,25 +561,35 @@ else{
 
                //         showToast(message); // Replace with your display logic
                     } else {
+
+
+                        androidx.appcompat.app.AlertDialog.Builder builder1 = new androidx.appcompat.app.AlertDialog.Builder(HomeVisitChecklist.this);
+                        builder1.setIcon(R.drawable.nascoplogonew);
+                        builder1.setTitle(message);
+                        builder1.setMessage( "Server Response");
+                        builder1.setCancelable(false);
+
+                        builder1.setPositiveButton(
+                                "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+
+
+                                        Intent intent = new Intent(HomeVisitChecklist.this, CaseManagement.class);
+
+                                        startActivity(intent);
+                                    }
+                                });
+
+
+                        AlertDialog alert11 = builder1.create();
+                        alert11.show();
                         // Unsuccessful response
                         // Display or handle the error message
-                        showToast(message); // Replace with your display logic
+                      //  showToast(message); // Replace with your display logic
+
                     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

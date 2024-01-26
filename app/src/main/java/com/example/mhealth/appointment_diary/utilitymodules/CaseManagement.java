@@ -45,7 +45,7 @@ import java.util.List;
 
 public class CaseManagement extends AppCompatActivity {
 
-    CardView card1, card2;
+    CardView card1, card2, card3;
     CheckInternet chkinternet;
 
     EditText csearch;
@@ -96,6 +96,7 @@ public class CaseManagement extends AppCompatActivity {
 
         card1 = (CardView) findViewById(R.id.add_menu);
         card2 = (CardView) findViewById(R.id.homecheck);
+        card3 = (CardView) findViewById(R.id.update_menu);
 
         card1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,11 +240,82 @@ public class CaseManagement extends AppCompatActivity {
 
             }
         });
+
+        //update
+        card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Dialog dialog =new Dialog(CaseManagement.this);
+                dialog.setContentView(R.layout.fragment_update_case);
+
+                Window mywindow = dialog.getWindow();
+                dialog.setCanceledOnTouchOutside(true);
+                mywindow.setLayout(ActionBar.LayoutParams.FILL_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+                dialog.show();
+
+                csearch = dialog.findViewById(R.id.ccsearch);
+                ccbtn = dialog.findViewById(R.id.btn_search);
+                ccno = dialog.findViewById(R.id.clinicnocase);
+                fname = dialog.findViewById(R.id.fname);
+                lname = dialog.findViewById(R.id.lname);
+                other = dialog.findViewById(R.id.other);
+                startVisit = dialog.findViewById(R.id.btn_startVisit);
+                btn_cancel= dialog.findViewById(R.id.btn_cancel);
+
+                sex = dialog.findViewById(R.id.sex);
+                phone = dialog.findViewById(R.id.phone);
+
+                details =dialog.findViewById(R.id.cc_details_layout);
+
+
+
+                //searchbutton
+
+                ccbtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        searchcc1();
+                        //   Toast.makeText(CaseManagement.this, "great", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                //stat visit
+                startVisit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String sendCC =ccno.getText().toString();
+                        Intent intent = new Intent(CaseManagement.this, UpdateCase.class);
+                        intent.putExtra("Client_CCC", sendCC);
+                        startActivity(intent);
+
+
+                        ccno.setText("");
+                        fname.setText("");
+                        other.setText("");
+                        lname.setText("");
+                        phone.setText("");
+                        sex.setText("");
+                        details.setVisibility(View.GONE);
+                    }
+                });
+
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                        dialog.dismiss();
+                    }
+                });
+
+
+            }
+        });
     }
 
     public void  searchcc1(){
 
-        if (csearch.getText().toString().isEmpty()){
+       if (csearch.getText().toString().isEmpty()){
             Toast.makeText(CaseManagement.this, "Enter CCC Number", Toast.LENGTH_LONG).show();
         }
         else if (!chkinternet.isInternetAvailable()){
@@ -259,7 +331,7 @@ public class CaseManagement extends AppCompatActivity {
         // details.setVisibility(View.VISIBLE);
 
    // }
-
+        //searchCCC2();
     }
 
 
@@ -293,6 +365,7 @@ public class CaseManagement extends AppCompatActivity {
 
             String tt1 = "?phone_no=" + phoneurl;
             String urls1 = "&clinic_number=" + csearch.getText().toString();
+         //   String urls1 = "&clinic_number=" + 1234500001;
 
             // Create a JsonObjectRequest
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
