@@ -142,7 +142,8 @@ public class AddCaseManager extends AppCompatActivity {
                     @Override
                     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
                         // adding the selected date in the edittext
-                        startDate1.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                       // startDate1.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                        startDate1.setText(year+"-" +(month + 1)+ "-"+dayOfMonth);
                     }
                 }, year, month, day);
 
@@ -169,7 +170,9 @@ public class AddCaseManager extends AppCompatActivity {
                     @Override
                     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {
                         // adding the selected date in the edittext
-                        enddate1.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                  //      enddate1.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+
+                        enddate1.setText(year+"-" +(month + 1)+ "-"+dayOfMonth);
                     }
                 }, year, month, day);
 
@@ -267,7 +270,8 @@ public class AddCaseManager extends AppCompatActivity {
                 else {
 
 
-                    send(phone_no1, newCC, REASON, RSHIP, other1.getText().toString(), providername, startDate1.getText().toString(), enddate1.getText().toString());
+                    send(phone_no1, newCC, REASON, other1.getText().toString(),  providername_code, RSHIP, startDate1.getText().toString(), enddate1.getText().toString());
+                    Log.d("DATA", phone_no1+ newCC+ REASON+other1.getText().toString()+ RSHIP+  providername+ startDate1.getText().toString()+ enddate1.getText().toString());
                     AssignCaseM1.setSelection(0);
                     provider1.setSelection(0);
                     rship1.setSelection(0);
@@ -380,19 +384,25 @@ public class AddCaseManager extends AppCompatActivity {
 
 
 
-    private  void send(String phone, String ccno, String REASON, String RSHIP, String other1, String prov,  String startDate1, String enddate1){
+    private  void send(String phone1, String ccno1, String REASON11,String other111,String prov11, String RSHIP11, String startDate111, String enddate111){
         RequestQueue queue = Volley.newRequestQueue(this);
         String saveurl ="https://ushauriapi.kenyahmis.org/case/assign";
         JSONObject payload = new JSONObject();
         try {
-            payload.put("phone_no", phone);
-            payload.put("clinic_number", ccno);
-            payload.put("reason_assign", REASON);
-            payload.put("other_reason", other1);
-            payload.put("provider_id", prov);
-            payload.put("relationship", RSHIP);
-            payload.put("start_date", startDate1);
-            payload.put("end_date", enddate1);
+            payload.put("phone_no", phone1);
+            payload.put("clinic_number", ccno1);
+            payload.put("reason_assign", REASON11);
+            payload.put("other_reason", other111);
+            payload.put("provider_id", prov11);
+            payload.put("relationship", RSHIP11);
+            payload.put("start_date", startDate111);
+            payload.put("end_date", enddate111);
+
+
+
+
+
+
 
         } catch (JSONException e) {
             e.printStackTrace();

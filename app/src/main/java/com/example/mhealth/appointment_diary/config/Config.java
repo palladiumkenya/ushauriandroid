@@ -237,6 +237,7 @@ public class Config extends AppCompatActivity {
     public static final String VERIFYOTP= "/verifyMFLCode/verifyotp/";
 
     public static final String SERCH_CLIENT= "/clients/api/search/";
+    public static final String SERCH_UPDATE_CLIENT="/case/search/";
 
     /*
     https://ushauriapi.kenyahmis.org/pmtct/pnc
