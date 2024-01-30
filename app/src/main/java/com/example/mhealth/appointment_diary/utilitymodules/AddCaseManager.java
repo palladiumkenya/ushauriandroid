@@ -67,6 +67,7 @@ public class AddCaseManager extends AppCompatActivity {
     String[] RshipS = {"--Select Relationship--", "Case Manager"};
     private String REASON = "";
     String REASON_code, RSHIP_code, providername_code;
+    int providername_code1;
 
     private String RSHIP = "";
     String providername;
@@ -253,9 +254,10 @@ public class AddCaseManager extends AppCompatActivity {
                 }else if(RSHIP_code.contentEquals("0")){
                     Toast.makeText(AddCaseManager.this, "Specify Relationship", Toast.LENGTH_SHORT).show();
 
-                }else if(providername_code.contentEquals("0")){
-                    Toast.makeText(AddCaseManager.this, "Choose Provider", Toast.LENGTH_SHORT).show();
                 }
+                //else if(providername_code1.contentEquals("0")){
+                   // Toast.makeText(AddCaseManager.this, "Choose Provider", Toast.LENGTH_SHORT).show();
+               // }
                 else if(startDate1.getText().toString().isEmpty()){
                     Toast.makeText(AddCaseManager.this, "Enter Start Date", Toast.LENGTH_SHORT).show();
                 }else if (enddate1.getText().toString().isEmpty()){
@@ -270,8 +272,8 @@ public class AddCaseManager extends AppCompatActivity {
                 else {
 
 
-                    send(phone_no1, newCC, REASON, other1.getText().toString(),  providername_code, RSHIP, startDate1.getText().toString(), enddate1.getText().toString());
-                    Log.d("DATA", phone_no1+ newCC+ REASON+other1.getText().toString()+ RSHIP+  providername+ startDate1.getText().toString()+ enddate1.getText().toString());
+                    send(phone_no1, newCC, REASON, other1.getText().toString(),  providername_code1, RSHIP, startDate1.getText().toString(), enddate1.getText().toString());
+                    Log.d("DATA", phone_no1+ newCC+ REASON+other1.getText().toString()+ RSHIP+   providername_code1+ startDate1.getText().toString()+ enddate1.getText().toString());
                     AssignCaseM1.setSelection(0);
                     provider1.setSelection(0);
                     rship1.setSelection(0);
@@ -346,7 +348,7 @@ public class AddCaseManager extends AppCompatActivity {
 
                             providername = names.get(position).getFull_name();
 
-                            providername_code= Integer.toString(position);
+                            providername_code1= names.get(position).getId();
 
                        //         stage_name =names.get(position).getStage();
 
@@ -384,7 +386,7 @@ public class AddCaseManager extends AppCompatActivity {
 
 
 
-    private  void send(String phone1, String ccno1, String REASON11,String other111,String prov11, String RSHIP11, String startDate111, String enddate111){
+    private  void send(String phone1, String ccno1, String REASON11,String other111,int prov11, String RSHIP11, String startDate111, String enddate111){
         RequestQueue queue = Volley.newRequestQueue(this);
         String saveurl ="https://ushauriapi.kenyahmis.org/case/assign";
         JSONObject payload = new JSONObject();
