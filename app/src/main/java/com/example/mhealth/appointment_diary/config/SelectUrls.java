@@ -161,7 +161,8 @@ public class SelectUrls extends AppCompatActivity {
 
     public void geturls1(){
 
-        String URLstring = "https://ushaurinode.mhealthkenya.co.ke/config";
+        //String URLstring = "https://ushaurinode.mhealthkenya.co.ke/config";
+        String URLstring = "https://ushauriapi.nascop.org/config";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URLstring, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
