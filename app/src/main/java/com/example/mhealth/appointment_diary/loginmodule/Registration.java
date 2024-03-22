@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.core.app.NotificationCompat;
 
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
@@ -31,6 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -82,9 +84,11 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
 
     Dialogs dialogs;
     Dialog mydialog;
+    CountDownTimer countDownTimer;
 
     private MaterialTextView privacy, otpphone1;;
     private CheckBox consent;
+    TextView countdownTextView;
 
     EditText username, password, repassword, securityhint, securityanswerE, affiliationE, trcidnoE, userphoneE, otp1,otp2,otp3,otp4,otp5;
     Button register, cancel, reg_btn, btnGetOtp, btnSendOtp;
@@ -233,7 +237,9 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
 
                 else{
 
-                getOtp();}
+                getOtp();
+                    //startCountdown();
+                }
 
             }
         });
@@ -418,6 +424,8 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
             privacy = (MaterialTextView) findViewById(R.id.tv_privacy);
 
             consent = (CheckBox) findViewById(R.id.terms);
+
+            countdownTextView = findViewById(R.id.countdownTextView);
 
 
         } catch (Exception e) {
@@ -901,6 +909,8 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
                 .getAsJSONObject(new JSONObjectRequestListener(){
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        startCountdown();
 //                        Log.e(TAG, response.toString());
                        /* if (response.length()==0){
                             Toast.makeText(Registration.this, "No Data", Toast.LENGTH_LONG).show();
@@ -1207,6 +1217,34 @@ public void submitOtp(String phone, String otpA){
         Toast.makeText(Registration.this, "error getting mflcode "+e, Toast.LENGTH_SHORT).show();
     }
 }
+
+    private void startCountdown() {
+        // Hide the request OTP button
+        btnGetOtp.setVisibility(View.GONE);
+
+        // Show the countdown text view
+        countdownTextView.setVisibility(View.VISIBLE);
+
+        countDownTimer = new CountDownTimer(45000, 1000) { // 60 seconds countdown
+            public void onTick(long millisUntilFinished) {
+                countdownTextView.setText("Time left: " + millisUntilFinished / 1000 + "s");
+            }
+
+            public void onFinish() {
+                countdownTextView.setVisibility(View.GONE);
+                btnGetOtp.setVisibility(View.VISIBLE);
+            }
+        }.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Cancel the countdown timer if the activity is destroyed
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
     private void getMyMflcode(JSONArray j) {
 
 

@@ -46,8 +46,15 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import static android.R.layout.simple_spinner_item;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+
 public class SelectUrls extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 1;
@@ -79,7 +86,23 @@ public class SelectUrls extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_urls);
-       if (!haveNetworkConnection()){
+        // Set the desired TLS versions
+
+
+
+
+        // For Android versions 5, 6, and 7, explicitly enable TLS v1.2
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH) {
+            String[] enabledTLSVersions = {"TLSv1.2"};
+            // Configure SSLSocket with the desired TLS versions
+            configureSSLSocket(enabledTLSVersions);
+
+           // sslContext.getSupportedSSLParameters().setProtocols(new String[]{"TLSv1.2"});
+        }
+
+
+
+        if (!haveNetworkConnection()){
            Toast.makeText(SelectUrls.this, "Check your internet", Toast.LENGTH_LONG).show();
        }else{
           geturls1();
@@ -161,8 +184,11 @@ public class SelectUrls extends AppCompatActivity {
 
     public void geturls1(){
 
-        //String URLstring = "https://ushaurinode.mhealthkenya.co.ke/config";
-        String URLstring = "https://ushauriapi.nascop.org/config";
+       String URLstring = "https://ushauriapi.kenyahmis.org/config";
+        //https://ushauriapilive.kenyahmis.org/config
+
+       // String URLstring ="https://ushauriapi.nascop.org/config";
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URLstring, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -244,7 +270,8 @@ public class SelectUrls extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Eror occured"+ " "+error.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("Error Occured", error.getMessage());
 
             }
         });
@@ -476,4 +503,23 @@ public class SelectUrls extends AppCompatActivity {
         return haveConnectedWifi || haveConnectedMobile;
     }
 
+
+    public static void configureSSLSocket(String[] enabledTLSVersions) {
+        try {
+            // Create an SSLContext
+            SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+            // Set enabled protocols
+            sslContext.init(null, null, null);
+
+            // Get the SSLSocketFactory from the SSLContext
+            SSLSocket sslSocket = (SSLSocket) sslContext.getSocketFactory().createSocket();
+
+            // Set enabled protocols on the SSLSocket
+            sslSocket.setEnabledProtocols(enabledTLSVersions);
+
+            // Use sslSocket as needed
+        } catch (NoSuchAlgorithmException | RuntimeException | KeyManagementException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

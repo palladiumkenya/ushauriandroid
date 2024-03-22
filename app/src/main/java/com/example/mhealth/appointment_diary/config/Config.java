@@ -22,7 +22,14 @@ import com.example.mhealth.appointment_diary.loginmodule.LoginActivity;
 import com.example.mhealth.appointment_diary.tables.UrlTable;
 import com.orm.SugarRecord;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 
 public class Config extends AppCompatActivity {
 
@@ -151,6 +158,12 @@ public class Config extends AppCompatActivity {
         setContentView(R.layout.activity_config);
 
 
+        // Set the desired TLS versions
+        String[] enabledTLSVersions = {"TLSv1.2"};
+
+        // Configure SSLSocket with the desired TLS versions
+        configureSSLSocket(enabledTLSVersions);
+
         TextView x =findViewById(R.id.show);
         Button xx =findViewById(R.id.show1);
 
@@ -210,5 +223,44 @@ public class Config extends AppCompatActivity {
         AlertDialog alert11 = builder1.create();
         alert11.show();
 
+    }
+
+
+    public static SSLSocketFactory configureSSLSocketFactory(String[] enabledTLSVersions) {
+        try {
+            // Create an SSLContext
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+
+            // Initialize SSLContext with a custom TrustManager, KeyManager, and SecureRandom (if needed)
+            // For simplicity, we're using default values here
+
+            // Set enabled protocols
+            sslContext.init(null, null, null);
+
+            // Get the SSLSocketFactory from the SSLContext
+            return sslContext.getSocketFactory();
+        } catch (NoSuchAlgorithmException | RuntimeException | KeyManagementException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void configureSSLSocket(String[] enabledTLSVersions) {
+        try {
+            // Create an SSLContext
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            // Set enabled protocols
+            sslContext.init(null, null, null);
+
+            // Get the SSLSocketFactory from the SSLContext
+            SSLSocket sslSocket = (SSLSocket) sslContext.getSocketFactory().createSocket();
+
+            // Set enabled protocols on the SSLSocket
+            sslSocket.setEnabledProtocols(enabledTLSVersions);
+
+            // Use sslSocket as needed
+        } catch (NoSuchAlgorithmException | RuntimeException | KeyManagementException | IOException e) {
+            e.printStackTrace();
+        }
     }
     }

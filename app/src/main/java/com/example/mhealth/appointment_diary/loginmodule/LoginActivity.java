@@ -43,7 +43,13 @@ import com.facebook.stetho.Stetho;
 import com.orm.SugarRecord;
 
 import java.io.File;
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
 
 //import android.support.v8.app.NotificationCompat;
 public class LoginActivity extends AppCompatActivity {
@@ -74,6 +80,21 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        // For Android versions 5, 6, and 7, explicitly enable TLS v1.2
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT_WATCH) {
+            // Set the desired TLS versions
+            String[] enabledTLSVersions = {"TLSv1.2"};
+            // Configure SSLSocket with the desired TLS versions
+            configureSSLSocket(enabledTLSVersions);
+            // sslContext.getSupportedSSLParameters().setProtocols(new String[]{"TLSv1.2"});
+        }
+
+
+
+
+
+
         dialogs=new Dialogs(LoginActivity.this);
         //setScreen();
 
@@ -502,6 +523,27 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences.Editor editor =preferencesS.edit();
             editor.putString("FirstTimeInstall", "Yes");
             editor.apply();
+        }
+    }
+
+
+
+    public static void configureSSLSocket(String[] enabledTLSVersions) {
+        try {
+            // Create an SSLContext
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            // Set enabled protocols
+            sslContext.init(null, null, null);
+
+            // Get the SSLSocketFactory from the SSLContext
+            SSLSocket sslSocket = (SSLSocket) sslContext.getSocketFactory().createSocket();
+
+            // Set enabled protocols on the SSLSocket
+            sslSocket.setEnabledProtocols(enabledTLSVersions);
+
+            // Use sslSocket as needed
+        } catch (NoSuchAlgorithmException | RuntimeException | KeyManagementException | IOException e) {
+            e.printStackTrace();
         }
     }
 }
