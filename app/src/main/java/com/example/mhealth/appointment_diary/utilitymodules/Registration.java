@@ -163,7 +163,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
     EditText cccE, upnE, fileserialE, f_nameE, s_nameE, o_nameE, dobE, enrollment_dateE, art_dateE, phoneE, buddyphoneE, idnoE, altphoneE, ageinyearsE, locatorcountyE, locatorsubcountyE, locatorlocationE, locatorwardE, locatorvillageE, UPI_number, dobirth;
 
-    Spinner genderS, maritalS, conditionS, enrollmentS, languageS, smsS, wklymotivation, messageTime, SelectstatusS, patientStatus, GroupingS, orphanS, schoolS, newGroupingS;
+    Spinner genderS, maritalS, conditionS, enrollmentS, languageS, smsS, wklymotivation, messageTime, SelectstatusS, patientStatus, GroupingS, orphanS, schoolS, newGroupingS, regimenS, who_stageS;
 
     String gender_code, marital_code, condition_code, grouping_code, new_grouping_code, category_code, language_code, sms_code, sms_code1, Selectstatus_code, wklyMotivation_code, messageTime_code, patientStatus_code, school_code, orphan_code, idnoS, upi_no, birth_cert_no, locatorcountyS, locatorsubcountyS, locatorlocationS, locatorwardS, locatorvillageS;
     int genderid, group_id, groupCode, time1, selectStatusCode,client_statusCode, txt_time, language_id1, language_code1, gender_code1, marital_code1, marital_id, county_code1, scounty_code1, ward_code1;
@@ -176,6 +176,13 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
     SendMessage sm;
 
     String[] genders = {"", "Female", "Male"};
+
+    String[] regimens = {"", "Female", "Male"};
+    String[] who_stages = {"", "Female", "Male"};
+
+    String WHO_STAGE ="";
+    String REGIMEN="";
+
     // Please Select Gender*
 
     String[] newgroupings = {"", "Adolescent", "PMTCT", "TB", "Adults", "Peads", "TB-HIV", "HEI"};
@@ -553,6 +560,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
             messageTime = (Spinner) findViewById(R.id.time_spinner);
             patientStatus = (Spinner) findViewById(R.id.Patientstatus_spinner);
 //           GroupingS=(Spinner) findViewById(R.id.grouping_spinner);
+
+            regimenS = (Spinner) findViewById(R.id.regimen_spinner);
+            who_stageS = (Spinner) findViewById(R.id.who_spinner);
 
 
             gender_code = "";
@@ -1139,7 +1149,14 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         Spinner spin = (Spinner) parent;
+        if (spin.getId()==R.id.who_spinner){
+            WHO_STAGE =who_stages[position];
 
+        }
+        if (spin.getId()==R.id.regimen_spinner){
+            REGIMEN = regimens[position];
+
+        }
         if (spin.getId() == R.id.gender_spinner) {
 
 
@@ -1149,6 +1166,8 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
         if (spin.getId() == R.id.marital_spinner) {
 
             marital_code = Integer.toString(position);
+
+           // String who = maritals[position];
 
 
         }
@@ -1352,6 +1371,9 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 //              populateStatus();
                 populateweekly();
                 populatemsg();
+                populate_Regimen();
+                populateWho_stage();
+
                 //populatepntstatus();
                 populategrouping();
                 gender_code1 = 0;
@@ -1413,6 +1435,26 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
 //        Toast.makeText(this, "you selected "+selected_item+"the behind scene value is "+myselected, Toast.LENGTH_SHORT).show();
 //        Toast.makeText(this, "you selected "+sel ected_item2+"the behind scene value is "+myselected2, Toast.LENGTH_SHORT).show();
+    }
+    public void populateWho_stage(){
+        try {
+            SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getApplicationContext(), who_stages);
+            who_stageS.setAdapter(spinnerAdapter);
+
+        }catch (Exception e){
+
+        }
+
+    }
+    public void populate_Regimen(){
+        try {
+            SpinnerAdapter spinnerAdapter = new SpinnerAdapter(getApplicationContext(), regimens);
+            regimenS.setAdapter(spinnerAdapter);
+
+        }catch (Exception e){
+
+        }
+
     }
 
     public void populategrouping() {
@@ -2401,7 +2443,7 @@ public class Registration extends AppCompatActivity implements AdapterView.OnIte
 
                 //String sendSms = myccnumber + "*" + fileserialS + "*" + f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" + upi_no + "*" + birth_cert_no + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + buddyphoneNumber + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" + locatorcountyS + "*" + locatorsubcountyS + "*" + locatorlocationS + "*" + locatorwardS + "*" + locatorvillageS;
                 // String sendSms = myccnumber + "*" + fileserialS + "*" + f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" +upi_no+ "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + buddyphoneNumber + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code+"*"+new_grouping_code+"*"+locatorcountyS+"*"+locatorsubcountyS+"*"+locatorlocationS+"*"+locatorwardS+"*"+locatorvillageS;
-                String sendSms = myccnumber + "*" + fileserialS + "*" + f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" + upi_no + "*" + birth_cert_no + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + altphoneNumber + "*" + buddyphoneNumber + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" + countryID+"*" +countyIDb+"*"+countyID + "*" + scountyID + "*" + locatorlocationS + "*" + wardID + "*" + locatorvillageS;
+                String sendSms = myccnumber + "*" + fileserialS + "*" + f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + idnoS + "*" + upi_no + "*" + birth_cert_no + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + REGIMEN+"*" +WHO_STAGE+"*" + phoneS + "*" + altphoneNumber + "*" + buddyphoneNumber + "*" + language_code + "*" + sms_code + "*" + wklyMotivation_code + "*" + messageTime_code + "*" + Selectstatus_code + "*" + patientStatus_code + "*" + new_grouping_code + "*" + countryID+"*" +countyIDb+"*"+countyID + "*" + scountyID + "*" + locatorlocationS + "*" + wardID + "*" + locatorvillageS;
 //countyID + "*" + scountyID + "*" + locatorlocationS + "*" + wardID + "*" + locatorvillageS;
 //                    String sendSms = "Reg*" + cccS + "*" + f_nameS + "*" + s_nameS + "*" + o_nameS + "*" + dobS + "*" + gender_code + "*" + marital_code + "*" + condition_code + "*" + enrollmentS + "*" + art_dateS + "*" + phoneS + "*" + language_code + "*" + sms_code + "*" +wkly_code+"*"+pnt_code+"*"+message_code+"*"+ status_code;
 

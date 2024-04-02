@@ -465,6 +465,58 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
+                <!-- Regimen-->
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:text="Start Regimen*"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20sp"
+                    android:layout_height="wrap_content">
+
+
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:id="@+id/regimen_spinner"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
+
+
+
+
+
+                <!-- WHO Stage-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:text="WHO Stage at Enrolment"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20sp"
+                    android:layout_height="wrap_content">
+
+
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:id="@+id/who_spinner"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+
+
+
 
 
 
