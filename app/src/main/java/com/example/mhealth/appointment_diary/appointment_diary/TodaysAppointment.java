@@ -121,7 +121,7 @@ public class TodaysAppointment extends AppCompatActivity {
     Progress progress;
 
     Button btnRegister, btnReport, bookedappointments, broadcast, transfer, consent,transitCl,moveClinic, todayapp;
-    CardView card_register, card_reschedule, card_book, card_consent, card_dsd, card_transfer, card_transit, card_clinic, card_today, card_calender;
+    CardView card_register, card_reschedule, card_book, card_consent, card_dsd, card_transfer, card_transit, card_clinic, card_today, card_calender, client_encounter;
     Button missed,honored;
     String passedUname,passedPassword;
 
@@ -175,7 +175,7 @@ public class TodaysAppointment extends AppCompatActivity {
         card_clinic= (CardView)  findViewById(R.id.card_clin);
         card_today= (CardView) findViewById(R.id.card_todey);
         card_calender= (CardView) findViewById(R.id.card_calender);
-        card_reschedule= (CardView) findViewById(R.id.card_reschedule);
+        card_reschedule= (CardView) findViewById(R.id.client_encounter);
         messages = (TextView) findViewById(R.id.msg_reschedule);
 
         messages.setOnClickListener(new View.OnClickListener() {
@@ -203,7 +203,7 @@ public class TodaysAppointment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), RescheduledRequests.class);
+                Intent intent = new Intent(getApplicationContext(), ClientEncounter.class);
                 startActivity(intent);
 
 

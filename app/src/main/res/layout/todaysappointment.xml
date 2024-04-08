@@ -844,6 +844,8 @@
 
                             </LinearLayout>
 
+                            <!-- clinic mvmt -->
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -916,13 +918,15 @@
                                     </LinearLayout>
                                 </androidx.cardview.widget.CardView>
 
+                                <!-- client Encounter form-->
+
                                <androidx.cardview.widget.CardView
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:id="@+id/card_reschedule"
+                                    android:id="@+id/client_encounter"
                                     android:layout_margin="@dimen/spacing_medium"
                                     android:layout_weight="1"
-                                   android:visibility="gone"
+
                                     app:cardCornerRadius="2dp"
                                     app:cardElevation="2dp">
 
@@ -930,19 +934,14 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:orientation="vertical">
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="80dp"
-                                            android:background="@drawable/ic__message"
-                                            android:textColor="@color/colorAccent"
-                                            android:text="your text here" />
 
-                                      <!--  <ImageView
+
+                                        <ImageView
                                             android:layout_width="match_parent"
                                             android:layout_height="80dp"
                                             android:paddingTop="@dimen/spacing_large"
                                             android:scaleType="centerInside"
-                                            app:srcCompat="@drawable/ic_appointment" />-->
+                                            app:srcCompat="@drawable/ic_appointment" />
 
                                         <LinearLayout
                                             android:layout_width="match_parent"
@@ -965,7 +964,7 @@
                                                     android:autoSizeTextType="uniform"
                                                     android:autoSizeMinTextSize="8sp"
                                                     android:autoSizeMaxTextSize="11sp"
-                                                    android:text="RESCHEDULE REQUESTS"
+                                                    android:text="CLIENT ENCOUNTER"
                                                     android:textColor="@color/grey_90" />
 
                                                 <TextView
@@ -974,7 +973,7 @@
                                                     android:autoSizeTextType="uniform"
                                                     android:autoSizeMinTextSize="8sp"
                                                     android:autoSizeMaxTextSize="11sp"
-                                                    android:text="Confirm Rescheduled Requests" />
+                                                    android:text="Fill client ecounter form" />
 
 
                                             </LinearLayout>
