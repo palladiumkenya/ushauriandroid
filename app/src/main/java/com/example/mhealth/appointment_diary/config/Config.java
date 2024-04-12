@@ -146,6 +146,9 @@ public class Config extends AppCompatActivity {
     public static final String GETAFFILIATION_URL1 = "/chore/affiliation";
     public static final String SENDDATATODB_URL1 = "/receiver/";
 
+    public static final String SENDENCOUNTERTO_DB = "/visit/enc";
+
+
     public static final String ApproveReschedule = "/appnt/updatereschedule";
     public static final String Reschedule_LIST = "/appnt/reschedule_list";
 

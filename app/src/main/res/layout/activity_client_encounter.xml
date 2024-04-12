@@ -133,6 +133,41 @@
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
+
+
+        <!-- bmi -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="BMI*"
+                android:id="@+id/bmi"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- ZSCORE -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="Zscore*"
+                android:id="@+id/zscore"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
         <!-- Blood sugar -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -142,7 +177,7 @@
                 android:layout_height="wrap_content"
 
                 android:hint="Enter Blood Sugar Level*"
-                android:id="@+id/lood_sugar"
+                android:id="@+id/blood_sugar"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 />
