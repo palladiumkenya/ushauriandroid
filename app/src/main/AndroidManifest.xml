@@ -24,6 +24,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
+            android:name=".appointment_diary.ClientEncounterSearch"
+            android:exported="false" />
+        <activity
             android:name=".appointment_diary.ClientEncounter"
             android:exported="false" />
         <activity

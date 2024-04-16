@@ -203,7 +203,7 @@ public class TodaysAppointment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), ClientEncounter.class);
+                Intent intent = new Intent(getApplicationContext(), ClientEncounterSearch.class);
                 startActivity(intent);
 
 
@@ -584,15 +584,5 @@ public class TodaysAppointment extends AppCompatActivity {
                     }
                 });
 
-
-
-
-
-
-
-
     }
-
-
-
 }
