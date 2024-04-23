@@ -90,9 +90,9 @@ public class ClientEncounterSearch extends AppCompatActivity {
         }
 
         try{
-            //getSupportActionBar().setDisplayShowHomeEnabled(true);
+             //getSupportActionBar().setDisplayShowHomeEnabled(true);
             // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Client Encounter");
+            getSupportActionBar().setTitle("Client Search");
 
         }
         catch(Exception e){
@@ -135,6 +135,7 @@ public class ClientEncounterSearch extends AppCompatActivity {
                 String sendCC =clinicno.getText().toString();
                 Intent intent = new Intent(ClientEncounterSearch.this, ClientEncounter.class);
                 intent.putExtra("Client_CCC", sendCC);
+                intent.putExtra("Client_DOB", dobi.getText().toString());
                 startActivity(intent);
 
             }
@@ -190,6 +191,9 @@ public class ClientEncounterSearch extends AppCompatActivity {
                         String currentregimen =jsonObject.getString("currentregimen");
                         String dob =jsonObject.getString("dob");
                         String upi_no =jsonObject.getString("upi_no");
+                      //  String upi_no =jsonObject.getString("upi_no");
+
+
 
 
                         clinicno.setText(clinicnumber);

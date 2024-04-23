@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-        <!-- Weight -->
+        <!--specify visit type -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -98,7 +98,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Enter Weight*"
+                android:visibility="gone"
+                android:hint="Specify visit type*"
+                android:id="@+id/specifyvisit"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Weight -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="3"
+                android:inputType="number"
+
+                android:hint="Enter Weight (kg)*"
                 android:id="@+id/weight"
                 android:textSize="13sp"
                 android:textStyle="bold"
@@ -112,7 +130,9 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Height*"
+                android:hint="Height (cm)*"
+                android:maxLength="3"
+                android:inputType="number"
                 android:id="@+id/height"
                 android:textSize="13sp"
                 android:textStyle="bold"
@@ -125,6 +145,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
 
                 android:hint="MUAC*"
                 android:id="@+id/muac"
@@ -142,6 +163,8 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:enabled="false"
 
                 android:hint="BMI*"
                 android:id="@+id/bmi"
@@ -158,6 +181,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
 
                 android:hint="Zscore*"
                 android:id="@+id/zscore"
@@ -176,8 +200,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Enter Blood Sugar Level*"
+                android:hint="Enter Blood Sugar Level (mg/dL)*"
                 android:id="@+id/blood_sugar"
+                android:maxLength="3"
+                android:inputType="number"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 />
@@ -192,7 +218,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Enter Systolic Blood Pressure*"
+                android:hint="Enter Systolic Blood Pressure (mmHg)*"
+                android:maxLength="6"
+                android:inputType="number"
                 android:id="@+id/systolic"
                 android:textSize="13sp"
                 android:textStyle="bold"
@@ -206,7 +234,9 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Diastolic Blood Sugar Level*"
+                android:hint="Enter Diastolic Blood Sugar Level (mmHg)*"
+                android:maxLength="6"
+                android:inputType="number"
                 android:id="@+id/diastolic"
                 android:textSize="13sp"
                 android:textStyle="bold"
@@ -260,7 +290,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false"
+
                 android:visibility="gone"
                 android:hint="Specify*"
                 android:id="@+id/specify"
