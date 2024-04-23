@@ -147,7 +147,7 @@
                 android:layout_height="wrap_content"
 
 
-                android:hint="MUAC*"
+                android:hint="MUAC"
                 android:id="@+id/muac"
                 android:textSize="13sp"
                 android:textStyle="bold"

@@ -24,11 +24,14 @@ import com.example.mhealth.appointment_diary.Dialogs.Dialogs;
 import com.example.mhealth.appointment_diary.ProcessReceivedMessage.ProcessMessage;
 import com.example.mhealth.appointment_diary.Progress.Progress;
 import com.example.mhealth.appointment_diary.R;
+import com.example.mhealth.appointment_diary.appointment_diary.TodaysAppointment;
 import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.encryption.Base64Encoder;
 import com.example.mhealth.appointment_diary.models.Appointments;
 import com.example.mhealth.appointment_diary.pmtct.ANCVisit;
+import com.example.mhealth.appointment_diary.pmtct.ANCVisitStarted;
 import com.example.mhealth.appointment_diary.pmtct.LaborAndDelivery;
+import com.example.mhealth.appointment_diary.pmtct.PMTCT1;
 import com.example.mhealth.appointment_diary.pmtct.PNCVisit;
 import com.example.mhealth.appointment_diary.tables.Mflcode;
 import com.example.mhealth.appointment_diary.tables.UrlTable;
@@ -2149,16 +2152,42 @@ public class AccessServer {
 //                        Toast.makeText(ctx, "message "+response, Toast.LENGTH_SHORT).show();
                         pr.dissmissProgress();
 
+                        String mss =null;
+                        int cd =0;
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            int code22 = jsonResponse.getInt("code");
+                            mss = jsonResponse.getString("message");
+                                    /*jsonObject = response.getJSONObject("code");
+                                    jsonObject1=response.getJSONObject("message");
+                                    String message1=jsonObject.getString("message");
+                                    int code1=jsonObject1.getInt("code");*/
 
-                        if(mStatusCode[0]==200){
+                            if (code22==200){
+                                 dialogs.showSuccessDialog(mss, "Server Response");
 
-                            dialogs.showSuccessDialog(response,"Server Response");
 
+
+
+                            }else{
+                                dialogs.showErrorDialog(mss, "err");
+
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        else{
 
-                            dialogs.showErrorDialog(response,"Server response");
-                        }
+
+//                        if(mStatusCode[0]==200){
+//
+//                            dialogs.showSuccessDialog(response,"Server Response");
+//
+//                        }
+//                        else{
+//
+//                            dialogs.showErrorDialog(response,"Server response");
+//                        }
 
                     }
                 },

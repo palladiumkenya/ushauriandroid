@@ -14,12 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.mhealth.appointment_diary.AccessServer.AccessServer;
 import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
 import com.example.mhealth.appointment_diary.R;
 import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.encryption.Base64Encoder;
+import com.example.mhealth.appointment_diary.pmtct.ANCVisitStarted;
 import com.example.mhealth.appointment_diary.sendmessages.SendMessage;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
@@ -336,73 +338,57 @@ public class ClientEncounter extends AppCompatActivity {
         btnRSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  weight1, height2, muac2, blood_sugar2, systolic2, diastolic2, specify2;
 
-               // if (we)
-
-                weight1 = weight.getText().toString();
-                height2 = height.getText().toString();
-                muac2 = muac.getText().toString();
-
-                bmi2 = bmi.getText().toString();
-                zscore2 =zscore.getText().toString();
-                blood_sugar2=blood_sugar.getText().toString();
-                systolic2=systolic.getText().toString();
-                diastolic2=diastolic.getText().toString();
-                specify2=specify.getText().toString();
-                specify3=specifyvisit.getText().toString();
-
-
-                if (specify.getText().toString().isEmpty()){
-                    specify2="-1";
-                }
-                if (specifyvisit.getText().toString().isEmpty()){
-                    specify3="-1";
-                }
-                String sendSms = ccno+ "*" + visitScheduled_code+ "*" + visitType_code + "*" + specify3+"*" +weight1 + "*" + height2 + "*" + bmi2+ "*" + zscore2 + "*" + muac2 + "*" + blood_sugar2+ "*" + systolic2+ "*" + diastolic2 + "*" +chronic_code + "*" + illness_code + "*" + specify2 + "*" + NCDS_code + "*" + regimen_code + "*" + Who_code;
-                Log.d("Data submitted", "visit*"+sendSms.toString()+"0712311264");
-
-
-
-                String encrypted = Base64Encoder.encryptString(sendSms);
-                Log.d("visit", "visit*"+encrypted.toString()+"0712311264");
-
-
-                String mynumber = Config.mainShortcode;
-
-                if (chkinternet.isInternetAvailable()) {
-                    List<Activelogin> myl = Activelogin.findWithQuery(Activelogin.class, "select * from Activelogin");
-                    for (int x = 0; x < myl.size(); x++) {
-
-                        String un = myl.get(x).getUname();
-                        List<Registrationtable> myl2 = Registrationtable.findWithQuery(Registrationtable.class, "select * from Registrationtable where username=? limit 1", un);
-                        for (int y = 0; y < myl2.size(); y++) {
-
-                            String phne = myl2.get(y).getPhone();
-//                                acs.sendDetailsToDb("Reg*"+sendSms+"/"+phne);
-                            acs.sendClientEncounter("visit*" + encrypted, phne);
-
-
-
-                        }
-                    }
-
-
-                } else {
-
-//                    sm.sendMessageApi("Reg*" + encrypted, mynumber);
-//
-//                    LogindisplayDialog("Client registered successfully, kindly confirm that you have received the client registration successful SMS before booking an appointment");
-//
-//
-//
-
-
+                if (visitType_code.isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Select Visit type", Toast.LENGTH_LONG).show();
+                } else if (visitScheduled_code.isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Select if the Visit is scheduled", Toast.LENGTH_LONG).show();
                 }
 
+
+               else if (weight.getText().toString().isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Enter weight", Toast.LENGTH_LONG).show();
+
+                } else if (height.getText().toString().isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Enter height", Toast.LENGTH_LONG).show();
+
+                }
+//                else if (zscore.getText().toString().isEmpty()){
+//                    Toast.makeText(ClientEncounter.this, "Enter zscore", Toast.LENGTH_LONG).show();
+//
+//                }
+                else if (blood_sugar.getText().toString().isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Enter blood sugar", Toast.LENGTH_LONG).show();
+
+                } else if (diastolic.getText().toString().isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Enter diastolic", Toast.LENGTH_LONG).show();
+
+                } else if (systolic.getText().toString().isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Enter systolic", Toast.LENGTH_LONG).show();
+
+                }  else if (visitScheduled_code.isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Select if the Visit is scheduled", Toast.LENGTH_LONG).show();
+                } else if (chronic_code.isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Select  chronic illness option", Toast.LENGTH_LONG).show();
+                } else if (illness_code.isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Select  illness option", Toast.LENGTH_LONG).show();
+                } else if (NCDS_code.isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Select  NCDS option", Toast.LENGTH_LONG).show();
+                } else if (Who_code.isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Select WHO stage option option", Toast.LENGTH_LONG).show();
+                }
+                else if (regimen_code.isEmpty()) {
+                    Toast.makeText(ClientEncounter.this, "Select Regimen", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    submit();
+                }
+
+                //  else{
 
 
             }
+
         });
 
     }
@@ -429,5 +415,80 @@ public class ClientEncounter extends AppCompatActivity {
             // If weight or height is empty, clear BMI EditText
             bmi.setText("");
         }
+    }
+
+
+    public void submit(){
+        weight1 = weight.getText().toString();
+        height2 = height.getText().toString();
+        muac2 = muac.getText().toString();
+
+        bmi2 = bmi.getText().toString();
+        zscore2 =zscore.getText().toString();
+        blood_sugar2=blood_sugar.getText().toString();
+        systolic2=systolic.getText().toString();
+        diastolic2=diastolic.getText().toString();
+        specify2=specify.getText().toString();
+        specify3=specifyvisit.getText().toString();
+
+
+        if (specify.getText().toString().isEmpty()){
+            specify2="-1";
+        }
+        if (specifyvisit.getText().toString().isEmpty()){
+            specify3="-1";
+        }
+        String sendSms = ccno+ "*" + visitScheduled_code+ "*" + visitType_code + "*" + specify3+"*" +weight1 + "*" + height2 + "*" + bmi2+ "*" + zscore2 + "*" + muac2 + "*" + blood_sugar2+ "*" + systolic2+ "*" + diastolic2 + "*" +chronic_code + "*" + illness_code + "*" + specify2 + "*" + NCDS_code + "*" + regimen_code + "*" + Who_code;
+        Log.d("Data submitted", "visit*"+sendSms.toString()+"0712311264");
+
+
+
+        String encrypted = Base64Encoder.encryptString(sendSms);
+        Log.d("visit", "visit*"+encrypted.toString()+"0712311264");
+
+
+        String mynumber = Config.mainShortcode;
+
+        if (chkinternet.isInternetAvailable()) {
+            List<Activelogin> myl = Activelogin.findWithQuery(Activelogin.class, "select * from Activelogin");
+            for (int x = 0; x < myl.size(); x++) {
+
+                String un = myl.get(x).getUname();
+                List<Registrationtable> myl2 = Registrationtable.findWithQuery(Registrationtable.class, "select * from Registrationtable where username=? limit 1", un);
+                for (int y = 0; y < myl2.size(); y++) {
+
+                    String phne = myl2.get(y).getPhone();
+//                                acs.sendDetailsToDb("Reg*"+sendSms+"/"+phne);
+                    acs.sendClientEncounter("visit*" + encrypted, phne);
+
+
+                    weight.setText("");
+                    height.setText("");
+                    muac.setText("");
+                    bmi.setText("");
+                    zscore.setText("");
+                    blood_sugar.setText("");
+                    systolic.setText("");
+                    diastolic.setText("");
+                    specify.setText("");
+                    specifyvisit.setText("");
+                    visitScheduled_code = "";
+                    visitType_code = "";
+                    chronic_code = "";
+                    illness_code = "";
+                    NCDS_code = "";
+                    regimen_code = "";
+                    Who_code = "";
+
+
+                    // }
+
+
+                }
+            } }
+
+
+
+
     }
 }
