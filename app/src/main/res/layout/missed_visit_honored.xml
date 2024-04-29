@@ -17,13 +17,28 @@
         android:id="@+id/datecalled"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="false"
+
         android:hint="Date client was visited*"
         android:inputType="text"
         android:maxLength="24"
 
         android:textColorHint="#000"
         android:textSize="12dp" />
+
+
+    <!-- phone no -->
+    <EditText
+        android:id="@+id/clientPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="phone number*"
+        android:inputType="number"
+        android:maxLength="10"
+        android:textColorHint="#000"
+        android:textSize="12dp" />
+
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -76,6 +91,24 @@
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+
+
+    <!-- consent -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/sms_spinner_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            />
     </LinearLayout>
 
 

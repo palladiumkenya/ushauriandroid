@@ -69,12 +69,13 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
     String ON_DSD_SERVER = "";
 
     String mysenddate;
-    Spinner myspinner, finalspinner,on_dsd_spinner;
+    Spinner myspinner, finalspinner,on_dsd_spinner,sms_spinner_update;
     Spinner newapptypespinner;
 
     String first_outcome_code = "";
     String second_outcome_code = "";
     String new_appointment_type = "";
+    String sms_spinner_update_code ="";
 
     DatePickerDialog datePickerDialog;
     DateTimePicker dtp;
@@ -313,10 +314,7 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
 
 
                                 String[] newapptype={"Select new appointment type","Refill","Clinical review","Enhanced Adherance Counselling","Lab investigation","VL Booking","Other"};
-
                                 final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(view.getContext() , android.R.layout.simple_spinner_dropdown_item,newapptype);
-
-
 //                    finalspinner.setAdapter(adapter2);
                                 newapptypespinner.setAdapter(adapter3);
 
@@ -592,13 +590,15 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
                         mywindow.setLayout(ActionBar.LayoutParams.FILL_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
 
                         on_dsd_spinner = (Spinner) dialog.findViewById(R.id.on_dsd_spinner);
+                        sms_spinner_update =(Spinner) dialog.findViewById(R.id.sms_spinner_update);
 
                         on_dsd_spinner = (Spinner) dialog.findViewById(R.id.on_dsd_spinner);
                         myspinner = (Spinner) dialog.findViewById(R.id.gender_spinner);
                         finalspinner = (Spinner) dialog.findViewById(R.id.final_spinner);
                         newapptypespinner = (Spinner) dialog.findViewById(R.id.missedvisitnewapptype);
-                        final EditText specifyother, rescheduladateE, rescheduledate1E,nextappother,clientreturndateE;
+                        final EditText specifyother, rescheduladateE, rescheduledate1E,nextappother,clientreturndateE, clientPhoneE;
                         specifyother = (EditText) dialog.findViewById(R.id.other);
+                        clientPhoneE =(EditText) dialog.findViewById(R.id.clientPhone);
                         rescheduladateE = (EditText) dialog.findViewById(R.id.rescheduledate);
                         nextappother = (EditText) dialog.findViewById(R.id.missedvisitOther);
                         rescheduledate1E = (EditText) dialog.findViewById(R.id.rescheduledateone);
@@ -607,6 +607,7 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
 
 
                         String[] onDsdString={"","On DSD","NOT on DSD"};
+                        String[] smsReceive={"Receive SMS*","Yes","No"};
 //Is the client on DSD or not?
 
 //                    final String[] outcome={"Select outcome","Client contacted","Client not contacted","client found", "client not found", "client declined care", "rescheduling", "other"};
@@ -623,7 +624,29 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
 //
                         String[] finalinformantoutcome={"Select final outcome","client declined care","Client Returned To Care","Self Transfer","Dead","Other"};
 
+                         //sms
+                        final ArrayAdapter<String> smsAdapter = new ArrayAdapter<String>(v.getContext() , android.R.layout.simple_spinner_dropdown_item,smsReceive);
+                        sms_spinner_update.setAdapter(smsAdapter);
 
+                        sms_spinner_update.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                        {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                            {
+                                sms_spinner_update_code =smsReceive[position];
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+
+
+
+
+                        //dsd
 
                         final ArrayAdapter<String> dsdAdapter = new ArrayAdapter<String>(v.getContext() , android.R.layout.simple_spinner_dropdown_item,onDsdString);
                         on_dsd_spinner.setAdapter(dsdAdapter);
@@ -811,6 +834,7 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
 
                                 if (finalspinner.getSelectedItem().equals("Client Returned To Care")) {
 
+                                    sms_spinner_update.setVisibility(View.VISIBLE);
                                     newapptypespinner.setVisibility(View.VISIBLE);
                                     myapp.setVisibility(View.VISIBLE);
                                     rescheduladateE.setVisibility(View.GONE);
@@ -831,6 +855,7 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
                                 }
 
                                 else if (finalspinner.getSelectedItem().equals("Dead")) {
+                                    sms_spinner_update.setVisibility(View.GONE);
 
                                     newapptypespinner.setVisibility(View.GONE);
                                     myapp.setVisibility(View.GONE);
@@ -873,6 +898,7 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
                                 } else if (finalspinner.getSelectedItem().equals("Self Transfer")) {
 
                                     mydate.setVisibility(View.GONE);
+                                    sms_spinner_update.setVisibility(View.GONE);
                                     specifyother.setVisibility(View.GONE);
                                     rescheduladateE.setVisibility(View.GONE);
                                     rescheduladateE.setText("");
@@ -929,6 +955,7 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
                                     mydate.setVisibility(View.GONE);
                                     newapptypespinner.setVisibility(View.GONE);
                                     myapp.setVisibility(View.GONE);
+                                    sms_spinner_update.setVisibility(View.GONE);
 
                                     clientreturndateE.setVisibility(View.GONE);
 
@@ -967,6 +994,9 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
 
                             }
                         });
+
+                        clientPhoneE.setText(phoneS);
+
 
                         submit.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -1206,7 +1236,8 @@ public class MissedVisitAdapter extends BaseAdapter implements Filterable {
                                             ON_DSD_SERVER = "NO";
 
 
-                                        String sendSms = ccnumberS + "*" + sendapptype + "*" + new_appointment_type + "*"+otherappValue+"*"+ clientdatecalled + "*" + first_outcome_code + "*" + sendDate + "*" + getTracers + "*" + second_outcome_code + "*" + other + "*" + patientS+"*"+clientreturndateS+"*"+TracingCost+"*"+ON_DSD_SERVER;
+                                       // String sendSms = ccnumberS + "*" + sendapptype + "*" + new_appointment_type + "*"+otherappValue+"*"+ clientdatecalled + "*" + first_outcome_code + "*" + sendDate + "*" + getTracers + "*" + second_outcome_code + "*" + other + "*" + patientS+"*"+clientreturndateS+"*"+TracingCost+"*"+ON_DSD_SERVER;
+                                        String sendSms = ccnumberS + "*" + sendapptype + "*" + new_appointment_type + "*"+otherappValue+"*"+ clientdatecalled + "*" + first_outcome_code + "*" + sendDate + "*" + getTracers + "*" + second_outcome_code + "*" + other + "*" + patientS+"*"+clientreturndateS+"*"+TracingCost+"*"+ON_DSD_SERVER+"*"+ccnumberS+"*"+clientPhoneE+"*"+sms_spinner_update_code;
 
 
                                         try {

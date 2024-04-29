@@ -60,7 +60,8 @@ public class AppointmentAdapter extends BaseAdapter implements Filterable {
     private List<AppointmentModel> filterList;
     List<Appointments> books = null;
 
-    Spinner myspinner,on_dsd_spinner;
+    Spinner myspinner,on_dsd_spinner,sms_spinner_update;
+    String sms_spinner_update_code ="";
 
     String ON_DSD = "";
     String ON_DSD_SERVER = "";
@@ -170,12 +171,16 @@ public class AppointmentAdapter extends BaseAdapter implements Filterable {
                     dialog.setTitle("SET NEXT APPOINTMENT DATE");
 
                     final EditText mydate = (EditText)dialog.findViewById(R.id.adate);
+                    final  EditText clientPhoneE = (EditText)dialog.findViewById(R.id.clientPhone);
                     final EditText myother = (EditText)dialog.findViewById(R.id.aother);
                     Button cancel = (Button)dialog.findViewById(R.id.cancel);
                     Button submit = (Button)dialog.findViewById(R.id.submit);
 
                     myspinner = (Spinner)dialog.findViewById(R.id.gender_spinner);
                     on_dsd_spinner = (Spinner)dialog.findViewById(R.id.on_dsd_spinner);
+                    sms_spinner_update =(Spinner) dialog.findViewById(R.id.sms_spinner_update);
+
+                    String[] smsReceive={"Receive SMS*","Yes","No"};
 
                     String[] nextapptype={"Select appointment type","Refill","Clinical review","Enhanced adherance","Lab investigation","VL Booking","Other"};
                     String[] onDsdString={"Is the client on DSD or not?","On DSD","NOT on DSD"};
@@ -199,6 +204,25 @@ public class AppointmentAdapter extends BaseAdapter implements Filterable {
 
                         }
                     });
+
+                    //sms
+                    final ArrayAdapter<String> smsAdapter = new ArrayAdapter<String>(v.getContext() , android.R.layout.simple_spinner_dropdown_item,smsReceive);
+                    sms_spinner_update.setAdapter(smsAdapter);
+
+                    sms_spinner_update.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                    {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                        {
+                            sms_spinner_update_code =smsReceive[position];
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
 
 
                     myspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -248,6 +272,7 @@ public class AppointmentAdapter extends BaseAdapter implements Filterable {
                             datePickerDialog.show();
                         }
                     });
+                    clientPhoneE.setText(phoneS);
 
                     submit.setOnClickListener(new View.OnClickListener()
                     {
@@ -355,7 +380,8 @@ public class AppointmentAdapter extends BaseAdapter implements Filterable {
                                   }
                                   else{
 
-                                      sendSms= ccnumberS +"*" + sendDate + "*" + appointmment_type_code+"*-1*"+1 + "*" + appidS +"*"+ON_DSD_SERVER;
+
+                                      sendSms= ccnumberS +"*" + sendDate + "*" + appointmment_type_code+"*-1*"+1 + "*" + appidS +"*"+ON_DSD_SERVER+"*"+ccnumberS+"*"+clientPhoneE+"*"+sms_spinner_update_code;
 
                                   }
 

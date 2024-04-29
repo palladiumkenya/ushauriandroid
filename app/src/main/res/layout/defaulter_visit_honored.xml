@@ -25,6 +25,21 @@
         android:textColorHint="#000"
         android:textSize="12dp" />
 
+
+    <!-- phone no -->
+
+    <EditText
+        android:id="@+id/clientPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:hint="phone number*"
+        android:inputType="text"
+        android:maxLength="24"
+
+        android:textColorHint="#000"
+        android:textSize="12dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

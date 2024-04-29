@@ -62,13 +62,45 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+
+
+
+    <!-- phone no -->
+    <EditText
+        android:id="@+id/clientPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="phone number*"
+        android:inputType="number"
+        android:maxLength="10"
+        android:textColorHint="#000"
+        android:textSize="12dp"
+        android:layout_marginTop="160dp"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <Spinner
+        android:id="@+id/sms_spinner_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/clientPhone"
+
+
+        />
+
+
+
+
     <Button
         android:id="@+id/cancel"
         android:layout_marginTop="21dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cancel"
-        android:layout_below="@+id/adate"
+        android:layout_below="@+id/sms_spinner_update"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="15dp"

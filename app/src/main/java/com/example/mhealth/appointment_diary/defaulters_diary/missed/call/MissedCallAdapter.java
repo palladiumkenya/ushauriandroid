@@ -84,8 +84,10 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
 
     String encrypted;
 
+
     String gender_code="";
-    Spinner myspinner,finalspinner,on_dsd_spinner;
+    String sms_spinner_update_code ="";
+    Spinner myspinner,finalspinner,on_dsd_spinner, sms_spinner_update;
     Spinner newapptypespinner;
 
     String other;
@@ -771,12 +773,36 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
                         dialog.setCanceledOnTouchOutside(true);
                         mywindow.setLayout(ActionBar.LayoutParams.FILL_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
 
+                        sms_spinner_update =(Spinner) dialog.findViewById(R.id.sms_spinner_update);
+
                         on_dsd_spinner = (Spinner)dialog.findViewById(R.id.on_dsd_spinner);
                         myspinner = (Spinner)dialog.findViewById(R.id.gender_spinner);
                         finalspinner = (Spinner)dialog.findViewById(R.id.final_spinner);
                         newapptypespinner = (Spinner)dialog.findViewById(R.id.newapptype);
 
+                        String[] smsReceive={"Receive SMS*","Yes","No"};
+
                         String[] onDsdString={"Is the client on DSD or not?","On DSD","NOT on DSD"};
+
+
+
+                        //sms
+                        final ArrayAdapter<String> smsAdapter = new ArrayAdapter<String>(v.getContext() , android.R.layout.simple_spinner_dropdown_item,smsReceive);
+                        sms_spinner_update.setAdapter(smsAdapter);
+
+                        sms_spinner_update.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+                        {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+                            {
+                                sms_spinner_update_code =smsReceive[position];
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
 
                         final ArrayAdapter<String> dsdAdapter = new ArrayAdapter<String>(v.getContext() , android.R.layout.simple_spinner_dropdown_item,onDsdString);
                         on_dsd_spinner.setAdapter(dsdAdapter);
@@ -797,8 +823,9 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
 
 
 
-                        final EditText specifyother,rescheduladateE,rescheduledate1E,nextappother,clientreturndateE;
+                        final EditText specifyother,rescheduladateE,rescheduledate1E,nextappother,clientreturndateE, clientPhoneE;
                         specifyother = (EditText)dialog.findViewById(R.id.other);
+                        clientPhoneE = (EditText)dialog.findViewById(R.id.clientPhone);
                         rescheduladateE=(EditText) dialog.findViewById(R.id.rescheduledate);
                         nextappother=(EditText) dialog.findViewById(R.id.missedvisitOther);
                         rescheduledate1E=(EditText) dialog.findViewById(R.id.rescheduledateone);
@@ -1180,6 +1207,8 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
                             }
                         });
 
+                        clientPhoneE.setText(phoneS);
+
                         submit.setOnClickListener(new View.OnClickListener()
                         {
                             @Override
@@ -1421,7 +1450,9 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
                                         ON_DSD_SERVER = "NO";
 
 
-                                    String sendSms = ccnumberS + "*" + sendapptype + "*" + new_appointment_type +"*"+nextappotherValue+ "*" + clientdatecalled + "*" + first_outcome_code + "*" + sendDate + "*" + getTracers + "*" + second_outcome_code + "*" + other+"*"+appointmentidS+"*"+clientreturndateS+"*"+Tracingcost+"*"+ON_DSD_SERVER;
+                                    //String sendSms = ccnumberS + "*" + sendapptype + "*" + new_appointment_type +"*"+nextappotherValue+ "*" + clientdatecalled + "*" + first_outcome_code + "*" + sendDate + "*" + getTracers + "*" + second_outcome_code + "*" + other+"*"+appointmentidS+"*"+clientreturndateS+"*"+Tracingcost+"*"+ON_DSD_SERVER;
+                                    String sendSms = ccnumberS + "*" + sendapptype + "*" + new_appointment_type +"*"+nextappotherValue+ "*" + clientdatecalled + "*" + first_outcome_code + "*" + sendDate + "*" + getTracers + "*" + second_outcome_code + "*" + other+"*"+appointmentidS+"*"+clientreturndateS+"*"+Tracingcost+"*"+ON_DSD_SERVER+"*"+ccnumberS+"*"+clientPhoneE+"*"+sms_spinner_update_code;
+
 
 
                                     try {
