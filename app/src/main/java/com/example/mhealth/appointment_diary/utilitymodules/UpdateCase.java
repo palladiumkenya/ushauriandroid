@@ -29,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.mhealth.appointment_diary.Checkinternet.CheckInternet;
 import com.example.mhealth.appointment_diary.Dialogs.Dialogs;
 import com.example.mhealth.appointment_diary.R;
+import com.example.mhealth.appointment_diary.models.CaseModel;
 import com.example.mhealth.appointment_diary.models.providerModel;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
@@ -549,4 +550,63 @@ public class UpdateCase extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
 
     }
+
+
+
+
+            String ccc ="?clinic_number="+newCC;
+            String phone ="&phone_no="+phone_no1;
+
+            String URL = "https://ushauriapi.kenyahmis.org/case/search/"+ccc+phone;
+
+            //https://ushauriapi.kenyahmis.org/case/search/?clinic_number=1234500001&phone_no=0712311264
+    public void fetchJsonArrayResponse() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        // Parse JSON response
+                        List<CaseModel> dataList = parseJsonResponse(response);
+                        // Handle your data here
+                        // For example, you can pass it to an adapter and display it in a RecyclerView
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle errors
+                Log.e("Error", "Error occurred: " + error.getMessage());
+            }
+        });
+
+        // Add the request to the RequestQueue.
+
+        RequestQueue requestQueue = Volley.newRequestQueue(UpdateCase.this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private List<CaseModel> parseJsonResponse(JSONArray jsonArray) {
+        List<CaseModel> dataList = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                // Extract data from JSON object
+                int id = jsonObject.getInt("id");
+                int clientId = jsonObject.getInt("client_id");
+
+                int provider_id = jsonObject.getInt("provider_id");
+                String reasonAssign = jsonObject.getString("reason_assign");
+                String relationship = jsonObject.getString("relationship");
+                String startDate = jsonObject.getString("start_date");
+                String endDate = jsonObject.getString("end_date");
+                // Create a MyDataModel object
+                CaseModel data = new  CaseModel(id, clientId, provider_id, reasonAssign, relationship, startDate, endDate);
+                // Add to the list
+                dataList.add(data);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return dataList;
+    }
+
 }
