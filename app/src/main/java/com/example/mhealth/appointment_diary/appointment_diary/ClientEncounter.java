@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mhealth.appointment_diary.AccessServer.AccessServer;
@@ -48,6 +49,7 @@ public class ClientEncounter extends AppCompatActivity {
     String[] visittype = {"", "Self", "Treatment Supporter", "Refill visit documentation","Other"};
 
     EditText weight, height,muac, bmi, zscore, blood_sugar,systolic, diastolic,specify, specifyvisit;
+    TextView illness_text;
 
     String weight1, height2, muac2, bmi2, zscore2, blood_sugar2, systolic2, diastolic2, specify2, specify3;
     Button btnRSubmit;
@@ -81,6 +83,7 @@ public class ClientEncounter extends AppCompatActivity {
 
         //initialize
         visitScheduledS=findViewById(R.id.visit_schedule_spinner);
+        illness_text =findViewById(R.id.illness_text);
         visitTypeS=findViewById(R.id.visittype_spinner);
         chronicS=findViewById(R.id.chronic_spinner);
         illnessS=findViewById(R.id.illness_spinner);
@@ -214,6 +217,15 @@ public class ClientEncounter extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 chronic_code=chronic[position];
+                if (chronic_code.contentEquals("Yes")){
+                    illnessS.setVisibility(View.VISIBLE);
+                    illness_text.setVisibility(View.VISIBLE);
+                }else{
+                    illnessS.setVisibility(View.GONE);
+                    illness_text.setVisibility(View.GONE);
+
+                    illness_code = "";
+                }
 
 
             }
