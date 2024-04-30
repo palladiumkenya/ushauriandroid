@@ -52,7 +52,7 @@ public class UpdateCase extends AppCompatActivity {
     Spinner AssignCaseM1, provider1, rship1;
 
     Button save1,btn_search;
-    String[] ReasonS = {"--Select Reason--", "New Client", "Transfer In", "High VL", "Defaulters", "High VL", "LTFU", "High VL", "Co Infected", "Other Specify"};
+    String[] ReasonS = {"--Select Reason--", "New Client", "Transfer In", "High VL", "Defaulters", "High VL", "LTFu", "High VL", "Co Infected", "Other Specify"};
 
     String[] RshipS = {"--Select Relationship--", "Case Manager"};
     private String REASON = "";
@@ -180,6 +180,7 @@ public class UpdateCase extends AppCompatActivity {
         });
 
 
+
         // Reason for assigning CM
         ArrayAdapter<String> reasonAdapter = new ArrayAdapter<String>(UpdateCase.this, android.R.layout.simple_spinner_item, ReasonS);
         reasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -235,9 +236,12 @@ public class UpdateCase extends AppCompatActivity {
             }
         });
         getproviders();
+        fetchJsonArrayResponse();
+
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fetchJsonArrayResponse();
 
             }
         });
@@ -269,7 +273,7 @@ public class UpdateCase extends AppCompatActivity {
                 else {
 
 
-                    send(phone_no1,newCC, REASON, RSHIP, other1.getText().toString(), providername, startDate1.getText().toString(), enddate1.getText().toString());
+                    send(phone_no1, REASON, RSHIP, other1.getText().toString(), providername, startDate1.getText().toString(), enddate1.getText().toString());
                     AssignCaseM1.setSelection(0);
                     provider1.setSelection(0);
                     rship1.setSelection(0);
@@ -382,7 +386,7 @@ public class UpdateCase extends AppCompatActivity {
 
 
 
-    private  void send(String phone,String ccno, String REASON, String RSHIP, String other1, String prov,  String startDate1, String enddate1){
+    private  void send(String phone, String REASON, String RSHIP, String other1, String prov,  String startDate1, String enddate1){
         RequestQueue queue = Volley.newRequestQueue(this);
         String saveurl ="https://ushauriapi.kenyahmis.org/case/assign/update/"+newCC;
 
@@ -391,7 +395,7 @@ public class UpdateCase extends AppCompatActivity {
         try {
            // JSONObject payload = new JSONObject();
             payload.put("phone_no", phone);
-            payload.put("clinic_number", ccno);
+          //  payload.put("clinic_number", ccno);
             payload.put("reason_assign", REASON);
             payload.put("other_reason", other1);
             payload.put("provider_id", prov);
@@ -511,28 +515,28 @@ public class UpdateCase extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle the error response
-                if (error.networkResponse != null && error.networkResponse.data != null) {
-                    try {
-                        // Convert error response data to JSON object
-                        JSONObject jsonObject = new JSONObject(new String(error.networkResponse.data));
-
-                        // Now you can extract information from the JSON object
-                        boolean success = jsonObject.optBoolean("success");
-                        String message = jsonObject.optString("message");
-
-                        // Handle the error message or any other information
-                        Log.e("ErrorResponse", "Success: " + success + ", Message: " + message);
-                        Toast.makeText(UpdateCase.this, message, Toast.LENGTH_SHORT).show();
-                        // dialogs.showErrorDialog(message)
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    // Handle other types of errors (e.g., network error or timeout)
-                    Log.e("ErrorResponse", "An error occurred: " + error.getMessage());
-
-                    Toast.makeText(UpdateCase.this, "An error occurred: " + " "+ error.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+            //    if (error.networkResponse != null && error.networkResponse.data != null) {
+//                    try {
+//                        // Convert error response data to JSON object
+//                        JSONObject jsonObject = new JSONObject(new String(error.networkResponse.data));
+//
+//                        // Now you can extract information from the JSON object
+//                        boolean success = jsonObject.optBoolean("success");
+//                        String message = jsonObject.optString("message");
+//
+//                        // Handle the error message or any other information
+//                        Log.e("ErrorResponse", "Success: " + success + ", Message: " + message);
+//                        Toast.makeText(UpdateCase.this, message, Toast.LENGTH_SHORT).show();
+//                        // dialogs.showErrorDialog(message)
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                } else {
+//                    // Handle other types of errors (e.g., network error or timeout)
+//                    Log.e("ErrorResponse", "An error occurred: " + error.getMessage());
+//
+//                    Toast.makeText(UpdateCase.this, "An error occurred: " + " "+ error.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
 
                 // Log.d("Errors", error.toString());
                 // Toast.makeText(AddCaseManager.this, "Error"+error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
@@ -554,21 +558,122 @@ public class UpdateCase extends AppCompatActivity {
 
 
 
-            String ccc ="?clinic_number="+newCC;
-            String phone ="&phone_no="+phone_no1;
-
-            String URL = "https://ushauriapi.kenyahmis.org/case/search/"+ccc+phone;
 
             //https://ushauriapi.kenyahmis.org/case/search/?clinic_number=1234500001&phone_no=0712311264
     public void fetchJsonArrayResponse() {
+
+
+        String ccc ="?clinic_number="+newCC;
+        String phone ="&phone_no="+phone_no1;
+
+        String URL = "https://ushauriapi.kenyahmis.org/case/search/"+ccc+phone;
+
+
+
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         // Parse JSON response
-                        List<CaseModel> dataList = parseJsonResponse(response);
+                       // List<CaseModel> dataList = parseJsonResponse(response);
                         // Handle your data here
                         // For example, you can pass it to an adapter and display it in a RecyclerView
+
+
+
+                        try {
+                            for (int i = 0; i <response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                // Extract data from JSON object
+                                int id = jsonObject.getInt("id");
+                                int clientId = jsonObject.getInt("client_id");
+
+                                int provider_id = jsonObject.getInt("provider_id");
+                                String reasonAssign = jsonObject.getString("reason_assign");
+                                String relationship = jsonObject.getString("relationship");
+                                String startDate = jsonObject.getString("start_date");
+                                String endDate = jsonObject.getString("end_date");
+                                // Create a MyDataModel object
+                                startDate1.setText(startDate);
+                                enddate1.setText(endDate);
+
+
+                                // Find the index of the reasonAssign in ReasonS array
+                                int defaultSelectionIndex = -1;
+                                for (int ii = 0; ii < ReasonS.length; ii++) {
+                                    if (ReasonS[ii].equals(reasonAssign)) {
+                                        defaultSelectionIndex = ii;
+                                        break;
+                                    }
+                                }
+
+                                if (defaultSelectionIndex!=0){
+                                    AssignCaseM1.setSelection(defaultSelectionIndex);
+                                }
+
+
+
+
+                                // Find the index of the reasonAssign in ReasonS array
+                                int defaultSelectionIndex2 = -1;
+                                for (int a = 0; a < RshipS.length; a++) {
+                                    if (RshipS[a].equals(relationship)) {
+                                        defaultSelectionIndex2 = a;
+                                        break;
+                                    }
+                                }
+
+                                if (defaultSelectionIndex2!=0){
+                                    rship1.setSelection(defaultSelectionIndex2);
+                                }
+
+
+
+
+
+
+
+
+
+                                // Find the index of provider_id in names list
+                                int defaultSelectionIndex3 = -1;
+                                for (int j = 0; j < names.size(); j++) {
+                                    if (names.get(j).getId() == provider_id) {
+                                        defaultSelectionIndex3 = j;
+                                        break;
+                                    }
+                                }
+
+                                if (defaultSelectionIndex3!= -1) {
+                                    provider1.setSelection(defaultSelectionIndex3);
+                                } else {
+                                    // If default provider_id is not found, set the last item as default
+                                    provider1.setSelection(providerModelArrayList.size() - 1);
+                                }
+
+
+
+
+                                CaseModel data = new  CaseModel(id, clientId, provider_id, reasonAssign, relationship, startDate, endDate);
+                                // Add to the list
+                               // dataList.add(data);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -584,29 +689,31 @@ public class UpdateCase extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
-    private List<CaseModel> parseJsonResponse(JSONArray jsonArray) {
-        List<CaseModel> dataList = new ArrayList<>();
-        try {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                // Extract data from JSON object
-                int id = jsonObject.getInt("id");
-                int clientId = jsonObject.getInt("client_id");
-
-                int provider_id = jsonObject.getInt("provider_id");
-                String reasonAssign = jsonObject.getString("reason_assign");
-                String relationship = jsonObject.getString("relationship");
-                String startDate = jsonObject.getString("start_date");
-                String endDate = jsonObject.getString("end_date");
-                // Create a MyDataModel object
-                CaseModel data = new  CaseModel(id, clientId, provider_id, reasonAssign, relationship, startDate, endDate);
-                // Add to the list
-                dataList.add(data);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return dataList;
-    }
+//    private List<CaseModel> parseJsonResponse(JSONArray jsonArray) {
+//        List<CaseModel> dataList = new ArrayList<>();
+//        try {
+//            for (int i = 0; i < jsonArray.length(); i++) {
+//                JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                // Extract data from JSON object
+//                int id = jsonObject.getInt("id");
+//                int clientId = jsonObject.getInt("client_id");
+//
+//                int provider_id = jsonObject.getInt("provider_id");
+//                String reasonAssign = jsonObject.getString("reason_assign");
+//                String relationship = jsonObject.getString("relationship");
+//                String startDate = jsonObject.getString("start_date");
+//                String endDate = jsonObject.getString("end_date");
+//                // Create a MyDataModel object
+//                startDate1.setText(startDate);
+//                enddate1.setText(endDate);
+//                CaseModel data = new  CaseModel(id, clientId, provider_id, reasonAssign, relationship, startDate, endDate);
+//                // Add to the list
+//                dataList.add(data);
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return dataList;
+//    }
 
 }

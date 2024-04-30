@@ -134,6 +134,8 @@
             android:textColor="@color/black_darker"
             android:textStyle="bold" />
 
+        <!-- get OTP -->
+
         <Button
             android:id="@+id/validate_phone"
             android:layout_width="fill_parent"
@@ -142,11 +144,21 @@
             android:layout_marginTop="24dp"
             android:padding="12dp"
             android:background="@drawable/background_round_corner_button"
-            android:text="Get OTP"
+            android:text="Request OTP"
             android:textColor="#FFFFFF"
             android:textAllCaps="true"/>
 
-        <!-- get OTP -->
+
+        <!-- Display Counter -->
+        <TextView
+            android:id="@+id/countdownTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Time left: 60s"
+
+            android:visibility="gone"/>
+
 
         <LinearLayout
             android:id="@+id/linearOTP"
@@ -154,6 +166,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:visibility="gone"
+            android:layout_marginTop="2dp"
             android:orientation="horizontal"
             >
 

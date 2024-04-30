@@ -253,46 +253,122 @@ public class CaseManagement extends AppCompatActivity {
         });
 
         //update
+
         card3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
+
+
                 final Dialog dialog =new Dialog(CaseManagement.this);
-                dialog.setContentView(R.layout.fragment_update_case);
+                dialog.setContentView(R.layout.fragment_case);
 
                 Window mywindow = dialog.getWindow();
                 dialog.setCanceledOnTouchOutside(true);
                 mywindow.setLayout(ActionBar.LayoutParams.FILL_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
                 dialog.show();
 
-                AssignCaseM1 = (Spinner) dialog.findViewById(R.id.AssignCaseM);
-                provider1 =(Spinner) dialog.findViewById(R.id.provider);
-                rship1 =(Spinner) dialog.findViewById(R.id.rship);
+                csearch = dialog.findViewById(R.id.ccsearch);
+                ccbtn = dialog.findViewById(R.id.btn_search);
+                ccno = dialog.findViewById(R.id.clinicnocase);
+                fname = dialog.findViewById(R.id.fname);
+                lname = dialog.findViewById(R.id.lname);
+                other = dialog.findViewById(R.id.other);
+                startVisit = dialog.findViewById(R.id.btn_startVisit);
+                btn_cancel= dialog.findViewById(R.id.btn_cancel);
 
-                save1 =(Button) dialog.findViewById(R.id.savebtn);
+                sex = dialog.findViewById(R.id.sex);
+                phone = dialog.findViewById(R.id.phone);
+
+                details =dialog.findViewById(R.id.cc_details_layout);
 
 
-                startDate1 =(EditText) dialog.findViewById(R.id.startDate);
-                enddate1 =(EditText) dialog.findViewById(R.id.endDate);
-                other1 =(EditText) dialog.findViewById(R.id.other);
 
-                ccsearch=(EditText) dialog.findViewById(R.id.ccsearch);
-                btn_search=(Button) dialog.findViewById(R.id.btn_search);
-                search_details_layout= (LinearLayout) dialog.findViewById(R.id.search_details_layout);
+                //searchbutton
 
-
-                btn_search.setOnClickListener(new View.OnClickListener() {
+                ccbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        search_details_layout.setVisibility(View.VISIBLE);
+                        searchcc1();
+                        //   Toast.makeText(CaseManagement.this, "great", Toast.LENGTH_LONG).show();
+                    }
+                });
 
+                //stat visit
+                startVisit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String sendCC =ccno.getText().toString();
+                        Intent intent = new Intent(CaseManagement.this, UpdateCase.class);
+                        intent.putExtra("Client_CCC", sendCC);
+                        startActivity(intent);
+
+
+                        ccno.setText("");
+                        fname.setText("");
+                        other.setText("");
+                        lname.setText("");
+                        phone.setText("");
+                        sex.setText("");
+                        details.setVisibility(View.GONE);
+                    }
+                });
+
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 });
 
 
+                //         getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer1, new CaseManager()).commit();
+
 
             }
         });
+//        card3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                final Dialog dialog =new Dialog(CaseManagement.this);
+//                dialog.setContentView(R.layout.activity_update_case);
+//
+//                Window mywindow = dialog.getWindow();
+//                dialog.setCanceledOnTouchOutside(true);
+//                mywindow.setLayout(ActionBar.LayoutParams.FILL_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+//                dialog.show();
+//
+//                AssignCaseM1 = (Spinner) dialog.findViewById(R.id.AssignCaseM);
+//                provider1 =(Spinner) dialog.findViewById(R.id.provider);
+//                rship1 =(Spinner) dialog.findViewById(R.id.rship);
+//
+//                save1 =(Button) dialog.findViewById(R.id.savebtn);
+//
+//
+//                startDate1 =(EditText) dialog.findViewById(R.id.startDate);
+//                enddate1 =(EditText) dialog.findViewById(R.id.endDate);
+//                other1 =(EditText) dialog.findViewById(R.id.other);
+//
+//                ccsearch=(EditText) dialog.findViewById(R.id.ccsearch);
+//                btn_search=(Button) dialog.findViewById(R.id.btn_search);
+//                search_details_layout= (LinearLayout) dialog.findViewById(R.id.search_details_layout);
+//
+//
+//                btn_search.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        search_details_layout.setVisibility(View.VISIBLE);
+//
+//                    }
+//                });
+//
+//
+//
+//            }
+//        });
     }
 
     public void  searchcc1(){

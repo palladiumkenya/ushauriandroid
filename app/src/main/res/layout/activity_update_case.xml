@@ -54,10 +54,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content">
 
                     <Button
                         android:id="@+id/btn_search"
@@ -68,7 +64,7 @@
                         android:fontFamily="serif"
                         android:text="Populate"
                         android:textColor="#FFFFFF" />
-                </com.google.android.material.textfield.TextInputLayout>
+
 
             </LinearLayout>
 

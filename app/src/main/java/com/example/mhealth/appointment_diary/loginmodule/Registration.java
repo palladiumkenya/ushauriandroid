@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.core.app.NotificationCompat;
 
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
@@ -31,6 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -79,12 +81,13 @@ import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
 
 public class Registration extends Activity implements AdapterView.OnItemSelectedListener {
-
     Dialogs dialogs;
     Dialog mydialog;
+    CountDownTimer countDownTimer;
 
     private MaterialTextView privacy, otpphone1;;
     private CheckBox consent;
+    TextView countdownTextView;
 
     EditText username, password, repassword, securityhint, securityanswerE, affiliationE, trcidnoE, userphoneE, otp1,otp2,otp3,otp4,otp5;
     Button register, cancel, reg_btn, btnGetOtp, btnSendOtp;
@@ -92,7 +95,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
     boolean istracer;
     String z;
     private JSONArray id_result;
-   // String id_result;
+    // String id_result;
 
     LinearLayout ucsfOptionsL, linearotp;
     Spinner spinner1;
@@ -128,7 +131,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
 
 
         initialise();
-       // getMflCode();
+        // getMflCode();
 
         addListenerOnChkTracer();
         requestNewPerms();
@@ -149,7 +152,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (otp1.getText().toString().length() == 1)     //size as per your requirement
-                   {
+                {
                     otp2.requestFocus();
                 }
             }
@@ -226,14 +229,16 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
                     Toast.makeText(Registration.this, "Phone Number Required", Toast.LENGTH_LONG).show();
 
                 }
-              else  if (!consent.isChecked()){
+                else  if (!consent.isChecked()){
                     Toast.makeText(Registration.this, "Consent Required", Toast.LENGTH_LONG).show();
                 }
 
 
                 else{
 
-                getOtp();}
+                    getOtp();
+                    //startCountdown();
+                }
 
             }
         });
@@ -261,34 +266,34 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
 
 
     private void getMflCode(){
-      //  HttpsTrustManager.allowAllSSL();
+        //  HttpsTrustManager.allowAllSSL();
 
         try{
 
-           userphoneE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-               @Override
-               public void onFocusChange(View v, boolean hasFocus) {
+            userphoneE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
 
-                   if (!hasFocus) {
-                       if(userphoneE.getText().toString().trim().length()!=10){
+                    if (!hasFocus) {
+                        if(userphoneE.getText().toString().trim().length()!=10){
 
-                           Toast.makeText(Registration.this, "provide a valid phone number", Toast.LENGTH_SHORT).show();
-                       }
-                       else{
+                            Toast.makeText(Registration.this, "provide a valid phone number", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
 
-                           acs.getUserMflCode(userphoneE.getText().toString(),userphoneE);
+                            acs.getUserMflCode(userphoneE.getText().toString(),userphoneE);
 
-                       }
-
-
-
-                   } else {
+                        }
 
 
-                   }
 
-               }
-           });
+                    } else {
+
+
+                    }
+
+                }
+            });
         }
         catch(Exception e){
 
@@ -419,6 +424,8 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
 
             consent = (CheckBox) findViewById(R.id.terms);
 
+            countdownTextView = findViewById(R.id.countdownTextView);
+
 
         } catch (Exception e) {
 
@@ -453,7 +460,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
         try {
             //getRemoteData();
             setFacilityAdapter();
-           // addListenerToAffiliationSpinnerEdt();
+            // addListenerToAffiliationSpinnerEdt();
 
 
         } catch (Exception e) {
@@ -700,7 +707,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
                                 Toast.makeText(Registration.this, "the provided username already exists, try again", Toast.LENGTH_SHORT).show();
                             } else {
 
-                               // List<Affiliationstable> affl = Affiliationstable.findWithQuery(Affiliationstable.class, "select * from Affiliationstable where affiliationname=? limit 1", affiliationS);
+                                // List<Affiliationstable> affl = Affiliationstable.findWithQuery(Affiliationstable.class, "select * from Affiliationstable where affiliationname=? limit 1", affiliationS);
                                 List<Affiliationstable> affl = Affiliationstable.findWithQuery(Affiliationstable.class, "select * from Affiliationstable where affiliationname=? limit 1");
                                 for (int y = 0; y < affl.size(); y++) {
 
@@ -901,48 +908,50 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
                 .getAsJSONObject(new JSONObjectRequestListener(){
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        startCountdown();
 //                        Log.e(TAG, response.toString());
                        /* if (response.length()==0){
                             Toast.makeText(Registration.this, "No Data", Toast.LENGTH_LONG).show();
                         }*/
 
-                       // if (mStatusCode[0]==200) {
+                        // if (mStatusCode[0]==200) {
                            /* linearotp.setVisibility(View.VISIBLE);
                             btnSendOtp.setVisibility(View.VISIBLE);*/
 
-                            try {
+                        try {
 
-                                JSONArray jsonArray = response.getJSONArray("result");
-
-
-                                for (int i = 0; i < jsonArray.length(); i++) {
-
-                                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                                    //JSONObject jsonObject2 = response.getJSONObject("mfl_code");
-                                   // id_result = jsonObject2.getJSONArray(Config.JSON_ARRAYRESULTS);
-                                    //getMyMflcode(id_result);
-                                    String mfl_code = jsonObject1.getString("mfl_code");
-                                   // String otp = jsonObject1.getString("otp");
-                                  //  id_result=mfl_code;
-                                   // getMyMflcode(id_result);
+                            JSONArray jsonArray = response.getJSONArray("result");
 
 
-                                    Log.d("Value for MFLCODE", mfl_code);
+                            for (int i = 0; i < jsonArray.length(); i++) {
 
-                                    if (!mfl_code.isEmpty()){
-                                        linearotp.setVisibility(View.VISIBLE);
-                                        btnSendOtp.setVisibility(View.VISIBLE);
-                                        otpphone1.setVisibility(View.VISIBLE);
-                                        otpphone1.setText("OTP Sent to"+ " "+userphoneE.getText().toString());
+                                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+                                //JSONObject jsonObject2 = response.getJSONObject("mfl_code");
+                                // id_result = jsonObject2.getJSONArray(Config.JSON_ARRAYRESULTS);
+                                //getMyMflcode(id_result);
+                                String mfl_code = jsonObject1.getString("mfl_code");
+                                // String otp = jsonObject1.getString("otp");
+                                //  id_result=mfl_code;
+                                // getMyMflcode(id_result);
 
-                                    }else{
-                                        linearotp.setVisibility(View.GONE);
-                                        btnSendOtp.setVisibility(View.GONE);
-                                        otpphone1.setVisibility(View.GONE);
 
-                                        Toast.makeText(Registration.this, userphoneE.getText().toString()+" " +"is not mapped", Toast.LENGTH_SHORT).show();
-                                    }
-                                   // Log.d("Value for OTP", otp);
+                                Log.d("Value for MFLCODE", mfl_code);
+
+                                if (!mfl_code.isEmpty()){
+                                    linearotp.setVisibility(View.VISIBLE);
+                                    btnSendOtp.setVisibility(View.VISIBLE);
+                                    otpphone1.setVisibility(View.VISIBLE);
+                                    otpphone1.setText("OTP Sent to"+ " "+userphoneE.getText().toString());
+
+                                }else{
+                                    linearotp.setVisibility(View.GONE);
+                                    btnSendOtp.setVisibility(View.GONE);
+                                    otpphone1.setVisibility(View.GONE);
+
+                                    Toast.makeText(Registration.this, userphoneE.getText().toString()+" " +"is not mapped", Toast.LENGTH_SHORT).show();
+                                }
+                                // Log.d("Value for OTP", otp);
 
 
                                    /* Mflcode.deleteAll(Mflcode.class);
@@ -953,19 +962,19 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
 
 
 
-                                    // Toast.makeText(Registration.this, otp, Toast.LENGTH_SHORT).show();
-                                   // Toast.makeText(Registration.this, mfl_code, Toast.LENGTH_SHORT).show();
-                                }
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-
-                                System.out.println("***error 0****"+e.getMessage());
-                               // Toast.makeText(Registration.this, "error getting mflcode, try again", Toast.LENGTH_SHORT).show();
-
+                                // Toast.makeText(Registration.this, otp, Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(Registration.this, mfl_code, Toast.LENGTH_SHORT).show();
                             }
-                       // }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+
+                            System.out.println("***error 0****"+e.getMessage());
+                            // Toast.makeText(Registration.this, "error getting mflcode, try again", Toast.LENGTH_SHORT).show();
+
+                        }
+                        // }
                       /*  else{
                             linearotp.setVisibility(View.GONE);
                             btnSendOtp.setVisibility(View.GONE);
@@ -984,14 +993,14 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
                         // handle error
 //                        Log.e(TAG, error.getErrorBody());
 
-                       // animationView.setVisibility(View.GONE);
+                        // animationView.setVisibility(View.GONE);
 
                         // Snackbar.make(findViewById(R.id.signup_layout), "Error: "+error.getErrorBody(), Snackbar.LENGTH_LONG).show();
 
                         //JSONObject jsonObject = new JSONObject();
                         int  errors = error.getErrorCode();
                         if (errors==400){
-                           // Snackbar.make(findViewById(R.id.signup_layout), " Invalid CCC number", Snackbar.LENGTH_LONG).show();
+                            // Snackbar.make(findViewById(R.id.signup_layout), " Invalid CCC number", Snackbar.LENGTH_LONG).show();
                         }else {
                             //Snackbar.make(findViewById(R.id.signup_layout), "Error: " + error.getErrorDetail(), Snackbar.LENGTH_LONG).show();
                         }
@@ -1005,7 +1014,7 @@ public class Registration extends Activity implements AdapterView.OnItemSelected
     }
 
 
-public void submitOtp(String phone, String otpA){
+    public void submitOtp(String phone, String otpA){
    /* JSONObject jsonObject = new JSONObject();
     try {
         jsonObject.put("phone_no", phone);
@@ -1016,53 +1025,77 @@ public void submitOtp(String phone, String otpA){
         e.printStackTrace();
     }*/
 
-    try{
-        List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
-        if (_url.size()==1){
-            for (int x=0; x<_url.size(); x++){
-                z=_url.get(x).getBase_url1();
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                }
             }
+
+        } catch(Exception e){
+
         }
-
-    } catch(Exception e){
-
-    }
-    final int[] mStatusCode = new int[1];
+        final int[] mStatusCode = new int[1];
 
 
-    try{
+        try{
 
-       // pr.showProgress("getting user mflcode...");
+            // pr.showProgress("getting user mflcode...");
 
 
-        // StringRequest stringRequest = new StringRequest(POST,Config.GETUSERMFLCODE_URL,
-        StringRequest stringRequest = new StringRequest(POST, z+Config.VERIFYOTP,
-                new Response.Listener<String>() {
+            // StringRequest stringRequest = new StringRequest(POST,Config.GETUSERMFLCODE_URL,
+            StringRequest stringRequest = new StringRequest(POST, z+Config.VERIFYOTP,
+                    new Response.Listener<String>() {
 
 
 
-                    @Override
-                    public void onResponse(String response) {
+                        @Override
+                        public void onResponse(String response) {
 //                            pd.dismissDialog();
 
-                        //pr.dissmissProgress();
+                            //pr.dissmissProgress();
 
 //                            Toast.makeText(ctx, "status code "+mStatusCode[0], Toast.LENGTH_LONG).show();
-                        if(mStatusCode[0]==200){
+                            if(mStatusCode[0]==200){
 
 //                                Toast.makeText(ctx, "success code "+mStatusCode[0], Toast.LENGTH_SHORT).show();
-                            System.out.println(response);
+                                System.out.println(response);
 
-                            JSONObject j = null;
-                            try {
-                                j = new JSONObject(response);
-                                id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS);
+                                JSONObject j = null;
+                                try {
+                                    j = new JSONObject(response);
+                                    id_result = j.getJSONArray(Config.JSON_ARRAYRESULTS);
 
-                                getMyMflcode(id_result);
+                                    getMyMflcode(id_result);
 
-                                Intent intent = new Intent(Registration.this, Registration2otp.class);
-                                intent.putExtra("PhoneNo", userphoneE.getText().toString());
-                                startActivity(intent);
+                                    Intent intent = new Intent(Registration.this, Registration2otp.class);
+                                    intent.putExtra("PhoneNo", userphoneE.getText().toString());
+                                    startActivity(intent);
+                                    userphoneE.setText("");
+                                    otp1.setText("");
+                                    otp2.setText("");
+                                    otp3.setText("");
+                                    otp4.setText("");
+                                    otp5.setText("");
+                                    linearotp.setVisibility(View.GONE);
+                                    btnSendOtp.setVisibility(View.GONE);
+                                    otpphone1.setVisibility(View.GONE);
+                                    consent.setChecked(false);
+                                    // dialogs.showErrorDialog(response,"Server responses"+id_result);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    System.out.println("***error 0****"+e.getMessage());
+                                    Toast.makeText(Registration.this, "error getting mflcode, try again", Toast.LENGTH_SHORT).show();
+
+                                }
+
+                            }
+                            else{
+                                System.out.println("***error 1****"+response);
+
+                                dialogs.showErrorDialog(response,"Server responses");
                                 userphoneE.setText("");
                                 otp1.setText("");
                                 otp2.setText("");
@@ -1073,93 +1106,69 @@ public void submitOtp(String phone, String otpA){
                                 btnSendOtp.setVisibility(View.GONE);
                                 otpphone1.setVisibility(View.GONE);
                                 consent.setChecked(false);
-                               // dialogs.showErrorDialog(response,"Server responses"+id_result);
+                                // dialogs.showErrorDialog(response,"Server responses"+id_result);
+                            }
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                System.out.println("***error 0****"+e.getMessage());
-                                Toast.makeText(Registration.this, "error getting mflcode, try again", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            try{
+
+                                byte[] htmlBodyBytes = error.networkResponse.data;
+
+//                            Toast.makeText(ctx,  ""+error.networkResponse.statusCode+" error mess "+new String(htmlBodyBytes), Toast.LENGTH_SHORT).show();
+                                //dialogs.showErrorDialog(new String(htmlBodyBytes),"Server Response");
+                                userphoneE.setText("");
+                                otp1.setText("");
+                                otp2.setText("");
+                                otp3.setText("");
+                                otp4.setText("");
+                                otp5.setText("");
+                                linearotp.setVisibility(View.GONE);
+                                btnSendOtp.setVisibility(View.GONE);
+                                otpphone1.setVisibility(View.GONE);
+                                consent.setChecked(false);
+                                // dialogs.showErrorDialog(response,"Server responses"+id_result);
+                                dialogs.showErrorDialog("No server connection", "Server Response");
+                                System.out.println("***error 3****"+error.getMessage());
+                                //Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_LONG).show();
+
+                                //    pr.dissmissProgress();
+
+                            }
+                            catch(Exception e){
+
+                                System.out.println("***error 2****"+e.getMessage());
+
+//                            Toast.makeText(ctx,  ""+error.networkResponse.statusCode+" error mess "+new String(htmlBodyBytes), Toast.LENGTH_SHORT).show();
+                                dialogs.showErrorDialog("error getting mflcode, try again","Server Response");
+
+                                //  pr.dissmissProgress();
+
 
                             }
 
-                        }
-                        else{
-                            System.out.println("***error 1****"+response);
-
-                            dialogs.showErrorDialog(response,"Server responses");
-                            userphoneE.setText("");
-                            otp1.setText("");
-                            otp2.setText("");
-                            otp3.setText("");
-                            otp4.setText("");
-                            otp5.setText("");
-                            linearotp.setVisibility(View.GONE);
-                            btnSendOtp.setVisibility(View.GONE);
-                            otpphone1.setVisibility(View.GONE);
-                            consent.setChecked(false);
-                            // dialogs.showErrorDialog(response,"Server responses"+id_result);
-                        }
 
 
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        try{
-
-                            byte[] htmlBodyBytes = error.networkResponse.data;
-
-//                            Toast.makeText(ctx,  ""+error.networkResponse.statusCode+" error mess "+new String(htmlBodyBytes), Toast.LENGTH_SHORT).show();
-                            //dialogs.showErrorDialog(new String(htmlBodyBytes),"Server Response");
-                            userphoneE.setText("");
-                            otp1.setText("");
-                            otp2.setText("");
-                            otp3.setText("");
-                            otp4.setText("");
-                            otp5.setText("");
-                            linearotp.setVisibility(View.GONE);
-                            btnSendOtp.setVisibility(View.GONE);
-                            otpphone1.setVisibility(View.GONE);
-                            consent.setChecked(false);
-                            // dialogs.showErrorDialog(response,"Server responses"+id_result);
-                            dialogs.showErrorDialog("No server connection", "Server Response");
-                            System.out.println("***error 3****"+error.getMessage());
-                            //Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_LONG).show();
-
-                        //    pr.dissmissProgress();
-
-                        }
-                        catch(Exception e){
-
-                            System.out.println("***error 2****"+e.getMessage());
-
-//                            Toast.makeText(ctx,  ""+error.networkResponse.statusCode+" error mess "+new String(htmlBodyBytes), Toast.LENGTH_SHORT).show();
-                            dialogs.showErrorDialog("error getting mflcode, try again","Server Response");
-
-                          //  pr.dissmissProgress();
 
 
                         }
+                    })
 
 
+            {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
 
-
-
-                    }
-                })
-
-
-        {
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-
-                mStatusCode[0] = response.statusCode;
+                    mStatusCode[0] = response.statusCode;
 
 //                    return Response.success(response, HttpHeaderParser.parseCacheHeaders(response));
-                return super.parseNetworkResponse(response);
-            }
+                    return super.parseNetworkResponse(response);
+                }
 
 
 //                    @Override
@@ -1168,21 +1177,21 @@ public void submitOtp(String phone, String otpA){
 //
 //                    }
 
-            @Override
-            protected VolleyError parseNetworkError(VolleyError volleyError) {
-                mStatusCode[0] = volleyError.hashCode();
-                return super.parseNetworkError(volleyError);
-            }
+                @Override
+                protected VolleyError parseNetworkError(VolleyError volleyError) {
+                    mStatusCode[0] = volleyError.hashCode();
+                    return super.parseNetworkError(volleyError);
+                }
 
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
 
-                params.put("phone_no", phone);
-                params.put("otp", otpA);
+                    params.put("phone_no", phone);
+                    params.put("otp", otpA);
 
-                return params;
-            }
+                    return params;
+                }
 
 //                @Override
 //                public Map<String, String> getHeaders() throws AuthFailureError {
@@ -1192,21 +1201,49 @@ public void submitOtp(String phone, String otpA){
 //                    return headers;
 //                }
 
-        };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                800000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        RequestQueue requestQueue = Volley.newRequestQueue(Registration.this);
-        requestQueue.add(stringRequest);
+            };
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    800000,
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            RequestQueue requestQueue = Volley.newRequestQueue(Registration.this);
+            requestQueue.add(stringRequest);
 
 
+        }
+        catch(Exception e){
+
+            Toast.makeText(Registration.this, "error getting mflcode "+e, Toast.LENGTH_SHORT).show();
+        }
     }
-    catch(Exception e){
 
-        Toast.makeText(Registration.this, "error getting mflcode "+e, Toast.LENGTH_SHORT).show();
+    private void startCountdown() {
+        // Hide the request OTP button
+        btnGetOtp.setVisibility(View.GONE);
+
+        // Show the countdown text view
+        countdownTextView.setVisibility(View.VISIBLE);
+
+        countDownTimer = new CountDownTimer(45000, 1000) { // 60 seconds countdown
+            public void onTick(long millisUntilFinished) {
+                countdownTextView.setText("Time left: " + millisUntilFinished / 1000 + "s");
+            }
+
+            public void onFinish() {
+                countdownTextView.setVisibility(View.GONE);
+                btnGetOtp.setVisibility(View.VISIBLE);
+            }
+        }.start();
     }
-}
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Cancel the countdown timer if the activity is destroyed
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
     private void getMyMflcode(JSONArray j) {
 
 
@@ -1232,4 +1269,6 @@ public void submitOtp(String phone, String otpA){
             }
         }
 
-}}
+    }
+
+    }
