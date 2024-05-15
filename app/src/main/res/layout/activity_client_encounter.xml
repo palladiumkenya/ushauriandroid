@@ -10,6 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
 
         android:orientation="vertical">
 
@@ -202,7 +204,7 @@
 
                 android:hint="Enter Blood Sugar Level (mg/dL)*"
                 android:id="@+id/blood_sugar"
-                android:maxLength="3"
+                android:maxLength="2"
                 android:inputType="number"
                 android:textSize="13sp"
                 android:textStyle="bold"
@@ -219,7 +221,7 @@
                 android:layout_height="wrap_content"
 
                 android:hint="Enter Systolic Blood Pressure (mmHg)*"
-                android:maxLength="6"
+                android:maxLength="3"
                 android:inputType="number"
                 android:id="@+id/systolic"
                 android:textSize="13sp"
@@ -235,7 +237,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter Diastolic Blood Sugar Level (mmHg)*"
-                android:maxLength="6"
+                android:maxLength="3"
                 android:inputType="number"
                 android:id="@+id/diastolic"
                 android:textSize="13sp"
