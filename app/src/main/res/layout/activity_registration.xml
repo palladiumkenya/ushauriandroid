@@ -434,6 +434,29 @@
 
 
 
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint="Date Confirmed Positive*"
+                        android:id="@+id/date_confirmed"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -938,7 +961,7 @@
                         android:text="County of Birth*"
                         android:textSize="13sp"
                         android:textStyle="bold"
-                         />
+                        />
 
                     <LinearLayout
                         android:id="@+id/birth_lyt_description"
@@ -1019,7 +1042,7 @@
                 </LinearLayout>
 
 
-        <!-- subcounty of residence -->
+                <!-- subcounty of residence -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -1099,21 +1122,21 @@
 
 
 
-                            <LinearLayout
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                                android:id="@+id/RankSpinner"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
+                                android:layout_height="@dimen/spacing_xlarge"
+                                android:drawSelectorOnTop="true"
 
-                                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                                    android:id="@+id/RankSpinner"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="@dimen/spacing_xlarge"
-                                    android:drawSelectorOnTop="true"
-
-                                    />
+                                />
 
 
-                            </LinearLayout>
+                        </LinearLayout>
                         <EditText
                             android:layout_width="match_parent"
                             android:id="@+id/locatorlocation"

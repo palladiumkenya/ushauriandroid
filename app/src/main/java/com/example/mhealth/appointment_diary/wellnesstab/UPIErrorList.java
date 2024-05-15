@@ -528,7 +528,7 @@ public class UPIErrorList extends AppCompatActivity {
             @Override
             public void onError(ANError anError) {
 
-                Toast.makeText(UPIErrorList.this, anError.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(UPIErrorList.this, "Server error, please try again later"+ " "+anError.getMessage(), Toast.LENGTH_LONG).show();
 
                 Log.d("", anError.getMessage());
 
