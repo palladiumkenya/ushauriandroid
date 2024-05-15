@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
 
         android:orientation="vertical">
@@ -140,9 +141,45 @@
                 android:textStyle="bold"
                 />
         </com.google.android.material.textfield.TextInputLayout>
+        <!-- pregnant -->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:id="@+id/pregnant_text"
+            android:visibility="invisible"
+            android:text="Pregnant?*"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20sp"
+            android:layout_height="wrap_content">
+
+
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:id="@+id/pregnant_spinner"
+                android:visibility="invisible"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
         <!-- MUAC -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
+            android:visibility="invisible"
             android:layout_height="wrap_content">
             <EditText
                 android:layout_width="match_parent"

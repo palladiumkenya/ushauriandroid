@@ -47,7 +47,7 @@ public class ClientEncounterSearch extends AppCompatActivity {
     String messagez;
     LinearLayout details;
     String z, phone;
-    EditText ccno,clinicno,fname,Mname,lname,dobi,reg, upino;
+    EditText ccno,clinicno,fname,Mname,lname,dobi,reg, upino, Esex;
     CheckInternet checkInternet;
 
     // public String z;
@@ -110,6 +110,7 @@ public class ClientEncounterSearch extends AppCompatActivity {
         dobi=(EditText) findViewById(R.id.dobb);
         reg=(EditText) findViewById(R.id.reg);
         upino=(EditText) findViewById(R.id.upino);
+        Esex=(EditText) findViewById(R.id.sex);
 
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +136,7 @@ public class ClientEncounterSearch extends AppCompatActivity {
                 String sendCC =clinicno.getText().toString();
                 Intent intent = new Intent(ClientEncounterSearch.this, ClientEncounter.class);
                 intent.putExtra("Client_CCC", sendCC);
+                intent.putExtra("Gender", Esex.getText().toString());
                 intent.putExtra("Client_DOB", dobi.getText().toString());
                 startActivity(intent);
 
@@ -191,7 +193,7 @@ public class ClientEncounterSearch extends AppCompatActivity {
                         String currentregimen =jsonObject.getString("currentregimen");
                         String dob =jsonObject.getString("dob");
                         String upi_no =jsonObject.getString("upi_no");
-                      //  String upi_no =jsonObject.getString("upi_no");
+                       String sex =jsonObject.getString("gender");
 
 
 
@@ -203,6 +205,7 @@ public class ClientEncounterSearch extends AppCompatActivity {
                         reg.setText(currentregimen);
                         dobi.setText(dob);
                         upino.setText(upi_no);
+                        Esex.setText(sex);
                         //  dialogs.showSuccessDialog(messagez, "server response");
 
 

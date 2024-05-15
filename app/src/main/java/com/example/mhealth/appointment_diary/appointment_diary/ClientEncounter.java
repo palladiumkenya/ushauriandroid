@@ -42,14 +42,15 @@ public class ClientEncounter extends AppCompatActivity {
     AccessServer acs;
     SendMessage sm;
 
-    Spinner visitScheduledS, visitTypeS, chronicS, illnessS,NCDS, regimenS, WhoS;
-    String visitScheduled_code, visitType_code, chronic_code, illness_code, NCDS_code, regimen_code, Who_code;
+    Spinner visitScheduledS, visitTypeS, chronicS, illnessS,NCDS, regimenS, WhoS, pregnantS;
+    String visitScheduled_code, visitType_code, chronic_code, illness_code, NCDS_code, regimen_code, Who_code, pregnant_code;
     String[] visitscheduled = {"", "Yes", "No"};
+    String[] pregnant = {"", "Yes", "No"};
     String[] chronic = {"", "Yes", "No"};
     String[] visittype = {"", "Self", "Treatment Supporter", "Refill visit documentation","Other"};
 
     EditText weight, height,muac, bmi, zscore, blood_sugar,systolic, diastolic,specify, specifyvisit;
-    TextView illness_text;
+    TextView illness_text, pregnant_text;
 
     String weight1, height2, muac2, bmi2, zscore2, blood_sugar2, systolic2, diastolic2, specify2, specify3;
     Button btnRSubmit;
@@ -66,7 +67,7 @@ public class ClientEncounter extends AppCompatActivity {
     //String[] ncd = {"", "Controlled", "Not-controlled"};
 
 
-    String date, ccno;
+    String date, ccno, gender;
 
 
 
@@ -103,6 +104,7 @@ public class ClientEncounter extends AppCompatActivity {
         specify=findViewById(R.id.specify);
         specifyvisit = findViewById(R.id.specifyvisit);
         btnRSubmit=findViewById(R.id.btnRSubmit);
+        pregnant_text=findViewById(R.id.pregnant_text);
 
 
 
@@ -113,6 +115,7 @@ public class ClientEncounter extends AppCompatActivity {
         if (intent != null) {
             date= intent.getStringExtra("Client_DOB"); // Replace "key" with the key used to pass the data
             ccno= intent.getStringExtra("Client_CCC");
+            gender= intent.getStringExtra("Gender");
             // Use the extracted data as needed
         }
 
@@ -143,6 +146,15 @@ public class ClientEncounter extends AppCompatActivity {
             //show bmi     weight/height
             bmi.setVisibility(View.VISIBLE);
             System.out.println("The given date is 5 years or more from the current date.");
+        }
+
+
+        if (gender.contentEquals("Female")){
+          pregnant_text.setVisibility(View.VISIBLE);
+          pregnantS.setVisibility(View.VISIBLE);
+        }else{
+            pregnant_text.setVisibility(View.GONE);
+            pregnantS.setVisibility(View.GONE);
         }
 
         //show pregnant women weight/height
@@ -259,6 +271,32 @@ public class ClientEncounter extends AppCompatActivity {
 
             }
         });
+        //PREGNANT
+
+        ArrayAdapter<String> pregnantAdapter = new ArrayAdapter<String>(ClientEncounter.this, android.R.layout.simple_spinner_item, pregnant);
+        reasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        pregnantS.setAdapter(illnessAdapter);
+        pregnantS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                pregnant_code=pregnant[position];
+
+                if (pregnant_code.contentEquals("Yes")){
+                    muac.setVisibility(View.VISIBLE);
+
+                }else{
+                    muac.setVisibility(View.GONE);
+                }
+
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         //NCDS
         ArrayAdapter<String> NCDSAdapter = new ArrayAdapter<String>(ClientEncounter.this, android.R.layout.simple_spinner_item, ncd);
