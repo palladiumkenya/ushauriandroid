@@ -105,6 +105,9 @@ public class ClientEncounter extends AppCompatActivity {
         specifyvisit = findViewById(R.id.specifyvisit);
         btnRSubmit=findViewById(R.id.btnRSubmit);
         pregnant_text=findViewById(R.id.pregnant_text);
+        pregnantS=findViewById(R.id.pregnant_spinner);
+
+
 
 
 
@@ -275,7 +278,7 @@ public class ClientEncounter extends AppCompatActivity {
 
         ArrayAdapter<String> pregnantAdapter = new ArrayAdapter<String>(ClientEncounter.this, android.R.layout.simple_spinner_item, pregnant);
         reasonAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        pregnantS.setAdapter(illnessAdapter);
+        pregnantS.setAdapter(pregnantAdapter);
         pregnantS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
