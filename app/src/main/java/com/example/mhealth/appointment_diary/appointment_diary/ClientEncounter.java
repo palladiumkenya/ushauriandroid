@@ -28,6 +28,7 @@ import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.example.mhealth.appointment_diary.utilitymodules.AddCaseManager;
 import com.example.mhealth.appointment_diary.utilitymodules.Registration;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,7 @@ public class ClientEncounter extends AppCompatActivity {
 
     EditText weight, height,muac, bmi, zscore, blood_sugar,systolic, diastolic,specify, specifyvisit;
     TextView illness_text, pregnant_text;
+    TextInputLayout muacL;
 
     String weight1, height2, muac2, bmi2, zscore2, blood_sugar2, systolic2, diastolic2, specify2, specify3;
     Button btnRSubmit;
@@ -95,6 +97,7 @@ public class ClientEncounter extends AppCompatActivity {
         weight=findViewById(R.id.weight);
         height=findViewById(R.id.height);
         muac=findViewById(R.id.muac);
+        muacL=findViewById(R.id.muac1);
 
         bmi=findViewById(R.id.bmi);
         zscore=findViewById(R.id.zscore);
@@ -158,6 +161,7 @@ public class ClientEncounter extends AppCompatActivity {
         }else{
             pregnant_text.setVisibility(View.GONE);
             pregnantS.setVisibility(View.GONE);
+            muac.setVisibility(View.GONE);
         }
 
         //show pregnant women weight/height
