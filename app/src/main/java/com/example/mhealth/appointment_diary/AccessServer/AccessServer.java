@@ -24,6 +24,7 @@ import com.example.mhealth.appointment_diary.Dialogs.Dialogs;
 import com.example.mhealth.appointment_diary.ProcessReceivedMessage.ProcessMessage;
 import com.example.mhealth.appointment_diary.Progress.Progress;
 import com.example.mhealth.appointment_diary.R;
+import com.example.mhealth.appointment_diary.appointment_diary.ClientEncounterSearch;
 import com.example.mhealth.appointment_diary.appointment_diary.TodaysAppointment;
 import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.encryption.Base64Encoder;
@@ -2164,8 +2165,36 @@ public class AccessServer {
                                     int code1=jsonObject1.getInt("code");*/
 
                             if (code22==200){
-                                 dialogs.showSuccessDialog(mss, "Server Response");
+                                // dialogs.showSuccessDialog(mss, "Server Response");
 
+
+
+
+                                androidx.appcompat.app.AlertDialog.Builder builder1 = new androidx.appcompat.app.AlertDialog.Builder(ctx);
+                                builder1.setIcon(R.drawable.nascoplogonew);
+                                builder1.setTitle(mss);
+                                builder1.setMessage( "Server Response");
+                                builder1.setCancelable(false);
+
+                                builder1.setPositiveButton(
+                                        "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+
+                                                Intent intent = new Intent(ctx, ClientEncounterSearch.class);
+                                                ctx.startActivity(intent);
+
+
+
+
+                                                //dialog.cancel();
+                                            }
+                                        });
+
+
+
+                                AlertDialog alert11 = builder1.create();
+                                alert11.show();
 
 
 
