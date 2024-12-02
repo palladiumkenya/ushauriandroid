@@ -144,23 +144,22 @@ public class RescheduledRequests extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id==R.id.action_search2){
+            handleMenuSearch();
+            return true;
+        }else if (id==R.id.logout){
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        switch(id){
-            case R.id.action_search2:
-                handleMenuSearch();
-                return true;
-
-            case R.id.logout:
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                // Closing all the Activities
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                startActivity(i);
-                finish();
-                return true;
+            startActivity(i);
+            finish();
+            return true;
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }

@@ -592,9 +592,9 @@ public class FragmentAll extends Fragment implements AdapterView.OnItemSelectedL
                     AllMessagesChecked.deleteAll(AllMessagesChecked.class);
                     mymess.clear();
 
-                    Intent myint=new Intent(getActivity(), BluetoothDemo.class);
-                    myint.putStringArrayListExtra("printmess",myarr);
-                    startActivity(myint);
+//                    Intent myint=new Intent(getActivity(), BluetoothDemo.class);
+//                    myint.putStringArrayListExtra("printmess",myarr);
+//                    startActivity(myint);
 
 
                 }

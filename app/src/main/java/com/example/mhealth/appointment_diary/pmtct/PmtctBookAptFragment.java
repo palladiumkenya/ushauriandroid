@@ -58,14 +58,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 
 public class PmtctBookAptFragment extends Fragment {
-    private Unbinder unbinder;
+    //private Unbinder unbinder;
     private View root;
     private Context context;
     public String  z;
@@ -84,19 +80,10 @@ public class PmtctBookAptFragment extends Fragment {
 //    @BindView(R.id.fab_add_exposure)
 //    FloatingActionButton fab_add_exposure;
 
-    @BindView(R.id.mfl_code)
     EditText mfl_code;
-
-    @BindView(R.id.ccc_no)
     EditText ccc_no;
-
-    @BindView(R.id.btn_check)
     Button btn_check;
-
-    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-
-    @BindView(R.id.select_hei_txt)
     TextView select_hei_txt;
 
 
@@ -120,7 +107,13 @@ public class PmtctBookAptFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root =  inflater.inflate(R.layout.pmtct_book_apt_fragment, container, false);
-        unbinder = ButterKnife.bind(this, root);
+        //unbinder = ButterKnife.bind(this, root);
+         mfl_code=root.findViewById(R.id.mfl_code);
+         ccc_no=root.findViewById(R.id.ccc_no);
+
+         btn_check=root.findViewById(R.id.btn_check);
+         recyclerView=root.findViewById(R.id.recyclerView);
+         select_hei_txt=root.findViewById(R.id.select_hei_txt);
 
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
@@ -186,7 +179,7 @@ public class PmtctBookAptFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+       // unbinder.unbind();
     }
 
     @Override

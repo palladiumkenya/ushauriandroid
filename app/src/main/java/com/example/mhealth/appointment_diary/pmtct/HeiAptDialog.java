@@ -47,17 +47,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 public class HeiAptDialog extends BottomSheetDialogFragment {
 
 
     private Hei hei;
     private Context context;
-    private Unbinder unbinder;
+   // private Unbinder unbinder;
     private String clinicNumber;
     private String phone_no;
     private String PCR_TAKEN = "";
@@ -76,26 +72,13 @@ public class HeiAptDialog extends BottomSheetDialogFragment {
 
 
 
-    @BindView(R.id.other_et)
+
     EditText other_et;
-
-    @BindView(R.id.appointment_date)
     EditText appointment_date;
-
-    @BindView(R.id.title)
     TextView titleTextView;
-
-
-    @BindView(R.id.appointment_type_spinner)
     Spinner appointment_type_spinner;
-
-    @BindView(R.id.btn_submit_apt)
     Button btn_submit_apt;
-
-    @BindView(R.id.other_layout)
     LinearLayout other_layout;
-
-    @BindView(R.id.pcr_taken_spinner)
     Spinner pcr_taken_spinner;
 
     public HeiAptDialog() {
@@ -122,7 +105,16 @@ public class HeiAptDialog extends BottomSheetDialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.hei_apt_bottom_sheet, container, false);
-        unbinder = ButterKnife.bind(this, view);
+
+
+         other_et = view.findViewById(R.id.other_et);
+         appointment_date= view.findViewById(R.id.appointment_date);
+         titleTextView= view.findViewById(R.id.title);
+         appointment_type_spinner= view.findViewById(R.id.appointment_type_spinner);
+         btn_submit_apt= view.findViewById(R.id.btn_submit_apt);
+         other_layout= view.findViewById(R.id.other_layout);
+         pcr_taken_spinner= view.findViewById(R.id.pcr_taken_spinner);
+         //unbinder = ButterKnife.bind(this, view);
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
@@ -229,7 +221,7 @@ public class HeiAptDialog extends BottomSheetDialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        //unbinder.unbind();
     }
 
     private boolean validateHei() {

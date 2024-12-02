@@ -17,46 +17,26 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.mhealth.appointment_diary.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 public class HomeFragment extends Fragment {
 
 
-    private Unbinder unbinder;
+   // private Unbinder unbinder;
     private View root;
     private Context context;
 
 
 
 
-    @BindView(R.id.unscheduled_hei_apt)
+
     CardView unscheduled_hei_apt;
-
-    @BindView(R.id.hei_apt)
     CardView hei_apt;
-
-    @BindView(R.id.mother_apt)
     CardView mother_apt;
-
-    @BindView(R.id.update_hei)
     CardView update_hei;
-
-    @BindView(R.id.reg_caregiver)
     CardView reg_caregiver;
-
-    @BindView(R.id.reg_hei)
     CardView reg_hei;
-
-    @BindView(R.id.pcr_positive_enrollment)
     CardView pcr_positive_enrollment;
-
-    @BindView(R.id.final_outcome)
     CardView final_outcome;
-
-    @BindView(R.id.pregnant_mothers)
     CardView pregnant_mothers;
 
 
@@ -77,7 +57,17 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_home, container, false);
-        unbinder = ButterKnife.bind(this, root);
+       // unbinder = ButterKnife.bind(this, root);
+
+        unscheduled_hei_apt= root.findViewById(R.id.unscheduled_hei_apt);
+        hei_apt= root.findViewById(R.id.hei_apt);
+        mother_apt= root.findViewById(R.id.mother_apt);
+        update_hei= root.findViewById(R.id.update_hei);
+        reg_caregiver= root.findViewById(R.id.reg_caregiver);
+        reg_hei= root.findViewById(R.id.reg_hei);
+        pcr_positive_enrollment= root.findViewById(R.id.pcr_positive_enrollment);
+        final_outcome= root.findViewById(R.id.final_outcome);
+        pregnant_mothers= root.findViewById(R.id.pregnant_mothers);
 
 
 
@@ -170,7 +160,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+      //  unbinder.unbind();
     }
 
     @Override

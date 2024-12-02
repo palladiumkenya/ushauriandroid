@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.credentials.Credential;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -31,6 +32,7 @@ import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,11 +64,13 @@ import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.facebook.stetho.Stetho;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.credentials.Credential;
+//import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -1351,52 +1355,41 @@ public class EID extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == R.id.action_settings) {
+            Intent myint = new Intent(getApplicationContext(), Settings.class);
+            startActivity(myint);
+            return true;
+        } else if (id == R.id.help_line) {
+            // Uncomment and adjust the following code for phone call functionality if needed
+            // String PhoneNo = "+254713559850";
+            // Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + PhoneNo));
+            // if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            //     // Handle permission request
+            //     return true;
+            // }
+            // startActivity(intent);
+            MydialogBuilder("Choose how to communicate with our helpline", "mLab HelpLine");
+            return true;
+        } else if (id == R.id.logout) {
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        switch (id) {
-            case R.id.action_settings:
-                Intent myint = new Intent(getApplicationContext(), Settings.class);
-                startActivity(myint);
-                return true;
+            SharedPreferences settings = getSharedPreferences(SETTING_INFOS, 0);
+            SharedPreferences.Editor myedit = settings.edit();
+            myedit.putString(LOGGED_IN, "false");
+            myedit.commit();
 
-            case R.id.help_line:
-//                String PhoneNo = "+254713559850";
-//                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + PhoneNo));
-//                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-//                    // TODO: Consider calling
-//                    //    ActivityCompat#requestPermissions
-//                    // here to request the missing permissions, and then overriding
-//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//                    //                                          int[] grantResults)
-//                    // to handle the case where the user grants the permission. See the documentation
-//                    // for ActivityCompat#requestPermissions for more details.
-////                    return ;
-//                }
-//                startActivity(intent);
-                MydialogBuilder("Choose how to communicate with our helpline", "mLab HelpLine");
-                return true;
-
-            case R.id.logout:
-
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                // Closing all the Activities
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                SharedPreferences settings = getSharedPreferences(SETTING_INFOS, 0);
-                SharedPreferences.Editor myedit = settings.edit();
-                myedit.putString(LOGGED_IN, "false");
-                myedit.commit();
-
-                startActivity(i);
-                finish();
-
-                return true;
-
-            case R.id.action_search:
-                handleMenuSearch();
-                return true;
+            startActivity(i);
+            finish();
+            return true;
+        } else if (id == R.id.action_search) {
+            handleMenuSearch();
+            return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -1986,15 +1979,25 @@ public class EID extends AppCompatActivity {
 
     //function triggered when there is an incoming message from receiver
     private void listenForIncomingMessage() {
+        // Initialize the SMS Retriever API instead of Credentials API
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
 
-        this.mCredentialsApiClient = (new GoogleApiClient.Builder((Context) this)).addApi(Auth.CREDENTIALS_API).build();
-        this.startSMSListener();
-        this.smsBroadcast.initOTPListener((SmsReceiver.MessageReceiveListener) this);
+        // Start the SMS Retriever
+        Task<Void> task = client.startSmsRetriever();
+
+        // Set a success listener to handle initialization
+        task.addOnSuccessListener(aVoid -> {
+            Log.d("SMSRetriever", "SMS Retriever started successfully.");
+        });
+
+        task.addOnFailureListener(e -> {
+            Log.e("SMSRetriever", "Failed to start SMS Retriever.", e);
+        });
+
+        // Register BroadcastReceiver for SMS retrieval
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.google.android.gms.auth.api.phone.SMS_RETRIEVED");
-        this.getApplicationContext().registerReceiver((BroadcastReceiver) this.smsBroadcast, intentFilter);
-
-
+        intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
+        registerReceiver(new SmsReceiver(), intentFilter);
     }
 
     //    function triggered when the application is in background or closed
@@ -2003,13 +2006,13 @@ public class EID extends AppCompatActivity {
         //background code after every 5 seconds
 
 
-        Intent alarm = new Intent(EID.this, SmsReceiver.class);
-        boolean alarmRunning = (PendingIntent.getBroadcast(EID.this, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
-        if (alarmRunning == false) {
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(EID.this, 0, alarm, 0);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 5000, pendingIntent);
-        }
+//        Intent alarm = new Intent(EID.this, SmsReceiver.class);
+//        boolean alarmRunning = (PendingIntent.getBroadcast(EID.this, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+//        if (alarmRunning == false) {
+//            PendingIntent pendingIntent = PendingIntent.getBroadcast(EID.this, 0, alarm, 0);
+//            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 5000, pendingIntent);
+//        }
 
         //background code
 
@@ -2073,7 +2076,10 @@ public class EID extends AppCompatActivity {
 
             Parcelable credentials = data.getParcelableExtra("com.google.android.gms.credentials.Credential");
             Intrinsics.checkExpressionValueIsNotNull(credentials, "data!!.getParcelableExtra(Credential.EXTRA_KEY)");
-            Credential credential = (Credential) credentials;
+            Credential credential = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                credential = (Credential) credentials;
+            }
             String credString = "credential : " + credential;
             System.out.print(credString);
         }

@@ -48,13 +48,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 public class HeiFinalOutcomeFragment extends Fragment {
-    private Unbinder unbinder;
+   // private Unbinder unbinder;
     private View root;
     private Context context;
 
@@ -78,44 +74,18 @@ public class HeiFinalOutcomeFragment extends Fragment {
     String[] young_final_outcome = {"Select final outcome","Dead","LTFU", "TO"};
     String[] old_final_outcome = {"Select final outcome*","Enroll to CCC","Discharged from PMTCT"};
 
-
-    @BindView(R.id.search_hei_no)
     EditText search_hei_no;
-
-    @BindView(R.id.btn_search)
     Button btn_search;
-
-    @BindView(R.id.outcome_spinner)
     Spinner outcome_spinner;
-
-    @BindView(R.id.f_name)
     TextView f_name;
-
-    @BindView(R.id.m_name)
     TextView m_name;
-
-    @BindView(R.id.l_name)
     TextView l_name;
-
-    @BindView(R.id.dob)
     TextView dob;
-
-    @BindView(R.id.btn_submit)
     Button btn_submit;
-
-    @BindView(R.id.final_outcome_layout)
     LinearLayout final_outcome_layout;
-
-    @BindView(R.id.deceased_date_input)
     TextInputLayout deceased_date_input;
-
-    @BindView(R.id.deceased_date)
     EditText deceased_date;
-
-    @BindView(R.id.to_date_input)
     TextInputLayout to_date_input;
-
-    @BindView(R.id.to_date)
     EditText to_date;
 
 
@@ -140,7 +110,21 @@ public class HeiFinalOutcomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root =  inflater.inflate(R.layout.hei_final_outcome_fragment, container, false);
-        unbinder = ButterKnife.bind(this, root);
+        //unbinder = ButterKnife.bind(this, root);
+         search_hei_no= root.findViewById(R.id.search_hei_no);
+         btn_search= root.findViewById(R.id.btn_search);
+         outcome_spinner= root.findViewById(R.id.outcome_spinner);
+         f_name= root.findViewById(R.id.f_name);
+         m_name= root.findViewById(R.id.m_name);
+         l_name= root.findViewById(R.id.l_name);
+         dob= root.findViewById(R.id.dob);
+         btn_submit= root.findViewById(R.id.btn_submit);
+         final_outcome_layout= root.findViewById(R.id.final_outcome_layout);
+        deceased_date_input= root.findViewById(R.id.deceased_date_input);
+         deceased_date= root.findViewById(R.id.deceased_date);
+         to_date_input= root.findViewById(R.id.to_date_input);
+         to_date= root.findViewById(R.id.to_date);
+
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
@@ -244,7 +228,7 @@ public class HeiFinalOutcomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        //unbinder.unbind();
     }
 
     @Override

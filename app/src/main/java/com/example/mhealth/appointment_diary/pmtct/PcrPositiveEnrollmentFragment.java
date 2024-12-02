@@ -46,13 +46,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 public class PcrPositiveEnrollmentFragment extends Fragment {
-    private Unbinder unbinder;
+    //private Unbinder unbinder;
     private View root;
     private Context context;
 
@@ -89,40 +85,18 @@ public class PcrPositiveEnrollmentFragment extends Fragment {
     String[] client_status = {"Client status*","ART","On Care","Pre-ART"};
 
 
-    @BindView(R.id.search_hei_no)
+
     EditText search_hei_no;
-
-    @BindView(R.id.btn_search)
     Button btn_search;
-
-    @BindView(R.id.motivation_spinner)
     Spinner motivation_spinner;
-
-    @BindView(R.id.enrollment_date)
     EditText enrollment_date;
-
-    @BindView(R.id.art_date)
     EditText art_date;
-
-    @BindView(R.id.dob)
     EditText dob;
-
-    @BindView(R.id.clinic_number)
     EditText clinic_number;
-
-    @BindView(R.id.client_status_spinner)
     Spinner client_status_spinner;
-
-    @BindView(R.id.file_no)
     EditText file_no;
-
-    @BindView(R.id.hei_no)
     EditText hei_no;
-
-    @BindView(R.id.pcr_details_layout)
     LinearLayout pcr_details_layout;
-
-    @BindView(R.id.btn_submit_pcr)
     Button btn_submit_pcr;
 
 
@@ -150,7 +124,19 @@ public class PcrPositiveEnrollmentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root =  inflater.inflate(R.layout.pcr_positive_enrollment_fragment, container, false);
-        unbinder = ButterKnife.bind(this, root);
+        // unbinder = ButterKnife.bind(this, root);
+        search_hei_no = root.findViewById(R.id.search_hei_no);
+        btn_search= root.findViewById(R.id.btn_search);
+        motivation_spinner= root.findViewById(R.id.motivation_spinner);
+        enrollment_date= root.findViewById(R.id.enrollment_date);
+        art_date= root.findViewById(R.id.art_date);
+        dob= root.findViewById(R.id.dob);
+        clinic_number= root.findViewById(R.id.clinic_number);
+        client_status_spinner= root.findViewById(R.id.client_status_spinner);
+        file_no= root.findViewById(R.id.file_no);
+        hei_no= root.findViewById(R.id.hei_no);
+         pcr_details_layout= root.findViewById(R.id.pcr_details_layout);
+         btn_submit_pcr= root.findViewById(R.id.btn_submit_pcr);
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
@@ -323,7 +309,7 @@ public class PcrPositiveEnrollmentFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+       // unbinder.unbind();
     }
 
     @Override

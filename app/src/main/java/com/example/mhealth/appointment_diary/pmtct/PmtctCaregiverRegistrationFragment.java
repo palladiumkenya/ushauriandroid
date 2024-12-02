@@ -45,13 +45,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 public class PmtctCaregiverRegistrationFragment extends Fragment {
-    private Unbinder unbinder;
+   // private Unbinder unbinder;
     private View root;
     private Context context;
     public  String z;
@@ -71,40 +67,18 @@ public class PmtctCaregiverRegistrationFragment extends Fragment {
 
 
 
-    @BindView(R.id.care_giver_phone)
+
     EditText care_giver_phone;
-
-    @BindView(R.id.caregiver_gender_spinner)
     Spinner caregiver_gender_spinner;
-
-    @BindView(R.id.care_giver_fname)
     EditText care_giver_fname;
-
-    @BindView(R.id.care_giver_mname)
     EditText care_giver_mname;
-
-    @BindView(R.id.care_giver_lname)
     EditText care_giver_lname;
-
-    @BindView(R.id.hei_no)
     EditText hei_no;
-
-    @BindView(R.id.hei_gender_spinner)
     Spinner hei_gender_spinner;
-
-    @BindView(R.id.dob)
     EditText dob;
-
-    @BindView(R.id.first_name)
     EditText first_name;
-
-    @BindView(R.id.middle_name)
     EditText middle_name;
-
-    @BindView(R.id.last_name)
     EditText last_name;
-
-    @BindView(R.id.btn_submit_reg)
     Button btn_submit_reg;
 
 
@@ -127,7 +101,20 @@ public class PmtctCaregiverRegistrationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root =  inflater.inflate(R.layout.pmtct_caregiver_reg_fragment, container, false);
-        unbinder = ButterKnife.bind(this, root);
+        //unbinder = ButterKnife.bind(this, root);
+        care_giver_phone=root.findViewById(R.id.care_giver_phone);
+        caregiver_gender_spinner=root.findViewById(R.id.caregiver_gender_spinner);
+        care_giver_fname=root.findViewById(R.id.care_giver_fname);
+        care_giver_mname=root.findViewById(R.id.care_giver_mname);
+        care_giver_lname=root.findViewById(R.id.care_giver_lname);
+        hei_no=root.findViewById(R.id.hei_no);
+        hei_gender_spinner=root.findViewById(R.id.hei_gender_spinner);
+        dob=root.findViewById(R.id.dob);
+        first_name=root.findViewById(R.id.first_name);
+        middle_name=root.findViewById(R.id.middle_name);
+        last_name=root.findViewById(R.id.last_name);
+        btn_submit_reg=root.findViewById(R.id.btn_submit_reg);
+
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
@@ -227,7 +214,7 @@ public class PmtctCaregiverRegistrationFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+       // unbinder.unbind();
     }
 
     @Override

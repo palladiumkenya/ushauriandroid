@@ -10,9 +10,6 @@ import android.widget.TextView;
 import com.example.mhealth.appointment_diary.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 
 public class ErrorMessage extends BottomSheetDialogFragment {
@@ -20,14 +17,9 @@ public class ErrorMessage extends BottomSheetDialogFragment {
 
     private String error;
     private Context context;
-    private Unbinder unbinder;
+   // private Unbinder unbinder;
     private String title = null;
-
-
-    @BindView(R.id.error_message)
     TextView errorMessage;
-
-    @BindView(R.id.title)
     TextView titleTextView;
 
     public ErrorMessage() {
@@ -61,7 +53,10 @@ public class ErrorMessage extends BottomSheetDialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.error_bottom_sheet, container, false);
-        unbinder = ButterKnife.bind(this, view);
+
+        errorMessage=view.findViewById(R.id.error_message);
+        titleTextView=view.findViewById(R.id.title);
+        //unbinder = ButterKnife.bind(this, view);
 
         errorMessage.setText(error);
         if (title != null)
@@ -78,6 +73,6 @@ public class ErrorMessage extends BottomSheetDialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+       // unbinder.unbind();
     }
 }

@@ -1,5 +1,4 @@
 package com.example.mhealth.appointment_diary.defaulters_diary.missed.call;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -51,6 +50,9 @@ import java.util.concurrent.TimeUnit;
 
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
+//import com.github.MdFarhanRaja.SearchableSpinner.SpinnerDialog;
+
+
 
 /**
  * Created by abdullahi on 11/12/2017.
@@ -70,6 +72,7 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
     CheckInternet chkinternet;
     makeCalls mc;
     SendMessage sm;
+
 
     SpinnerDialog spinnerDialog;
 
@@ -281,16 +284,11 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
 
 
 
-
-
-
 //                        start function to remove false defaulters record from system manually
                         notDefaulterbtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-
                                 //*****************************old code start here
-
 //                                Toast.makeText(view.getContext(), "clearing false defaulters", Toast.LENGTH_SHORT).show();
                                 String msgbdy = mylist1.get(position).getCcnumber();
                                 final String appId=mylist1.get(position).getAppointmentID();
@@ -634,7 +632,8 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
 
                                         }
 
-                                        spinnerDialog=new SpinnerDialog(myactivity,y,"Select Tracer",R.style.DialogAnimations_SmileWindow,"Close");// With 	Animation
+                                        //spinnerDialog=new SpinnerDialog(myactivity,y,"Select Tracer",R.style.DialogAnimations_SmileWindow,"Close");// With 	Animation
+                                        spinnerDialog=new SpinnerDialog(myactivity,y,"Select Tracer","Close");
 
 
                                         spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
@@ -1473,7 +1472,8 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
 
                                                 String phne=myl2.get(y).getPhone();
 //                                acs.sendDetailsToDb("Reg*"+sendSms+"/"+phne);
-                                                acs.sendConfirmToDbPost("MSDC*"+encrypted,phne,ON_DSD_SERVER,second_outcome_code);
+                                                //acs.sendConfirmToDbPost("MSDC*"+encrypted,phne,ON_DSD_SERVER,second_outcome_code);
+                                                acs.sendConfirmToDbPost("MSDC*"+encrypted, phne,ON_DSD_SERVER,second_outcome_code);
                                             }
                                         }
 
@@ -1546,10 +1546,6 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
 
                 honoredbutton.setVisibility(View.GONE);
             }
-
-
-
-
             ccnumberT.setText(ccnumberS);
             appnameT.setText(appnameS);
             phoneT.setText(phoneS);
@@ -1681,9 +1677,5 @@ public class MissedCallAdapter extends BaseAdapter implements Filterable {
             notifyDataSetChanged();
 
         }
-
-
     }
-
-
 }

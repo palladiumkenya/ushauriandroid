@@ -2,6 +2,7 @@ package com.example.mhealth.appointment_diary.Smsretrieverapi;
 
 
 import android.app.Activity;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -22,7 +23,8 @@ import com.example.mhealth.appointment_diary.ProcessReceivedMessage.ProcessMessa
 import com.example.mhealth.appointment_diary.R;
 import com.facebook.stetho.Stetho;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.credentials.Credential;
+//import com.google.android.gms.auth.api.credentials.Credential;
+
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -121,7 +123,7 @@ public class TestClass extends AppCompatActivity implements SmsReceiver.MessageR
     //function triggered when there is an incoming message from receiver
     private void listenForIncomingMessage() {
 
-        this.mCredentialsApiClient = (new GoogleApiClient.Builder((Context) this)).addApi(Auth.CREDENTIALS_API).build();
+       // this.mCredentialsApiClient = (new GoogleApiClient.Builder((Context) this)).addApi(Auth.CREDENTIALS_API).build();
         this.startSMSListener();
         this.smsBroadcast.initOTPListener((SmsReceiver.MessageReceiveListener) this);
         IntentFilter intentFilter = new IntentFilter();
@@ -138,9 +140,9 @@ public class TestClass extends AppCompatActivity implements SmsReceiver.MessageR
 
 
         Intent alarm = new Intent(TestClass.this, SmsReceiver.class);
-        boolean alarmRunning = (PendingIntent.getBroadcast(TestClass.this, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        boolean alarmRunning = (PendingIntent.getBroadcast(TestClass.this, 0, alarm, PendingIntent.FLAG_NO_CREATE | PendingIntent.FLAG_IMMUTABLE) != null);
         if (alarmRunning == false) {
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(TestClass.this, 0, alarm, 0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(TestClass.this, 0, alarm, PendingIntent.FLAG_IMMUTABLE);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 5000, pendingIntent);
         }
@@ -211,9 +213,9 @@ public class TestClass extends AppCompatActivity implements SmsReceiver.MessageR
 
             Parcelable credentials = data.getParcelableExtra("com.google.android.gms.credentials.Credential");
             Intrinsics.checkExpressionValueIsNotNull(credentials, "data!!.getParcelableExtra(Credential.EXTRA_KEY)");
-            Credential credential = (Credential) credentials;
-            String credString = "credential : " + credential;
-            System.out.print(credString);
+           // Credential credential = (Credential) credentials;
+            //String credString = "credential : " + credential;
+            //System.out.print(credString);
         }
 
     }

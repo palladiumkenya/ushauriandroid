@@ -163,7 +163,7 @@ public class AppCal extends AppCompatActivity {
 
         //Set an event for Teachers' Professional Day 2016 which is 21st of October
         ///card = (CardView) findViewById(R.id.card);
-        text = (TextView) findViewById(R.id.text);
+     //   text = (TextView) findViewById(R.id.text);
        /* Event ev1 = new Event(Color.RED, 1669749065000L, "Teachers' Professional Day");
         compactCalendar.addEvent(ev1, true);*/
 
@@ -401,24 +401,20 @@ public class AppCal extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id==R.id.action_search2){
+            handleMenuSearch();
+            return true;
+        } else if (id== R.id.logout) {
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        switch(id){
-            case R.id.action_search2:
-                handleMenuSearch();
-                return true;
-
-            case R.id.logout:
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                // Closing all the Activities
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                startActivity(i);
-                finish();
-                return true;
+            startActivity(i);
+            finish();
+            return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

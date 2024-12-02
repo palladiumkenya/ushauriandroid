@@ -3,15 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mhealth.appointment_diary">
 
-    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+   <!-- <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ReservedSystemPermission" />-->
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- If your app doesn't need to access media files that other apps created,
+     set the "maxSdkVersion" attribute to "28" instead. -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <!--<uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />-->
+
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
         android:name="com.orm.SugarApp"
@@ -22,7 +32,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         tools:replace="android:icon">
+
         <activity
             android:name=".appointment_diary.ClientEncounterSearch"
             android:exported="false" />
@@ -68,9 +80,9 @@
         <activity
             android:name=".appointment_diary.Settings"
             android:exported="false" />
-        <activity
+        <!--<activity
             android:name=".appointment_diary.BluetoothDemo"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".appointment_diary.VLsamplelogin"
             android:exported="false" />
@@ -173,7 +185,8 @@
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.example.mhealth.appointment_diary" /> <!-- start sms retriever details here -->
-        <service android:name=".Smsretrieverapi.BackgroundService" />
+        <service android:name=".Smsretrieverapi.BackgroundService"
+            android:foregroundServiceType=""/>
 
         <activity android:name=".Smsretrieverapi.TestClass">
 

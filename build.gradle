@@ -1,14 +1,21 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-buildscript { 
+buildscript {
    // ext.kotlin_version = '1.3.10'
 
     repositories {
-        jcenter()
         google()
+        mavenCentral()
+        //jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url = uri("https://jcenter.bintray.com") }
+        maven { url 'https://dl.bintray.com/amitshekhar/android-networking' } // Example
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
+       // classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.android.tools.build:gradle:8.1.4'
+        classpath 'com.google.gms:google-services:4.4.2' // Check for the latest version
+
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -18,10 +25,23 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        google()
+        //jcenter()
+        mavenCentral()
+        maven { url = uri("https://jcenter.bintray.com") }
         maven {url "https://jitpack.io" }
 
-        google()
+    }
+    configurations {
+        all {
+            resolutionStrategy {
+                dependencySubstitution {
+                    substitute(module("com.tapadoo.android:alerter:6.1.0"))
+                            .using(module("com.github.tapadoo:alerter:7.2.4"))
+                            .because("401 error in main repo")
+                }
+            }
+        }
     }
 }
 

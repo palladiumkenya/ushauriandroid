@@ -47,15 +47,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+//import butterknife.BindView;
+//import butterknife.ButterKnife;
+//import butterknife.Unbinder;
 
 
 public class RescheduleDialog extends BottomSheetDialogFragment {
 
     private Context context;
-    private Unbinder unbinder;
+  //  private Unbinder unbinder;
     private Appointment appointment;
     private String phone_no;
 
@@ -65,14 +65,8 @@ public class RescheduleDialog extends BottomSheetDialogFragment {
 
     private String APPOINTMENT_DATE = "";
 
-
-    @BindView(R.id.appointment_date)
     EditText appointment_date;
-
-    @BindView(R.id.title)
     TextView titleTextView;
-
-    @BindView(R.id.btn_submit_apt)
     Button btn_submit_apt;
 
 
@@ -99,7 +93,13 @@ public class RescheduleDialog extends BottomSheetDialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.reschedule_bottom_sheet, container, false);
-        unbinder = ButterKnife.bind(this, view);
+       // unbinder = ButterKnife.bind(this, view);
+
+
+        appointment_date = view.findViewById(R.id.appointment_date);
+        titleTextView= view.findViewById(R.id.title);
+        btn_submit_apt= view.findViewById(R.id.btn_submit_apt);
+
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
@@ -167,7 +167,7 @@ public class RescheduleDialog extends BottomSheetDialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        //unbinder.unbind();
     }
 
 

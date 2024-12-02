@@ -46,13 +46,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 
 public class PmtctHeiAptFragment extends Fragment {
-    private Unbinder unbinder;
+   // private Unbinder unbinder;
     private View root;
     private Context context;
     public  String z;
@@ -77,28 +73,13 @@ public class PmtctHeiAptFragment extends Fragment {
 
 
 
-    @BindView(R.id.hei_no)
+
     EditText hei_no;
-
-    @BindView(R.id.appointment_date)
     EditText appointment_date;
-
-
-    @BindView(R.id.other_layout)
     LinearLayout other_layout;
-
-    @BindView(R.id.appointment_type_spinner)
     Spinner appointment_type_spinner;
-
-    @BindView(R.id.pcr_taken_spinner)
     Spinner pcr_taken_spinner;
-
-
-    @BindView(R.id.other_et)
     EditText other_et;
-
-
-    @BindView(R.id.btn_submit_apt)
     Button btn_submit_apt;
 
 
@@ -123,7 +104,16 @@ public class PmtctHeiAptFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root =  inflater.inflate(R.layout.pmtct_hei_apt_fragment, container, false);
-        unbinder = ButterKnife.bind(this, root);
+       // unbinder = ButterKnife.bind(this, root);
+
+         hei_no=root.findViewById(R.id.hei_no);
+         appointment_date=root.findViewById(R.id.appointment_date);
+        other_layout=root.findViewById(R.id.other_layout);
+        appointment_type_spinner =root.findViewById(R.id.appointment_type_spinner);
+        pcr_taken_spinner=root.findViewById(R.id.pcr_taken_spinner);
+        other_et=root.findViewById(R.id.other_et);
+        btn_submit_apt=root.findViewById(R.id.btn_submit_apt);
+
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
@@ -230,7 +220,7 @@ public class PmtctHeiAptFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+       // unbinder.unbind();
     }
 
     @Override

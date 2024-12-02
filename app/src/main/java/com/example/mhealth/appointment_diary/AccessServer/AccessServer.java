@@ -798,7 +798,7 @@ public class AccessServer {
     }
 
 //submit TCAs
-    public void sendConfirmToDbPost(final String msg, final String phone, final String ON_DSD, final String second_outcome_code ) {
+    public void sendConfirmToDbPost(final String msg, String phone, final String ON_DSD, final String second_outcome_code) {
         try{
             List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
             if (_url.size()==1){

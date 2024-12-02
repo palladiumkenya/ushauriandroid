@@ -49,7 +49,7 @@ import com.example.mhealth.appointment_diary.sendmessages.SendMessage;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.credentials.Credential;
+//import com.google.android.gms.auth.api.credentials.Credential;
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -336,8 +336,8 @@ public class FetchAppointment extends AppCompatActivity implements SmsReceiver.M
     protected void onResume() {
         super.onResume();
 
-        listenForIncomingMessage();
-//        loadMessagesOnline();
+       // listenForIncomingMessage();
+       loadMessagesOnline();
     }
 
     public void getPassedData(){
@@ -417,21 +417,19 @@ public class FetchAppointment extends AppCompatActivity implements SmsReceiver.M
         int id = item.getItemId();
 
 
-        switch(id){
-            case R.id.action_search2:
-                handleMenuSearch();
-                return true;
+        if (id == R.id.action_search2) {
+            handleMenuSearch();
+            return true;
+        } else if (id == R.id.logout) {
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            // Closing all the Activities
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            case R.id.logout:
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-                // Closing all the Activities
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                startActivity(i);
-                finish();
-                return true;
+            startActivity(i);
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -551,7 +549,7 @@ public class FetchAppointment extends AppCompatActivity implements SmsReceiver.M
     }
     private void listenForIncomingMessage() {
 
-        this.mCredentialsApiClient = (new GoogleApiClient.Builder((Context) this)).addApi(Auth.CREDENTIALS_API).build();
+       // this.mCredentialsApiClient = (new GoogleApiClient.Builder((Context) this)).addApi(Auth.CREDENTIALS_API).build();
         this.startSMSListener();
         this.smsBroadcast.initOTPListener((SmsReceiver.MessageReceiveListener) this);
         IntentFilter intentFilter = new IntentFilter();
@@ -578,7 +576,7 @@ public class FetchAppointment extends AppCompatActivity implements SmsReceiver.M
                 //boolean alarmRunning = (PendingIntent.getBroadcast(FetchAppointment.this, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
 
                 if (alarmRunning == false) {
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(FetchAppointment.this, 0, alarm, 0);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(FetchAppointment.this, 0, alarm, PendingIntent.FLAG_IMMUTABLE);
                     AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                     alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 5000, pendingIntent);
                 }
@@ -642,9 +640,9 @@ public class FetchAppointment extends AppCompatActivity implements SmsReceiver.M
 
             Parcelable credentials = data.getParcelableExtra("com.google.android.gms.credentials.Credential");
             Intrinsics.checkExpressionValueIsNotNull(credentials, "data!!.getParcelableExtra(Credential.EXTRA_KEY)");
-            Credential credential = (Credential) credentials;
-            String credString = "credential : " + credential;
-            System.out.print(credString);
+            //Credential credential = (Credential) credentials;
+            //String credString = "credential : " + credential;
+           // System.out.print(credString);
         }
 
     }

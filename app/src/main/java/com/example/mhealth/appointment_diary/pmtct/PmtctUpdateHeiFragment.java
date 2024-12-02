@@ -57,10 +57,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
@@ -95,7 +91,7 @@ public class PmtctUpdateHeiFragment extends Fragment {
 
     LinearLayout pregnant, positiveLayout, partnerLayout, positiveselected, hivdata1c, hivdata2c, hei_visit_details1L;
     String prophy_code, height_Code, tb__Code, infant_code, pcrdone_code, eid_code, pcrResults_Code, confirmatory_code;
-    private Unbinder unbinder;
+   // private Unbinder unbinder;
     private View root;
     private Context context;
 
@@ -119,59 +115,27 @@ public class PmtctUpdateHeiFragment extends Fragment {
     private String CLINIC_ID = "";
     private String HEI_NO = "";
 
-
-    @BindView(R.id.hei_visit_details1)
     LinearLayout heiLayout;
-    @BindView(R.id.confirmLL)
     LinearLayout confirmLL1;
-
-    @BindView(R.id.pcrResultsLL)
     LinearLayout pcrResultsLL1;
 
-    @BindView(R.id.EID_test_doneL)
+
     LinearLayout EID_test_doneLL;
-
-   @BindView(R.id.weight)
     EditText weight11;
-    @BindView(R.id.EID_layout)
    TextInputLayout EID_layoutL;
-
-    @BindView(R.id.submitHEI)
    Button submit_hei;
-
-
-    @BindView(R.id.EID_date_sample)
     EditText Eid_date_sample;
 
-
-    @BindView(R.id.height)
     EditText height_length1;
-
-    @BindView(R.id.muac)
      EditText mu1;
 
-
-   @BindView(R.id.prophyl)
     Spinner  prophS;
-
-    @BindView(R.id.height_legth_s)
     Spinner  heightSS;
-
-    @BindView(R.id.tb_screening_s)
     Spinner  tbSS;
-
-    @BindView(R.id.infant_feeding_s)
     Spinner infantS;
-
-    @BindView(R.id.pcrDone_s)
     Spinner  pcrdoneS;
-    @BindView(R.id.eid_Done_S)
     Spinner  eidoneS;
-
-    @BindView(R.id.pcrResults_s1)
     Spinner  pcrResults;
-
-    @BindView(R.id.confirmDNA)
     Spinner  confS;
 
 
@@ -179,44 +143,18 @@ public class PmtctUpdateHeiFragment extends Fragment {
    // Spinner prophyS, heightS, tbS, infantS, pcrdoneS, eidS, pcrresultS, confirmS;
 
 
-
-    @BindView(R.id.phone_no_et)
     EditText phone_no_et;
-
-    @BindView(R.id.search_hei_no)
     EditText search_hei_no;
-
-    @BindView(R.id.btn_search)
     Button btn_search;
-
-    @BindView(R.id.hei_no_et)
     EditText hei_no_et;
-
-    @BindView(R.id.clinic_id_tv)
     TextView clinic_id_tv;
-
-    @BindView(R.id.hei_gender_spinner)
     Spinner hei_gender_spinner;
-
-    @BindView(R.id.dob)
     EditText dob;
-
-    @BindView(R.id.first_name)
     EditText first_name;
-
-
-    @BindView(R.id.middle_name)
     EditText middle_name;
-
-    @BindView(R.id.last_name)
     EditText last_name;
 
-
-    @BindView(R.id.btn_submit_reg)
     Button btn_submit_reg;
-
-
-    @BindView(R.id.hei_details_layout)
     LinearLayout hei_details_layout;
 
 
@@ -243,7 +181,44 @@ public class PmtctUpdateHeiFragment extends Fragment {
         Dialogs dialogs=new Dialogs(context);
         // Inflate the layout for this fragment
         root =  inflater.inflate(R.layout.pmtct_update_hei_fragment, container, false);
-        unbinder = ButterKnife.bind(this, root);
+       // unbinder = ButterKnife.bind(this, root);
+        heiLayout=root.findViewById(R.id.hei_visit_details1);
+         confirmLL1=root.findViewById(R.id.confirmLL);
+         pcrResultsLL1=root.findViewById(R.id.pcrResultsLL);
+        EID_test_doneLL=root.findViewById(R.id.EID_test_doneL);
+        weight11=root.findViewById(R.id.weight);
+        EID_layoutL=root.findViewById(R.id.EID_layout);
+        submit_hei=root.findViewById(R.id.submitHEI);
+
+        Eid_date_sample=root.findViewById(R.id.EID_date_sample);
+        height_length1=root.findViewById(R.id.height);
+        mu1=root.findViewById(R.id.muac);
+        prophS=root.findViewById(R.id.prophyl);
+        heightSS=root.findViewById(R.id.height_legth_s);
+        tbSS=root.findViewById(R.id.tb_screening_s);
+        infantS=root.findViewById(R.id.infant_feeding_s);
+        pcrdoneS=root.findViewById(R.id.pcrDone_s);
+        eidoneS=root.findViewById(R.id.eid_Done_S);
+        pcrResults=root.findViewById(R.id.pcrResults_s1);
+        confS=root.findViewById(R.id.confirmDNA);
+
+
+
+        // Spinner prophyS, heightS, tbS, infantS, pcrdoneS, eidS, pcrresultS, confirmS;
+        phone_no_et=root.findViewById(R.id.phone_no_et);
+        search_hei_no=root.findViewById(R.id.search_hei_no);
+
+         btn_search=root.findViewById(R.id.btn_search);hei_no_et=root.findViewById(R.id.hei_no_et);
+        clinic_id_tv=root.findViewById(R.id.clinic_id_tv);
+        hei_gender_spinner=root.findViewById(R.id.hei_gender_spinner);
+        dob=root.findViewById(R.id.dob);
+        first_name=root.findViewById(R.id.first_name);
+
+
+        middle_name=root.findViewById(R.id.middle_name);
+         last_name=root.findViewById(R.id.last_name);
+        btn_submit_reg=root.findViewById(R.id.btn_submit_reg);
+        hei_details_layout=root.findViewById(R.id.hei_details_layout);
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
@@ -611,7 +586,7 @@ public class PmtctUpdateHeiFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+       // unbinder.unbind();
     }
 
     @Override

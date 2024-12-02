@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -30,7 +31,7 @@ public class MainActivity2 extends Activity {
 
         String[] items = new String[]{"What is the name of your first pet", "what is the name of favorite song", "what is the name of your favorite movie", "what is the name of favorite book"};
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), com.tapadoo.alerter.R.layout.support_simple_spinner_dropdown_item, items);
 
         spinner.setAdapter(adapter);
 
