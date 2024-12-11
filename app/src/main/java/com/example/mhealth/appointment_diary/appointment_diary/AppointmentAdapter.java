@@ -381,7 +381,8 @@ public class AppointmentAdapter extends BaseAdapter implements Filterable {
                                   else{
 
 
-                                      sendSms= ccnumberS +"*" + sendDate + "*" + appointmment_type_code+"*-1*"+1 + "*" + appidS +"*"+ON_DSD_SERVER+"*"+ccnumberS+"*"+clientPhoneE+"*"+sms_spinner_update_code;
+                                     // sendSms= ccnumberS +"*" + sendDate + "*" + appointmment_type_code+"*-1*"+1 + "*" + appidS +"*"+ON_DSD_SERVER+"*"+ccnumberS+"*"+clientPhoneE+"*"+sms_spinner_update_code;
+                                      sendSms= ccnumberS +"*" + sendDate + "*" + appointmment_type_code+"*-1*"+1 + "*" + appidS +"*"+ON_DSD_SERVER;
 
                                   }
 
